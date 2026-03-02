@@ -1,0 +1,73 @@
+job_title,required_skills,salary_range
+AI Engineer,"Python, TensorFlow, PyTorch, Deep Learning, Neural Networks, NLP, Computer Vision, Reinforcement Learning, ML Algorithms, Cloud AI Services",10-28 LPA
+Accountant,"Tally, QuickBooks, GST, TDS, Excel, Bookkeeping, Financial Statements, Payroll Processing, Bank Reconciliation, Accounting Principles",2-8 LPA
+Aerospace Engineer,"Aerodynamics, Propulsion, Structural Analysis, Flight Mechanics, CFD, MATLAB, CATIA, ANSYS, Control Systems, Spacecraft Design",5-18 LPA
+Architect,"AutoCAD, Revit, SketchUp, 3ds Max, Building Design, Construction Documentation, Project Management, Building Codes, Sustainable Design, Creativity",3-15 LPA
+BBA Graduate,"Management Principles, Marketing Basics, Financial Accounting, Business Economics, Organizational Behavior, Business Communication, Excel, Presentation",2-7 LPA
+BCA Graduate,"C Programming, C++, Java, Python, Database Management, Web Development, HTML, CSS, JavaScript, Networking Fundamentals, Operating Systems",2-8 LPA
+Backend Developer,"Python, Java, C#, Node.js, PHP, Ruby, Go, SQL, MongoDB, PostgreSQL, MySQL, REST APIs, GraphQL, Microservices, Docker, Kubernetes, AWS",5-18 LPA
+Bioinformatician,"Python, R, Perl, Genomics, Proteomics, Sequence Analysis, Biological Databases, Data Mining, Statistics, Machine Learning, NGS Data Analysis",5-16 LPA
+Biomedical Engineer,"Medical Devices, Biomaterials, Biomechanics, Signal Processing, Imaging Systems, MATLAB, LabVIEW, Tissue Engineering, Regulatory Affairs",4-14 LPA
+Biotechnologist,"Molecular Biology, Genetic Engineering, Bioinformatics, Microbiology, Biochemistry, Cell Culture, PCR, Chromatography, Spectroscopy, Lab Techniques",3-12 LPA
+Blockchain Developer,"Blockchain Architecture, Smart Contracts, Solidity, Ethereum, Hyperledger, Cryptography, Web3.js, Distributed Systems, DApps, Security",8-30 LPA
+Business Analyst,"Excel, SQL, Tableau, Power BI, Requirements Gathering, UML, BPMN, JIRA, Agile, Scrum, Data Analysis, Process Modeling, Stakeholder Management",5-15 LPA
+Business Development Manager,"Market Research, Lead Generation, Client Relationship Management, Negotiation, Strategic Partnerships, Sales Strategy, CRM, Communication",8-24 LPA
+Business Intelligence Analyst,"SQL, Tableau, Power BI, Excel, Data Warehousing, ETL, Data Modeling, Dashboard Design, KPI Tracking, Business Analysis",5-16 LPA
+Chartered Accountant (CA),"Financial Accounting, Auditing, Taxation, Corporate Law, Financial Reporting, Cost Accounting, GST, TDS, ERP Systems, Excel",7-25 LPA
+Chemical Engineer,"Process Design, Thermodynamics, Fluid Mechanics, Chemical Kinetics, Process Control, Aspen Plus, Plant Design, Safety Engineering, MATLAB",4-15 LPA
+Civil Engineer,"AutoCAD, STAAD Pro, Structural Analysis, Surveying, Geotechnical Engineering, Transportation Engineering, Construction Management, Project Planning",3-12 LPA
+Clinical Research Associate,"Clinical Trials, GCP Guidelines, Regulatory Compliance, Data Management, Patient Recruitment, Medical Terminology, Documentation, Monitoring",4-14 LPA
+Cloud Architect,"AWS, Azure, GCP, IaaS, PaaS, SaaS, Docker, Kubernetes, Terraform, Cloud Security, Networking, Microservices, DevOps, Python, Java",12-35 LPA
+Content Writer,"Creative Writing, SEO Writing, Blogging, Copywriting, Editing, Proofreading, Research, Grammar, Storytelling, WordPress, Social Media Writing",2-8 LPA
+Corporate Lawyer,"Corporate Law, Contract Law, Mergers & Acquisitions, Legal Research, Drafting, Negotiation, Compliance, Intellectual Property, Client Counseling",8-28 LPA
+Cybersecurity Analyst,"Network Security, Firewalls, IDS/IPS, Ethical Hacking, Penetration Testing, Risk Assessment, Security Audits, Cryptography, Python, SIEM Tools",6-20 LPA
+Data Analyst,"Excel, SQL, Python, R, Tableau, Power BI, Statistics, Data Cleaning, Data Visualization, Pandas, NumPy, Matplotlib, Seaborn, Google Analytics",4-12 LPA
+Data Engineer,"Python, SQL, ETL, Hadoop, Spark, Kafka, Data Warehousing, AWS/GCP/Azure, Database Design, Data Modeling, Airflow, Big Data Technologies",7-22 LPA
+Data Scientist,"Python, R, SQL, Machine Learning, Deep Learning, TensorFlow, PyTorch, Pandas, NumPy, Statistics, Data Visualization, Big Data, Hadoop, Spark, NLP, Computer Vision",8-25 LPA
+Database Administrator,"MySQL, PostgreSQL, Oracle, MongoDB, Database Design, Query Optimization, Backup Recovery, Performance Tuning, Security, SQL, NoSQL",5-16 LPA
+DevOps Engineer,"Linux, Docker, Kubernetes, Jenkins, Git, CI/CD, AWS, Azure, GCP, Ansible, Terraform, Python, Bash, Monitoring Tools, Prometheus, Grafana",6-22 LPA
+Digital Marketer,"SEO, SEM, Social Media Marketing, Email Marketing, Content Marketing, Google Analytics, Facebook Ads, Google Ads, Marketing Automation, CRM",3-14 LPA
+Electrical Engineer,"Circuit Analysis, Power Systems, Control Systems, Electronics, MATLAB, PLC Programming, Electrical Design, Renewable Energy, AutoCad Electrical",3-13 LPA
+Electronics Engineer,"Embedded Systems, Microcontrollers, VLSI Design, PCB Design, Signal Processing, Communication Systems, IoT, MATLAB, C Programming",3-14 LPA
+Financial Analyst,"Financial Modeling, Valuation, Excel, Bloomberg, Financial Statements, Investment Analysis, Risk Assessment, Forecasting, Research, Reporting",5-18 LPA
+Financial Manager,"Financial Analysis, Budgeting, Forecasting, Investment Management, Risk Management, Accounting, Financial Reporting, ERP, Excel, SAP",10-28 LPA
+Frontend Developer,"HTML5, CSS3, JavaScript, React, Angular, Vue.js, TypeScript, Webpack, Babel, SASS/SCSS, Bootstrap, Tailwind, UI/UX Principles, Git",4-14 LPA
+Full Stack Developer,"HTML, CSS, JavaScript, React/Angular, Node.js/Python, SQL/NoSQL, REST APIs, Git, Docker, AWS, MongoDB, Express.js, Django/Flask",6-20 LPA
+Game Developer,"Unity, Unreal Engine, C++, C#, 3D Modeling, Game Design, Physics, Animation, AI in Games, Multiplayer Networking, Problem Solving",4-18 LPA
+Graphic Designer,"Adobe Photoshop, Adobe Illustrator, Adobe InDesign, CorelDRAW, Typography, Color Theory, Branding, Print Design, Digital Design, Creativity",2-10 LPA
+HR Executive,"Recruitment, Employee Engagement, HR Operations, Payroll Processing, Employee Relations, HR Policies, Communication, Excel, HRIS",3-9 LPA
+HR Manager,"Recruitment, Employee Relations, Performance Management, Training Development, Compensation Benefits, HR Policies, Labor Laws, HRIS, Communication",6-18 LPA
+IT Manager,"IT Strategy, Infrastructure Management, Cybersecurity, Vendor Management, Budgeting, Team Leadership, Cloud Services, ITIL, Project Management",10-26 LPA
+Industrial Engineer,"Operations Research, Supply Chain Management, Manufacturing Systems, Quality Control, Six Sigma, Ergonomics, Simulation, CAD, Project Management",4-14 LPA
+Interior Designer,"AutoCAD, SketchUp, 3ds Max, Space Planning, Color Theory, Material Selection, Furniture Design, Lighting Design, Client Management, Creativity",3-12 LPA
+Investment Banker,"Financial Modeling, Valuation, M&A, Capital Markets, Due Diligence, Excel, PowerPoint, Financial Analysis, Deal Structuring, Client Management",10-35 LPA
+IoT Developer,"Embedded Systems, Sensors, Microcontrollers, Arduino, Raspberry Pi, IoT Protocols, Cloud IoT Platforms, Python, C++, Networking",5-18 LPA
+Journalist,"News Writing, Reporting, Interviewing, Research, Editing, Media Ethics, Digital Journalism, Broadcast Journalism, Feature Writing, Current Affairs",3-12 LPA
+Legal Advisor,"Legal Research, Contract Drafting, Compliance, Risk Management, Corporate Law, Litigation Support, Client Advisory, Negotiation, Documentation",5-18 LPA
+Logistics Coordinator,"Shipping, Tracking, Inventory Control, Documentation, Customs Compliance, Carrier Management, Route Planning, Excel, Communication",3-10 LPA
+MBA,"Strategic Management, Leadership, Financial Management, Marketing Management, HR Management, Operations Management, Business Analytics, Economics, Communication",8-25 LPA
+MCA Graduate,"Advanced Java, Python, .NET, Web Technologies, Mobile Computing, Cloud Computing, Data Analytics, Software Engineering, Project Management, Database Systems",4-12 LPA
+Machine Learning Engineer,"Python, R, TensorFlow, PyTorch, Scikit-learn, Deep Learning, NLP, Computer Vision, ML Algorithms, Statistics, Data Processing, Cloud ML Services",8-25 LPA
+Marketing Executive,"Digital Marketing, Social Media, Content Creation, Market Research, Campaign Management, SEO/SEM, Analytics, Communication, Creativity",3-10 LPA
+Marketing Manager,"Digital Marketing, Brand Management, Market Research, SEO/SEM, Social Media Marketing, Content Strategy, Analytics, Campaign Management, CRM",7-20 LPA
+Mechanical Engineer,"CAD/CAM, SolidWorks, AutoCAD, Thermodynamics, Fluid Mechanics, Manufacturing Processes, Materials Science, FEA, HVAC, PLC Programming",3-12 LPA
+Medical Laboratory Technician,"Lab Testing, Microscopy, Hematology, Microbiology, Biochemistry, Blood Banking, Quality Control, Lab Equipment Operation, Safety Protocols",2-8 LPA
+Mobile App Developer,"Java, Kotlin, Swift, React Native, Flutter, iOS Development, Android Development, Mobile UI Design, REST APIs, Firebase, Git",5-18 LPA
+Operations Manager,"Supply Chain Management, Logistics, Inventory Management, Process Improvement, Six Sigma, Lean Management, Budgeting, Team Leadership, ERP Systems",8-22 LPA
+Pharmacist,"Pharmaceutical Chemistry, Pharmacology, Pharmacotherapy, Drug Interactions, Patient Counseling, Pharmacy Laws, Compounding, Inventory Management",3-10 LPA
+Product Designer,"Design Thinking, User Research, Prototyping, Figma, Sketch, 3D Modeling, CAD, Material Selection, Manufacturing Processes, Problem Solving",5-18 LPA
+Product Manager,"Product Strategy, Market Research, User Stories, Roadmapping, Agile, Scrum, Data Analysis, UX Design, Competitive Analysis, Stakeholder Management",12-30 LPA
+Professor,"Teaching, Research, Publications, Subject Matter Expertise, Curriculum Development, Student Mentoring, Academic Advising, Grant Writing, Communication",6-20 LPA
+Project Manager,"PMP, Agile, Scrum, JIRA, Risk Management, Budgeting, Stakeholder Management, Team Leadership, Project Planning, MS Project, Communication",10-28 LPA
+Public Relations Specialist,"Media Relations, Press Releases, Crisis Communication, Event Management, Brand Management, Content Creation, Social Media, Communication",4-14 LPA
+QA Tester,"Manual Testing, Automated Testing, Selenium, JUnit, TestNG, JIRA, Bug Tracking, Test Planning, Regression Testing, Performance Testing, SQL",3-10 LPA
+Robotics Engineer,"Robotics, ROS, C++, Python, Embedded Systems, Control Systems, Sensors, Actuators, Machine Vision, AI, Mechanics, Electronics",6-22 LPA
+Sales Manager,"B2B Sales, B2C Sales, Account Management, Negotiation, CRM, Sales Strategy, Team Leadership, Forecasting, Market Analysis, Communication",8-25 LPA
+Software Engineer,"Java, Python, C++, Data Structures, Algorithms, OOP, Design Patterns, SQL, Git, Agile, Testing, Debugging, Problem Solving",4-18 LPA
+Software Engineer (BE),"C, C++, Java, Python, Data Structures, Algorithms, Database Management, Operating Systems, Computer Networks, Software Engineering, OOP",4-16 LPA
+Supply Chain Manager,"Logistics, Inventory Management, Procurement, Demand Planning, Warehouse Management, Transportation, ERP Systems, Data Analysis, Negotiation",6-20 LPA
+System Administrator,"Linux, Windows Server, Networking, Shell Scripting, Python, Virtualization, Cloud Services, Security, Troubleshooting, Active Directory",4-12 LPA
+Teacher,"Lesson Planning, Classroom Management, Subject Expertise, Assessment, Communication, Patience, Adaptability, Technology Integration, Student Engagement",2-8 LPA
+UI/UX Designer,"User Research, Wireframing, Prototyping, Figma, Sketch, Adobe XD, User Testing, Information Architecture, Interaction Design, Visual Design",4-16 LPA
+Web Designer,"HTML, CSS, JavaScript, WordPress, Figma, Adobe XD, Photoshop, Responsive Design, UI Design, User Experience, Creative Suite",3-12 LPA
+Web Developer,"HTML5, CSS3, JavaScript, React, Angular, Vue.js, Node.js, PHP, Python, Django, Flask, MySQL, MongoDB, REST APIs, Git, Responsive Design",3-12 LPA

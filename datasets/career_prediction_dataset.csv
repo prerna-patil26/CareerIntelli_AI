@@ -1,0 +1,266 @@
+skills,cgpa,interest,internship,projects_count,communication_score,career_label
+"Kubernetes, AWS, Python, Docker",9.4,Analytics,No,4,5,DevOps Engineer
+"IoT, Embedded Systems, PCB Design, MATLAB",4.9,Electronics,Yes,3,7,Electronics Engineer
+"Docker, Security, Azure, GCP, Kubernetes",4.9,Technology,Yes,3,5,Cloud Architect
+"Valuation, Investment Analysis, Financial Modeling",7.1,Investments,Yes,5,5,Financial Analyst
+"Pharmacology, Patient Counseling, Drug Interactions, Pharmaceutical Chemistry",7.3,Creative,No,2,9,Pharmacist
+"Cryptography, Solidity, Smart Contracts, Blockchain, Ethereum",7.7,Cryptocurrency,Yes,4,4,Blockchain Developer
+"CSS, MySQL, Node.js",8.7,Analytics,Yes,2,8,Web Developer
+"UX Design, Product Strategy, User Stories, Market Research, Data Analysis, Agile",6.2,Business,Yes,3,7,Product Manager
+"Employee Relations, Recruitment, HR Policies",8.2,Organization,Yes,5,8,HR Manager
+"Python, ML",8.2,AI,Yes,4,7,Machine Learning Engineer
+"PCB Design, Microcontrollers, Embedded Systems",8.2,Electronics,Yes,3,7,Electronics Engineer
+"Forecasting, Financial Analysis, Excel, Risk Management, ERP, Budgeting",7.7,Business,Yes,2,7,Financial Manager
+"Construction, Structural Analysis, Surveying, AutoCAD, STAAD Pro",9.0,Engineering,Yes,2,7,Civil Engineer
+"SEO/SEM, Content Strategy, Digital Marketing, Social Media",4.9,Creative,Yes,2,5,Marketing Manager
+"Molecular Biology, Microbiology, Genetics, Bioinformatics",7.4,Research,Yes,4,7,Biotechnologist
+"Excel, Financial Modeling, Valuation, Bloomberg, Investment Analysis",6.0,Analytics,Yes,4,7,Financial Analyst
+"React, JavaScript",7.5,Design,Yes,3,6,Web Developer
+"Embedded Systems, Microcontrollers, PCB Design, IoT",4.7,Technology,Yes,1,7,Electronics Engineer
+"Valuation, Bloomberg, Investment Analysis, Financial Modeling, Excel",7.5,Finance,Yes,5,8,Financial Analyst
+"Solidity, Blockchain, Ethereum, Cryptography, Smart Contracts",4.5,Technology,Yes,1,6,Blockchain Developer
+"Solidity, Cryptography, Ethereum, Smart Contracts",8.1,Design,Yes,4,5,Blockchain Developer
+"FEA, Manufacturing, Thermodynamics",9.5,Engineering,Yes,4,4,Mechanical Engineer
+"FEA, Manufacturing, CAD",6.8,Engineering,Yes,1,8,Mechanical Engineer
+"Git, PHP, CSS, Bootstrap, MongoDB",6.7,Development,Yes,1,6,Web Developer
+"Docker, GCP, DevOps, Python",4.8,Infrastructure,Yes,3,7,Cloud Architect
+"Construction, Surveying, AutoCAD, STAAD Pro, Structural Analysis",6.2,Teaching,Yes,1,8,Civil Engineer
+"Leadership, Communication, Scrum, Risk Management",5.0,Management,Yes,0,9,Project Manager
+"ML Algorithms, Computer Vision, TensorFlow, Deep Learning, NLP, PyTorch",9.2,Business,Yes,2,6,Machine Learning Engineer
+"OOP, C++, Algorithms, Data Structures, Python, SQL",6.5,Development,Yes,4,4,Software Engineer
+"Solidity, Ethereum, Cryptography, Blockchain, Smart Contracts",7.3,Analytics,Yes,3,5,Blockchain Developer
+"Statistics, Excel, Analytics, Pandas",6.6,Analytics,Yes,3,8,Data Analyst
+"Git, Bootstrap, HTML, PHP, CSS, MySQL",8.1,UI/UX,Yes,5,4,Web Developer
+"PCB Design, Microcontrollers, IoT, MATLAB, Embedded Systems",8.6,Creative,No,5,6,Electronics Engineer
+"Molecular Biology, Bioinformatics, Microbiology",6.9,Creative,Yes,4,9,Biotechnologist
+"Solidity, Smart Contracts, Blockchain, Cryptography, Ethereum",7.9,Innovation,Yes,4,7,Blockchain Developer
+"Data Structures, Python, OOP, C++, Java, SQL",7.5,Programming,Yes,5,6,Software Engineer
+"Data Visualization, Tableau, Statistics",5.1,Visualization,Yes,0,5,Data Analyst
+"Microbiology, Bioinformatics, Genetics, Molecular Biology",8.7,Teaching,No,3,8,Biotechnologist
+"Oracle, MongoDB, Database Design, Backup Recovery, SQL, MySQL",7.6,Management,Yes,4,7,Database Administrator
+"AWS, Python, GCP",7.8,Architecture,Yes,3,9,Cloud Architect
+"Drug Interactions, Pharmaceutical Chemistry, Pharmacology, Patient Counseling",6.7,Research,Yes,4,5,Pharmacist
+"Arduino, Sensors, C++, Python",8.5,Hardware,Yes,4,7,IoT Developer
+"Leadership, Six Sigma, Process Improvement",7.6,Management,No,4,9,Operations Manager
+"Product Strategy, Market Research, UX Design",8.8,Strategy,No,4,5,Product Manager
+"MySQL, SQL, Database Design, Backup Recovery",6.6,Engineering,No,2,6,Database Administrator
+"Employee Relations, Communication, HR Policies",6.2,Organization,Yes,3,6,HR Manager
+"Data Management, Clinical Trials, Regulatory Compliance, GCP",5.4,Teaching,Yes,1,7,Clinical Research Associate
+"SQL, Manual Testing, Selenium, JIRA",9.3,Technology,Yes,2,7,QA Tester
+"SEO/SEM, Content Strategy, Digital Marketing, Social Media",7.4,Strategy,No,2,8,Marketing Manager
+"Regulatory Compliance, Clinical Trials, Data Management, GCP",7.7,Healthcare,Yes,2,9,Clinical Research Associate
+"Embedded Systems, Microcontrollers, PCB Design",6.4,Innovation,No,2,6,Electronics Engineer
+"SEO/SEM, Digital Marketing, Social Media, Content Strategy, Analytics",5.6,Communication,Yes,1,7,Marketing Manager
+"Analytics, Tableau, Power BI, Pandas, Data Visualization",4.3,Business,Yes,0,8,Data Analyst
+"Agile, User Stories, Market Research, Product Strategy, UX Design",9.0,Management,Yes,5,9,Product Manager
+"Figma, Prototyping",7.0,Design,Yes,2,8,UI/UX Designer
+"Automation Testing, SQL, Manual Testing, JIRA, Selenium, Test Planning",9.0,Quality,No,3,6,QA Tester
+"Database Design, MongoDB, PostgreSQL, Backup Recovery",9.4,AI,No,2,6,Database Administrator
+"Cryptography, Ethereum, Smart Contracts, Blockchain",6.1,Innovation,Yes,3,7,Blockchain Developer
+"Tableau, UML, Agile, Excel, SQL",7.9,Problem Solving,Yes,3,7,Business Analyst
+"Risk Management, Budgeting, Forecasting, Financial Analysis, Excel",7.9,Analysis,Yes,2,9,Financial Manager
+"Test Planning, SQL, Selenium, Manual Testing",5.7,Technology,No,1,6,QA Tester
+"GST, TDS, Accounting, Taxation, Auditing, Financial Reporting",9.1,Analysis,Yes,5,7,Chartered Accountant
+"Product Strategy, Agile, UX Design, User Stories, Data Analysis",8.6,Strategy,Yes,2,8,Product Manager
+"Lab Techniques, Genetics, Microbiology, Molecular Biology",4.6,Biology,Yes,2,8,Biotechnologist
+"Wireframing, User Research, Figma, Sketch",4.0,Visual,Yes,0,6,UI/UX Designer
+"Firewalls, Network Security, Ethical Hacking, Python, Risk Assessment, Cryptography",9.3,Technology,Yes,2,5,Cybersecurity Analyst
+"Analytics, Social Media, Digital Marketing, Content Strategy",7.7,Marketing,No,5,9,Marketing Manager
+"GCP, Clinical Trials, Data Management, Regulatory Compliance",5.9,Technology,Yes,2,8,Clinical Research Associate
+"Patient Counseling, Pharmaceutical Chemistry, Pharmacology, Drug Interactions",8.8,Healthcare,Yes,2,8,Pharmacist
+"Ethical Hacking, Network Security, Firewalls",4.6,Creative,Yes,1,5,Cybersecurity Analyst
+"Figma, Wireframing, User Research, Adobe XD, Prototyping",9.5,Creative,Yes,5,6,UI/UX Designer
+"Clinical Trials, Data Management, Regulatory Compliance",8.9,Medicine,Yes,2,7,Clinical Research Associate
+"Microcontrollers, PCB Design, MATLAB, Embedded Systems, IoT",6.5,Engineering,Yes,3,4,Electronics Engineer
+"User Stories, Agile, UX Design, Market Research",7.2,Strategy,Yes,2,7,Product Manager
+"GCP, Data Management, Clinical Trials, Regulatory Compliance",9.2,Research,Yes,5,7,Clinical Research Associate
+"Typography, Illustrator, Branding, Creativity, Photoshop, InDesign",6.9,Visual,Yes,1,6,Graphic Designer
+"Financial Analysis, Excel, Budgeting, Forecasting, Risk Management, ERP",8.2,Business,Yes,2,7,Financial Manager
+"Python, Embedded Systems, Robotics, C++",9.4,Engineering,Yes,4,6,Robotics Engineer
+"Surveying, AutoCAD, STAAD Pro, Structural Analysis, Construction",4.7,Engineering,Yes,3,7,Civil Engineer
+"Ethereum, Cryptography, Solidity, Smart Contracts, Blockchain",5.7,Cryptocurrency,No,1,7,Blockchain Developer
+"Data Structures, Python, C++, Algorithms, OOP",8.2,Technology,Yes,4,4,Software Engineer
+"Oracle, Backup Recovery, SQL",9.5,Technology,No,4,6,Database Administrator
+"Computer Vision, Deep Learning, ML Algorithms, Python",8.9,AI,Yes,4,6,Machine Learning Engineer
+"Six Sigma, Process Improvement, Logistics, Supply Chain, Leadership",4.5,Organization,No,3,5,Operations Manager
+"SEO, Email Marketing, Social Media",8.9,Digital,No,3,7,Digital Marketer
+"Regulatory Compliance, Clinical Trials, GCP, Data Management",4.0,Healthcare,Yes,1,5,Clinical Research Associate
+"AutoCAD, FEA, CAD, Thermodynamics",9.1,Engineering,Yes,3,8,Mechanical Engineer
+"Risk Assessment, Firewalls, Network Security",7.6,Finance,Yes,3,6,Cybersecurity Analyst
+"Tableau, SQL, Excel, Requirements",6.1,Business,Yes,1,9,Business Analyst
+"Agile, Requirements, SQL",8.7,Analysis,Yes,2,6,Business Analyst
+"Communication, Leadership",8.0,Management,Yes,3,9,Project Manager
+"Risk Management, Financial Analysis, Forecasting",8.5,Analysis,Yes,2,9,Financial Manager
+"MySQL, SQL, MongoDB, Database Design, PostgreSQL",8.4,Organization,No,4,5,Database Administrator
+"Cryptography, Blockchain, Smart Contracts, Solidity, Ethereum",8.8,Technology,No,4,8,Blockchain Developer
+Network Security,8.1,Security,No,2,7,Cybersecurity Analyst
+"Content Strategy, SEO/SEM, Analytics, Social Media, Digital Marketing",6.6,Marketing,No,2,9,Marketing Manager
+"Typography, Creativity, Illustrator, Photoshop, Branding, InDesign",7.5,Visual,Yes,2,6,Graphic Designer
+"HTML, Git, MongoDB, CSS, JavaScript, MySQL",4.8,Development,No,1,6,Web Developer
+"Flutter, iOS, Java, React Native, Swift, API",5.3,Finance,Yes,1,5,Mobile App Developer
+"Communication, SQL, Excel",5.1,Analysis,Yes,3,9,Business Analyst
+"Excel, Data Visualization, Python, Analytics, Tableau",4.2,Visualization,No,2,6,Data Analyst
+"PLC, Power Systems, Electronics, MATLAB, Circuit Analysis",8.9,Engineering,Yes,3,8,Electrical Engineer
+"Structural Analysis, Construction, STAAD Pro, Surveying",8.4,Construction,No,5,7,Civil Engineer
+"Git, C++, OOP",7.4,Technology,Yes,4,8,Software Engineer
+"Solidity, Blockchain, Ethereum",8.2,Cryptocurrency,Yes,5,4,Blockchain Developer
+"Agile, Market Research, Data Analysis, Product Strategy, User Stories",5.6,Business,No,2,9,Product Manager
+"HTML, CSS",5.5,Design,No,0,6,Web Developer
+"Solidity, Ethereum, Smart Contracts, Cryptography, Blockchain",6.3,Finance,Yes,1,6,Blockchain Developer
+"Logistics, Process Improvement, Supply Chain, Six Sigma, Leadership",8.8,Operations,No,3,9,Operations Manager
+"UML, Agile, Excel, Requirements, SQL, Tableau",6.8,Analysis,Yes,3,7,Business Analyst
+"Financial Analysis, Excel, ERP",4.4,Finance,Yes,3,5,Financial Manager
+Java,8.5,Development,Yes,3,5,Software Engineer
+"DevOps, Security, Kubernetes",5.2,Architecture,No,2,9,Cloud Architect
+"Sensors, Embedded Systems, Python",5.0,Design,Yes,2,7,IoT Developer
+"Communication, Agile, Leadership, Planning, Risk Management",8.0,Leadership,No,3,7,Project Manager
+"Python, C++, Raspberry Pi",8.2,Hardware,Yes,5,6,IoT Developer
+"Molecular Biology, Genetics, Bioinformatics, Microbiology",6.1,Biology,Yes,2,7,Biotechnologist
+"Sketch, Figma, Wireframing",9.0,User Experience,Yes,5,9,UI/UX Designer
+"SEO/SEM, Digital Marketing, Content Strategy",9.1,Marketing,Yes,5,9,Marketing Manager
+"Supply Chain, Process Improvement, Logistics",7.3,Management,Yes,2,10,Operations Manager
+"Java, Data Structures, OOP, Git, Algorithms, Python",5.8,Technology,Yes,3,6,Software Engineer
+"Regulatory Compliance, Data Management, Clinical Trials, GCP",9.0,Science,Yes,5,6,Clinical Research Associate
+"JIRA, Communication, Risk Management, Scrum, Agile",7.8,Management,No,3,9,Project Manager
+"Jenkins, Python, Kubernetes, CI/CD, AWS, Bash",5.9,Technology,Yes,3,8,DevOps Engineer
+"Machine Learning, Deep Learning, Pandas, Statistics, SQL, Python",8.1,AI,Yes,5,9,Data Scientist
+"Communication, SQL, Requirements",7.5,Business,Yes,4,6,Business Analyst
+"Electronics, Circuit Analysis, PLC, Power Systems",7.5,Electronics,Yes,3,4,Electrical Engineer
+"Manual Testing, SQL, JIRA, Test Planning, Automation Testing, Selenium",6.1,Technology,No,2,6,QA Tester
+"C++, Python, Robotics, Embedded Systems, ROS, Control Systems",8.8,Technology,No,4,6,Robotics Engineer
+"GCP, Clinical Trials, Regulatory Compliance, Data Management",7.6,Design,Yes,3,9,Clinical Research Associate
+"PLC, MATLAB, Circuit Analysis, Power Systems, Electronics",5.8,Technology,Yes,2,5,Electrical Engineer
+"IoT, PCB Design, MATLAB, Microcontrollers, Embedded Systems",5.5,Engineering,No,3,6,Electronics Engineer
+"Planning, Leadership, Risk Management, Scrum, JIRA",9.2,Organization,Yes,5,7,Project Manager
+"PLC, Circuit Analysis, Power Systems",7.6,Engineering,Yes,3,6,Electrical Engineer
+"Agile, SQL, Excel, Tableau, Requirements, Communication",5.5,Strategy,Yes,0,5,Business Analyst
+"Automation Testing, JIRA, SQL, Test Planning",7.0,Testing,Yes,3,8,QA Tester
+"Linux, Bash, AWS, Kubernetes, Jenkins, CI/CD",8.4,Automation,No,2,7,DevOps Engineer
+"FEA, Thermodynamics, SolidWorks, AutoCAD",5.1,Innovation,Yes,0,6,Mechanical Engineer
+"Leadership, Recruitment, Employee Relations",7.2,People,Yes,5,9,HR Manager
+"Editing, Grammar, Research",6.1,Content,No,2,8,Content Writer
+"PyTorch, NLP, Deep Learning, Python",8.4,Research,Yes,4,5,Machine Learning Engineer
+"Lab Techniques, Bioinformatics, Genetics, Molecular Biology, Microbiology",6.7,Healthcare,Yes,3,5,Biotechnologist
+"Python, Data Structures, SQL",4.3,Technology,No,0,6,Software Engineer
+"Deep Learning, PyTorch, Python, Computer Vision",6.5,AI,Yes,2,4,Machine Learning Engineer
+"Logistics, Supply Chain, Process Improvement, Leadership, Six Sigma",7.9,Management,No,2,8,Operations Manager
+"Python, SQL, Excel",9.2,AI,Yes,4,8,Data Scientist
+"Pharmaceutical Chemistry, Drug Interactions, Patient Counseling, Pharmacology",8.5,Creative,Yes,3,9,Pharmacist
+"PHP, MySQL, HTML, React, MongoDB, Node.js",9.0,Development,Yes,3,4,Web Developer
+"Manual Testing, Automation Testing, JIRA, Selenium",9.4,Detail-oriented,No,5,6,QA Tester
+"Deep Learning, TensorFlow, Python",9.0,Mathematics,Yes,5,6,Machine Learning Engineer
+"MATLAB, PLC, Power Systems, Circuit Analysis",4.3,Engineering,Yes,2,6,Electrical Engineer
+"Machine Learning, SQL, Pandas, Statistics, NumPy",7.3,Analytics,Yes,5,9,Data Scientist
+"Prototyping, Wireframing, Sketch, User Research, Figma",6.5,Design,Yes,3,7,UI/UX Designer
+"Python, Pandas, Statistics, SQL, R",7.1,AI,No,3,9,Data Scientist
+"PyTorch, Computer Vision, TensorFlow, ML Algorithms, Deep Learning, Python",9.4,Technology,Yes,4,5,Machine Learning Engineer
+"MATLAB, Power Systems, Circuit Analysis",4.5,Technology,Yes,3,4,Electrical Engineer
+"Pharmaceutical Chemistry, Pharmacology, Drug Interactions, Patient Counseling",7.2,Science,Yes,3,8,Pharmacist
+"Communication, Employee Relations, Recruitment",6.7,Communication,Yes,2,8,HR Manager
+"Agile, JIRA, Planning",8.3,Creative,Yes,5,8,Project Manager
+"GCP, Docker, Security, DevOps, AWS",9.2,Infrastructure,Yes,3,5,Cloud Architect
+"HR Policies, Employee Relations, Recruitment, Leadership, Communication",9.3,People,Yes,2,7,HR Manager
+"Agile, Risk Management, Leadership, JIRA",4.7,Business,Yes,1,7,Project Manager
+"Excel, ERP, Risk Management, Financial Analysis, Forecasting, Budgeting",7.5,Analysis,Yes,3,8,Financial Manager
+"Python, ROS, C++, Control Systems, Robotics",9.3,Engineering,Yes,5,4,Robotics Engineer
+"Python, Statistics, Excel",9.0,Analytics,Yes,4,7,Data Analyst
+"Tableau, Pandas, Statistics",7.8,Design,Yes,4,9,Data Analyst
+"Bash, Kubernetes, Docker, AWS, Python",6.2,Cloud,No,2,5,DevOps Engineer
+"Social Media, Content Strategy, Analytics",7.8,Marketing,Yes,3,7,Marketing Manager
+"Genetics, Lab Techniques, Microbiology, Molecular Biology, Bioinformatics",6.2,Healthcare,Yes,3,8,Biotechnologist
+"Agile, Communication, SQL, UML, Tableau, Excel",7.6,Strategy,No,4,8,Business Analyst
+"Photoshop, Illustrator",7.2,Creative,Yes,2,8,Graphic Designer
+"CI/CD, Git, Jenkins, Bash, Linux, AWS",7.8,Cloud,Yes,4,5,DevOps Engineer
+"JIRA, Planning, Scrum, Agile, Leadership, Risk Management",5.4,Business,Yes,1,9,Project Manager
+"Product Strategy, Market Research, Data Analysis, Agile, UX Design, User Stories",7.4,Business,Yes,2,6,Product Manager
+"Android, API, React Native, Firebase, Kotlin",9.2,Technology,Yes,2,5,Mobile App Developer
+"Python, Jenkins, Bash, Docker, CI/CD",9.1,Research,Yes,2,6,DevOps Engineer
+"Drug Interactions, Pharmaceutical Chemistry, Pharmacology, Patient Counseling",6.5,Patient Care,No,2,9,Pharmacist
+"DevOps, AWS, Python",7.8,Engineering,Yes,2,9,Cloud Architect
+"Deep Learning, SQL, R, Data Visualization, Python, Statistics",4.8,Analytics,No,2,8,Data Scientist
+"Leadership, Employee Relations, Recruitment, Communication, HR Policies",9.3,Business,Yes,5,5,HR Manager
+"SQL, Selenium, Manual Testing, Test Planning, JIRA, Automation Testing",4.6,Testing,Yes,0,7,QA Tester
+"Test Planning, Automation Testing, Manual Testing, SQL, Selenium",4.7,Research,No,2,6,QA Tester
+"User Research, Adobe XD, Sketch",9.3,Creative,Yes,5,9,UI/UX Designer
+"SEO, Content Marketing, Social Media, Email Marketing, Google Analytics",8.8,Digital,Yes,3,7,Digital Marketer
+"Swift, Kotlin, React Native, Android",7.6,Technology,Yes,5,7,Mobile App Developer
+"AWS, Bash, Docker",8.3,Infrastructure,Yes,2,7,DevOps Engineer
+"C++, Python, Robotics, Control Systems, Embedded Systems",4.6,Engineering,Yes,2,4,Robotics Engineer
+"Jenkins, Linux, CI/CD, AWS, Kubernetes, Docker",8.9,Analytics,Yes,3,8,DevOps Engineer
+"PLC, Circuit Analysis, MATLAB, Electronics",4.1,Electronics,Yes,1,5,Electrical Engineer
+"Requirements, Excel, Tableau, Communication, SQL, Agile",6.7,Engineering,Yes,4,5,Business Analyst
+"Social Media, SEO/SEM, Content Strategy",8.6,Finance,Yes,2,9,Marketing Manager
+"SQL, Excel, Tableau",8.8,Strategy,Yes,2,6,Business Analyst
+"Bloomberg, Investment Analysis, Valuation",7.1,Numbers,Yes,5,7,Financial Analyst
+"AWS, Docker, Kubernetes, GCP",4.7,Technology,Yes,2,9,Cloud Architect
+"UML, SQL, Requirements",4.2,Strategy,Yes,1,7,Business Analyst
+"AWS, GCP, Azure, Python, Security, Kubernetes",9.4,Technology,Yes,3,5,Cloud Architect
+"Python, GCP, Security, Networking, Azure",8.6,Cloud,No,3,8,Cloud Architect
+Excel,6.0,Analytics,No,1,7,Data Analyst
+"Python, Git, Algorithms, SQL",9.4,Technology,Yes,5,4,Software Engineer
+"Process Improvement, Logistics, Six Sigma",9.5,Organization,Yes,4,9,Operations Manager
+"Android, React Native, Firebase",9.2,Creative,Yes,2,5,Mobile App Developer
+"Clinical Trials, GCP, Data Management, Regulatory Compliance",8.4,Management,No,2,8,Clinical Research Associate
+"Writing, Research",7.5,Content,No,1,9,Content Writer
+"Data Analysis, Market Research, Product Strategy, UX Design, Agile",5.7,Business,Yes,2,7,Product Manager
+"Process Improvement, Supply Chain, Leadership, Six Sigma, Logistics",7.3,Management,Yes,4,7,Operations Manager
+"Accounting, Excel",8.8,Finance,Yes,2,7,Financial Analyst
+"Social Media, Content Marketing, SEO, Email Marketing, Google Analytics",7.9,Strategy,Yes,5,6,Digital Marketer
+"Financial Analysis, Forecasting, Risk Management, Excel, ERP",8.3,Analytics,Yes,5,5,Financial Manager
+"Google Analytics, SEO, Social Media, Content Marketing, Email Marketing",4.5,Strategy,Yes,0,6,Digital Marketer
+"Docker, Kubernetes",7.8,Cloud,Yes,3,6,DevOps Engineer
+"PLC, Electronics, Circuit Analysis",7.7,Electronics,Yes,2,4,Electrical Engineer
+"Pandas, TensorFlow, Statistics, R",8.5,Research,Yes,2,6,Data Scientist
+"Python, C++, ROS",4.4,Innovation,No,1,8,Robotics Engineer
+"Database Design, SQL, MySQL, Backup Recovery, PostgreSQL",8.2,Analysis,No,3,9,Database Administrator
+"Creative Writing, SEO, Blogging, Research",7.0,Creative,No,4,7,Content Writer
+"Communication, HR Policies, Employee Relations, Leadership, Recruitment",9.3,People,Yes,5,7,HR Manager
+"Microbiology, Lab Techniques, Genetics",4.0,Healthcare,Yes,0,9,Biotechnologist
+"Python, Embedded Systems, C++, Sensors, Arduino",7.9,Technology,Yes,2,8,IoT Developer
+"MySQL, Backup Recovery, SQL, Oracle, Database Design",6.8,Analysis,No,4,5,Database Administrator
+"Kubernetes, AWS, Docker, Linux, Git",8.6,Automation,No,4,8,DevOps Engineer
+"Risk Management, JIRA, Agile, Planning, Communication, Scrum",9.4,Management,Yes,5,8,Project Manager
+"Bloomberg, Valuation, Excel, Financial Modeling",5.4,Numbers,No,3,9,Financial Analyst
+"MySQL, React, PHP, CSS, HTML",6.1,Research,Yes,4,6,Web Developer
+"Machine Learning, Pandas, NumPy, Statistics, Deep Learning, R",9.0,Mathematics,Yes,2,7,Data Scientist
+"Power BI, Pandas, SQL, Statistics, Analytics",9.3,Business,Yes,3,6,Data Analyst
+"Algorithms, C++, OOP, Git, Data Structures",5.6,Finance,Yes,1,8,Software Engineer
+"Microbiology, Lab Techniques, Genetics",5.6,Healthcare,Yes,3,7,Biotechnologist
+"Embedded Systems, PCB Design, Microcontrollers",8.2,Electronics,Yes,2,5,Electronics Engineer
+"Microbiology, Bioinformatics, Molecular Biology, Genetics",7.4,Healthcare,Yes,5,8,Biotechnologist
+"Firewalls, Ethical Hacking, Cryptography, Python",5.6,Problem Solving,No,1,7,Cybersecurity Analyst
+"Adobe XD, Sketch, Wireframing, Prototyping, User Research, Figma",9.2,Creative,Yes,3,5,UI/UX Designer
+"Agile, User Stories, Data Analysis, UX Design",8.2,Innovation,Yes,5,9,Product Manager
+"Embedded Systems, ROS, Robotics, Control Systems, C++, Python",9.2,Robotics,Yes,3,8,Robotics Engineer
+"Drug Interactions, Pharmaceutical Chemistry, Pharmacology, Patient Counseling",7.4,Patient Care,Yes,5,9,Pharmacist
+"SQL, Data Visualization, Pandas, Python",4.4,Reporting,No,0,6,Data Analyst
+"GST, Financial Reporting, Auditing",5.1,Business,Yes,1,6,Chartered Accountant
+"Risk Management, Agile, Planning, JIRA, Scrum, Communication",7.6,Organization,Yes,2,6,Project Manager
+"SQL, Automation Testing, Test Planning",6.0,Testing,Yes,1,7,QA Tester
+"Python, Statistics, Excel, Analytics, Pandas",7.3,Business,Yes,3,6,Data Analyst
+"Creative Writing, SEO, Research, Editing, Blogging, Grammar",4.1,Content,No,3,5,Content Writer
+"HR Policies, Leadership, Communication, Recruitment, Employee Relations",5.5,Organization,Yes,0,8,HR Manager
+"Wireframing, Adobe XD, Prototyping, User Research, Sketch, Figma",8.3,Management,No,2,7,UI/UX Designer
+"CAD, SolidWorks",6.8,Design,Yes,2,6,Mechanical Engineer
+"Social Media, Content Marketing, Email Marketing, SEO",6.8,Marketing,Yes,3,8,Digital Marketer
+"Adobe XD, User Research, Figma",6.7,User Experience,Yes,1,6,UI/UX Designer
+"Excel, Python, Statistics",7.6,Visualization,Yes,4,8,Data Analyst
+"Data Management, GCP, Clinical Trials, Regulatory Compliance",4.4,Medicine,Yes,1,9,Clinical Research Associate
+"Power BI, Excel, Statistics, Analytics, Data Visualization, Python",8.4,Healthcare,Yes,3,9,Data Analyst
+"Analytics, SEO/SEM, Digital Marketing, Content Strategy, Social Media",8.9,Strategy,Yes,3,8,Marketing Manager
+"TensorFlow, Statistics, Deep Learning, R",5.8,Business,Yes,3,6,Data Scientist
+"Tableau, Agile, UML, Requirements",8.9,Analysis,Yes,4,6,Business Analyst
+"SEO/SEM, Content Strategy, Digital Marketing, Social Media, Analytics",7.1,Creative,Yes,2,5,Marketing Manager
+"Electronics, Circuit Analysis, PLC, Power Systems, MATLAB",7.9,Electronics,No,5,4,Electrical Engineer
+"Content Strategy, Social Media, Digital Marketing",8.3,Communication,Yes,4,8,Marketing Manager
+"SQL, Tableau",7.9,Analytics,Yes,3,8,Data Analyst
+"Java, Python, Git",9.1,Technology,Yes,2,8,Software Engineer
+"ML Algorithms, NLP, PyTorch",8.6,AI,Yes,5,7,Machine Learning Engineer
+"Automation Testing, JIRA, Selenium",9.3,Quality,Yes,5,6,QA Tester
+"Blockchain, Ethereum, Solidity",7.5,Cryptocurrency,No,2,6,Blockchain Developer
+"JavaScript, Bootstrap, MySQL, Node.js",7.6,Design,Yes,3,7,Web Developer
+"Manufacturing, AutoCAD, Thermodynamics, SolidWorks, FEA, CAD",8.8,Design,Yes,5,6,Mechanical Engineer
+"TDS, Accounting, GST, Taxation, Financial Reporting, Auditing",8.4,Finance,No,4,9,Chartered Accountant
+"R, Machine Learning, TensorFlow",7.5,Research,Yes,3,5,Data Scientist
+"Selenium, Test Planning, Manual Testing, JIRA, Automation Testing, SQL",8.2,Quality,Yes,5,6,QA Tester
+"Construction, AutoCAD, Surveying, STAAD Pro",9.5,Engineering,Yes,4,8,Civil Engineer
