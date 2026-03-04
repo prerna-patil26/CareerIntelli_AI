@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Report - CareerIntelli AI</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>CareerIntelli AI - Report</h1>
+            <nav>
+                <ul>
+                    <li><a href="{{ url_for('dashboard') }}">Dashboard</a></li>
+                    <li><a href="{{ url_for('logout') }}">Logout</a></li>
+                </ul>
+            </nav>
+        </header>
+        
+        <main>
+            <section class="report-section">
+                <h2>Comprehensive Assessment Report</h2>
+                
+                <div class="report-container">
+                    <div class="report-card">
+                        <h3>Talent Score</h3>
+                        <div class="score-display">
+                            <div class="circle-progress" id="talent-score">
+                                <span class="score-value">--</span>%
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="report-card">
+                        <h3>Interview Performance</h3>
+                        <div class="metric">
+                            <span>Overall Score:</span>
+                            <strong id="interview-score">--</strong>
+                        </div>
+                    </div>
+                    
+                    <div class="report-card">
+                        <h3>Resume Quality</h3>
+                        <div class="metric">
+                            <span>Score:</span>
+                            <strong id="resume-score">--</strong>
+                        </div>
+                    </div>
+                </div>
+                
+                <section class="recommendations">
+                    <h3>Recommendations</h3>
+                    <ul id="recommendations-list">
+                        <li>Loading recommendations...</li>
+                    </ul>
+                </section>
+                
+                <div class="actions">
+                    <button class="btn-primary" onclick="downloadPDF()">Download PDF</button>
+                    <button class="btn-secondary" onclick="emailReport()">Email Report</button>
+                    <button class="btn-secondary" onclick="backToDashboard()">Back to Dashboard</button>
+                </div>
+            </section>
+        </main>
+    </div>
+    
+    <script src="{{ url_for('static', filename='js/dashboard.js') }}"></script>
+</body>
+</html>

@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CareerIntelli AI - Profile</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>CareerIntelli AI</h1>
+            <nav>
+                <ul>
+                    <li><a href="{{ url_for('dashboard') }}">Dashboard</a></li>
+                    <li><a href="{{ url_for('logout') }}">Logout</a></li>
+                </ul>
+            </nav>
+        </header>
+        
+        <main>
+            <section class="profile-section">
+                <h2>Complete Your Profile</h2>
+                
+                <form id="profile-form" method="POST">
+                    <div class="form-group">
+                        <label for="current_role">Current Role:</label>
+                        <input type="text" id="current_role" name="current_role" placeholder="e.g., Software Engineer">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="target_role">Target Role:</label>
+                        <input type="text" id="target_role" name="target_role" placeholder="e.g., Senior Software Engineer">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="experience">Years of Experience:</label>
+                        <input type="number" id="experience" name="experience" min="0" max="100">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="skills">Skills (comma-separated):</label>
+                        <textarea id="skills" name="skills" rows="4" placeholder="Python, JavaScript, React, Django..."></textarea>
+                    </div>
+                    
+                    <button type="submit" class="btn-primary">Save Profile</button>
+                </form>
+            </section>
+        </main>
+    </div>
+</body>
+</html>
