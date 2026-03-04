@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - CareerIntelli AI</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>CareerIntelli AI Dashboard</h1>
+            <nav>
+                <ul>
+                    <li><a href="{{ url_for('profile') }}">Profile</a></li>
+                    <li><a href="{{ url_for('logout') }}">Logout</a></li>
+                </ul>
+            </nav>
+        </header>
+        
+        <main>
+            <section class="dashboard-section">
+                <div class="welcome">
+                    <h2>Welcome, <span id="user-name">User</span>!</h2>
+                </div>
+                
+                <div class="dashboard-cards">
+                    <div class="card">
+                        <h3>Resume Analysis</h3>
+                        <p>Upload and analyze your resume</p>
+                        <button class="btn-primary" onclick="location.href='/resume'">Upload Resume</button>
+                    </div>
+                    
+                    <div class="card">
+                        <h3>Career Prediction</h3>
+                        <p>Discover your ideal career path</p>
+                        <button class="btn-primary" onclick="location.href='/career-prediction'">Get Prediction</button>
+                    </div>
+                    
+                    <div class="card">
+                        <h3>Interview Preparation</h3>
+                        <p>Practice with AI-powered interviews</p>
+                        <button class="btn-primary" onclick="location.href='/interview'">Start Interview</button>
+                    </div>
+                    
+                    <div class="card">
+                        <h3>View Reports</h3>
+                        <p>Check your comprehensive reports</p>
+                        <button class="btn-primary" onclick="location.href='/reports'">View Reports</button>
+                    </div>
+                </div>
+                
+                <section class="recent-activity">
+                    <h3>Recent Activity</h3>
+                    <div id="activity-list" class="activity-list">
+                        <p>No recent activity</p>
+                    </div>
+                </section>
+            </section>
+        </main>
+    </div>
+    
+    <script src="{{ url_for('static', filename='js/dashboard.js') }}"></script>
+</body>
+</html>
