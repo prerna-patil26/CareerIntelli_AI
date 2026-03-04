@@ -1,0 +1,27 @@
+{
+  "session_summary": {
+    "date": "2026-03-04 18:13:25",
+    "duration_seconds": 10.29,
+    "duration_formatted": "00:00:10"
+  },
+  "engagement_metrics": {
+    "overall_engagement_score": 83.59,
+    "attention_percentage": 100.0,
+    "face_present_duration": 10.29,
+    "face_absent_duration": 0.0
+  },
+  "frame_analysis": {
+    "total_frames": 55,
+    "frames_with_face": 55,
+    "frames_without_face": 0,
+    "face_detection_rate": 100.0
+  },
+  "pattern_analysis": {
+    "pattern": "Consistent engagement",
+    "average_engagement": 83.59,
+    "max_engagement": 86.87,
+    "min_engagement": 74.67,
+    "recommendation": "Excellent engagement! Keep it up!"
+  },
+  "rating": "\ud83c\udf1f Excellent"
+}
