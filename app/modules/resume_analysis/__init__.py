@@ -1,0 +1,1 @@
+"""Resume analysis module package."""

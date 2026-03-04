@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CareerIntelli AI - Upload Resume</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>CareerIntelli AI</h1>
+            <nav>
+                <ul>
+                    <li><a href="{{ url_for('dashboard') }}">Dashboard</a></li>
+                    <li><a href="{{ url_for('logout') }}">Logout</a></li>
+                </ul>
+            </nav>
+        </header>
+        
+        <main>
+            <section class="resume-section">
+                <h2>Upload Your Resume</h2>
+                
+                <form id="resume-form" enctype="multipart/form-data" method="POST">
+                    <div class="form-group">
+                        <label for="resume_file">Select Resume File:</label>
+                        <input type="file" id="resume_file" name="resume_file" accept=".pdf,.docx,.doc,.txt" required>
+                        <p class="help-text">Supported formats: PDF, DOCX, DOC, TXT</p>
+                    </div>
+                    
+                    <button type="submit" class="btn-primary">Upload & Analyze</button>
+                </form>
+                
+                <div id="upload-progress" class="hidden">
+                    <p>Analyzing your resume...</p>
+                    <div class="progress-bar">
+                        <div class="progress-fill"></div>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+</body>
+</html>

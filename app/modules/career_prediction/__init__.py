@@ -1,0 +1,1 @@
+"""Career prediction module package."""
