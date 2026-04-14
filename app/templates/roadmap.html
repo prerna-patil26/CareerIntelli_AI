@@ -656,8 +656,8 @@
     </div>
 
     <!-- Data Injection -->
-    <script id="roles-data" type="application/json">{{ roles | tojson | safe }}</script>
-    <script id="skills-data" type="application/json">{{ skills | tojson | safe }}</script>
+    <script id="roles-data" type="application/json">{{ (roles | default([])) | tojson | safe }}</script>
+    <script id="skills-data" type="application/json">{{ (skills | default([])) | tojson | safe }}</script>
 
     <!-- Main Container -->
     <div class="container">
