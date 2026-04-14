@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#0B0F14">
+    <title>AI Career Guidance - Your Path to Success</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/career.css') }}">
+</head>
+<body>
+    <!-- Neural Background Animation -->
+    <canvas id="neural-canvas" aria-hidden="true"></canvas>
+    <div class="background-wash" aria-hidden="true"></div>
+
+    <!-- Main Content -->
+    <main class="page-shell">
+        <!-- Hero Section -->
+        <header class="hero">
+            <p class="eyebrow">✨ AI Career Guidance</p>
+            <h1>Your Career Path, Powered by AI</h1>
+            <p class="hero-copy">Discover your ideal career trajectory. Our AI analyzes your skills, identifies gaps, and creates a personalized roadmap to success.</p>
+        </header>
+
+        <!-- Progress Tracker -->
+        <nav class="progress-tracker" aria-label="Progress Steps">
+            <div class="progress-step is-active" data-step="1">
+                <span aria-hidden="true">①</span> Skill Scan
+            </div>
+            <div class="progress-step" data-step="2">
+                <span aria-hidden="true">②</span> Strength Map
+            </div>
+            <div class="progress-step" data-step="4">
+                <span aria-hidden="true">③</span> AI Analysis
+            </div>
+            <div class="progress-step" data-step="5">
+                <span aria-hidden="true">④</span> Career Match
+            </div>
+        </nav>
+
+        <!-- Wizard Card -->
+        <section class="wizard-card">
+            <!-- Step 1: Skill Input -->
+            <section class="wizard-step is-active" data-step="1">
+                <h2>Let's understand your skills</h2>
+                <p class="step-copy">Enter your skills separated by commas. Watch the AI network react in real-time as you type.</p>
+                <label class="input-label" for="skills-input">Your Skills</label>
+                <input 
+                    id="skills-input" 
+                    class="skill-input" 
+                    type="text" 
+                    placeholder="e.g., Python, Machine Learning, Data Analysis"
+                    autocomplete="off"
+                    aria-describedby="skills-description"
+                >
+                <p id="skills-description" style="display: none;">Enter your technical and professional skills</p>
+                <div class="skill-chip-list" id="skills-chips" role="region" aria-label="Selected skills"></div>
+                <div class="step-actions">
+                    <button class="button button-primary" id="go-step-2">Continue →</button>
+                </div>
+            </section>
+
+            <!-- Step 2: Rating -->
+            <section class="wizard-step" data-step="2">
+                <h2>Rate your expertise</h2>
+                <p class="step-copy">Give each skill a confidence rating from 1-5. This helps us identify your strengths and growth areas.</p>
+                <div class="rating-list" id="rating-list" role="group" aria-label="Skill confidence ratings"></div>
+                <div class="step-actions">
+                    <button class="button button-secondary" id="back-step-1">← Back</button>
+                    <button class="button button-primary" id="analyze-button">Analyze Profile →</button>
+                </div>
+            </section>
+
+            <!-- Step 5: Results -->
+            <section class="wizard-step" data-step="5">
+                <h2 id="result-heading">Career Guidance Results</h2>
+                <div class="result-layout">
+                    <!-- Summary Card -->
+                    <article class="result-section">
+                        <h3>Career Profile</h3>
+                        <p id="current-level">Your Current Level: Intermediate</p>
+                        <p id="career-readiness">Your readiness will appear here after analysis.</p>
+                    </article>
+
+                    <!-- Skills Analysis Card -->
+                    <article class="result-section">
+                        <h3>Skill Analysis</h3>
+                        <div id="skills-analysis" class="result-list"></div>
+                    </article>
+
+                    <!-- AI Insight Card -->
+                    <article class="result-section">
+                        <h3>AI Insight</h3>
+                        <p id="ai-insight" class="typing-block"></p>
+                    </article>
+
+                    <!-- Skill Gap Card -->
+                    <article class="result-section">
+                        <h3>Development Areas</h3>
+                        <p id="gap-intro"></p>
+                        <div id="skill-gap" class="result-list"></div>
+                    </article>
+
+                    <!-- Action Plan Card -->
+                    <article class="result-section">
+                        <h3>Action Plan</h3>
+                        <ol id="action-plan" class="action-plan"></ol>
+                    </article>
+
+                    <!-- Career Alternatives Card -->
+                    <article class="result-section">
+                        <h3>Alternate Paths</h3>
+                        <div class="switch-grid">
+                            <button class="button button-secondary switch-career" data-career="" type="button" disabled>
+                                No Alternate Match
+                            </button>
+                            <button class="button button-secondary switch-career" data-career="" type="button" disabled>
+                                No Alternate Match
+                            </button>
+                        </div>
+                    </article>
+                </div>
+
+                <div class="step-actions">
+                    <button class="button button-secondary" id="restart-button">Start New Analysis</button>
+                </div>
+            </section>
+        </section>
+    </main>
+
+    <!-- Thinking Screen -->
+    <section class="thinking-screen" id="thinking-screen" aria-live="polite" aria-atomic="true">
+        <div class="thinking-card">
+            <h2>🧠 AI is analyzing your profile</h2>
+            <p id="thinking-message" class="thinking-message"></p>
+            <div class="thinking-dots" aria-hidden="true">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </section>
+
+    <!-- Scripts -->
+    <script src="{{ url_for('static', filename='js/career.js') }}"></script>
+</body>
+</html>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </section>
+
+    <script src="{{ url_for('static', filename='js/career.js') }}"></script>
+</body>
+</html>

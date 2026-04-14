@@ -1,65 +1,128 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dashboard - CareerIntelli AI</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CareerIntelli AI - Dashboard</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
 </head>
+
 <body>
-    <div class="container">
-        <header>
-            <h1>CareerIntelli AI Dashboard</h1>
-            <nav>
-                <ul>
-                    <li><a href="{{ url_for('profile') }}">Profile</a></li>
-                    <li><a href="{{ url_for('logout') }}">Logout</a></li>
-                </ul>
-            </nav>
-        </header>
-        
-        <main>
-            <section class="dashboard-section">
-                <div class="welcome">
-                    <h2>Welcome, <span id="user-name">User</span>!</h2>
-                </div>
-                
-                <div class="dashboard-cards">
-                    <div class="card">
-                        <h3>Resume Analysis</h3>
-                        <p>Upload and analyze your resume</p>
-                        <button class="btn-primary" onclick="location.href='/resume'">Upload Resume</button>
-                    </div>
-                    
-                    <div class="card">
-                        <h3>Career Prediction</h3>
-                        <p>Discover your ideal career path</p>
-                        <button class="btn-primary" onclick="location.href='/career-prediction'">Get Prediction</button>
-                    </div>
-                    
-                    <div class="card">
-                        <h3>Interview Preparation</h3>
-                        <p>Practice with AI-powered interviews</p>
-                        <button class="btn-primary" onclick="location.href='/interview'">Start Interview</button>
-                    </div>
-                    
-                    <div class="card">
-                        <h3>View Reports</h3>
-                        <p>Check your comprehensive reports</p>
-                        <button class="btn-primary" onclick="location.href='/reports'">View Reports</button>
-                    </div>
-                </div>
-                
-                <section class="recent-activity">
-                    <h3>Recent Activity</h3>
-                    <div id="activity-list" class="activity-list">
-                        <p>No recent activity</p>
-                    </div>
-                </section>
-            </section>
-        </main>
+
+<div class="dashboard">
+
+    <!-- SIDEBAR -->
+    <div class="sidebar">
+        <div class="logo">🚀 CareerIntelli AI</div>
+        <ul>
+            <li class="active">
+                <a href="{{ url_for('home.dashboard') }}">📊 Dashboard</a>
+            </li>
+            <li>
+                <a href="{{ url_for('home.resume_upload') }}">📄 Resume</a>
+            </li>
+            <li>
+                <a href="{{ url_for('home.career_result') }}">🎯 Career</a>
+            </li>
+            <li>
+                <a href="{{ url_for('home.interview') }}">🎤 Interview</a>
+            </li>
+            <li>
+                <a href="{{ url_for('profile.profile_page') }}">👤 Profile</a>
+            </li>
+        </ul>
     </div>
-    
-    <script src="{{ url_for('static', filename='js/dashboard.js') }}"></script>
+
+    <!-- 🔥 TOPBAR (CLEANED) -->
+    <div class="topbar">
+        <input type="text" placeholder="Search..." class="search">
+
+        <div class="top-actions">
+            <span class="theme-toggle">🌙</span>
+            <div class="profile-mini" onclick="location.href='{{ url_for('profile.profile_page') }}'">
+                👤
+            </div>
+        </div>
+    </div>
+
+    <div class="main">
+
+        <!-- HEADER -->
+        <div class="header">
+            <div>
+                <h1>Hi, {{ user.first_name }} 👋</h1>
+                <p>Let’s build your career with AI</p>
+            </div>
+        </div>
+
+        <!-- HERO -->
+        <div class="hero">
+            <div class="hero-content">
+                <h2>🚀 Welcome to Your AI Career Hub</h2>
+                <p>Unlock your potential with AI-powered Resume Analysis, Career Predictions, and Interview Practice</p>
+                <button onclick="location.href='{{ url_for('home.resume_upload') }}'">
+                    🚀 Get Started
+                </button>
+            </div>
+        </div>
+
+        <!-- ANALYTICS -->
+        <div class="analytics-card">
+            <h3>Career Progress</h3>
+            <p>Your improvement this week</p>
+            <div class="fake-chart"></div>
+        </div>
+
+        <!-- STATS -->
+        <div class="stats">
+
+            <div class="stat-card">
+                <h4>Total Resumes</h4>
+                <p>3</p>
+                <span class="growth">+12%</span>
+            </div>
+
+            <div class="stat-card">
+                <h4>Career Matches</h4>
+                <p>5</p>
+                <span class="growth">+8%</span>
+            </div>
+
+            <div class="stat-card">
+                <h4>Interviews</h4>
+                <p>2</p>
+                <span class="growth">+5%</span>
+            </div>
+
+        </div>
+
+        <!-- ACTIONS -->
+        <h2 class="section-title">Explore</h2>
+
+        <div class="cards">
+
+            <div class="card" onclick="location.href='{{ url_for('home.resume_upload') }}'">
+                <h3>📄 Resume Analyzer</h3>
+                <p>Smart ATS score & improvements</p>
+            </div>
+
+            <div class="card" onclick="location.href='{{ url_for('home.career_result') }}'">
+                <h3>🎯 Career Insights</h3>
+                <p>AI-powered predictions</p>
+            </div>
+
+            <div class="card" onclick="location.href='{{ url_for('home.interview') }}'">
+                <h3>🎤 Mock Interview</h3>
+                <p>Practice with real feedback</p>
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
 </body>
 </html>
