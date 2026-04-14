@@ -4,47 +4,89 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>CareerIntelli AI - Register</title>
+
+    <!-- FONT -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
 </head>
+
 <body class="auth-page">
-    <div class="auth-container">
-        <div class="auth-box">
-            <h1>CareerIntelli AI</h1>
+
+    <!-- 🔵 TOP LEFT TITLE -->
+    <div class="top-header">
+        CareerIntelli AI
+    </div>
+
+    <!-- 🔵 RIGHT SIDE FORM -->
+    <div class="auth-container" style="padding-top: 40px; justify-content: center;  
+  padding-right: 0; max-width: 1200px;
+  margin: auto;">
+        <div class="auth-box" style="max-width: 420px;
+  width: 90%;">
+
             <h2>Create Account</h2>
+            <p class="subtitle">Start your career journey with AI</p>
+
+            <form method="POST">
+                <div class="row">
+                    <div class="input-group">
+                        <input type="text" name="first_name" placeholder=" " required>
+                        <label>First Name</label>
+                    </div>
+
+                    <div class="input-group">
+                        <input type="text" name="last_name" placeholder=" " required>
+                        <label>Last Name</label>
+                    </div>
+                </div>
+
+                <!-- EMAIL -->
+                <div class="input-group" >
+                    <input type="email" name="email" placeholder=" " required>
+                    <label>Email</label>
+                </div>
+
+                <!-- PASSWORD -->
+                <div class="input-group password-group">
+                    <input type="password" name="password" id="password" placeholder=" " required>
+                    <label>Password</label>
+                    <span class="toggle-password" onclick="togglePassword('password', this)">👁</span>
+                </div>
+
+                <!-- CONFIRM PASSWORD -->
+                <div class="input-group password-group">
+                    <input type="password" name="confirm_password" id="confirm_password" placeholder=" " required>
+                    <label>Confirm Password</label>
+                    <span class="toggle-password" onclick="togglePassword('confirm_password', this)">👁</span>
+                </div>
             
-            <form id="register-form" method="POST">
-                <div class="form-group">
-                    <label for="first_name">First Name:</label>
-                    <input type="text" id="first_name" name="first_name" required>
-                </div>
-                
-                <div class="form-group">
-                    <label for="last_name">Last Name:</label>
-                    <input type="text" id="last_name" name="last_name" required>
-                </div>
-                
-                <div class="form-group">
-                    <label for="email">Email:</label>
-                    <input type="email" id="email" name="email" required>
-                </div>
-                
-                <div class="form-group">
-                    <label for="password">Password:</label>
-                    <input type="password" id="password" name="password" required>
-                </div>
-                
-                <div class="form-group">
-                    <label for="confirm_password">Confirm Password:</label>
-                    <input type="password" id="confirm_password" name="confirm_password" required>
-                </div>
-                
-                <button type="submit" class="btn-primary">Register</button>
+
+                <button type="submit" id="registerBtn">Create Account</button>
+
             </form>
-            
+
             <p class="auth-link">
-                Already have an account? <a href="{{ url_for('login') }}">Login here</a>
+                Already have an account?
+                <a href="{{ url_for('auth.login_page') }}">Login</a>
             </p>
+
         </div>
     </div>
+
+    <!-- 🔥 PASSWORD TOGGLE -->
+    <script>
+        function togglePassword(id, el) {
+            const input = document.getElementById(id);
+            if (input.type === "password") {
+                input.type = "text";
+                el.textContent = "🙈";
+            } else {
+                input.type = "password";
+                el.textContent = "👁";
+            }
+        }
+    </script>
+
 </body>
 </html>
