@@ -1,62 +1,24 @@
-"""Filler word detection module."""
-
-from typing import Dict, List, Any
+import pandas as pd
+import os
 
 
 class FillerWordDetector:
-    """Detect filler words and speech disfluencies."""
-    
     def __init__(self):
-        """Initialize the filler word detector."""
-        self.filler_words = [
-            'um', 'uh', 'like', 'you know', 'basically', 'actually',
-            'literally', 'right', 'okay', 'so', 'well', 'anyway',
-            'i mean', 'kind of', 'sort of', 'just', 'really'
-        ]
-    
-    def detect_fillers(self, text: str) -> Dict[str, Any]:
-        """
-        Detect filler words in transcribed text.
-        
-        Args:
-            text: Transcribed speech text
-        
-        Returns:
-            Dictionary with detected fillers and metrics
-        """
-        text_lower = text.lower()
-        words = text_lower.split()
-        
-        detected_fillers = []
-        filler_count = 0
-        
-        for filler in self.filler_words:
-            count = text_lower.count(filler)
-            if count > 0:
-                detected_fillers.append({
-                    'word': filler,
-                    'count': count
-                })
-                filler_count += count
-        
-        word_count = len(words)
-        filler_percentage = (filler_count / word_count * 100) if word_count > 0 else 0
-        
-        return {
-            'total_fillers': filler_count,
-            'unique_fillers': detected_fillers,
-            'filler_percentage': filler_percentage,
-            'quality_score': max(0, 100 - filler_percentage)
-        }
-    
-    def get_filler_frequency(self, text: str) -> Dict[str, int]:
-        """Get frequency of each filler word."""
-        text_lower = text.lower()
-        frequency = {}
-        
-        for filler in self.filler_words:
-            count = text_lower.count(filler)
-            if count > 0:
-                frequency[filler] = count
-        
-        return dict(sorted(frequency.items(), key=lambda x: x[1], reverse=True))
+        try:
+            # 🔥 Project root detect karo
+            base_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), "../../../"))
+
+            # 📁 correct path
+            dataset_path = os.path.join(base_dir, "data", "filler_words_dataset.csv")
+
+            print("✅ FINAL PATH:", dataset_path)  # debug
+
+            df = pd.read_csv(dataset_path)
+
+            self.filler_words = df['filler_word'].dropna().str.lower().tolist()
+
+        except Exception as e:
+            print("❌ Error loading filler words dataset:", e)
+
+            self.filler_words = ["um", "uh", "like", "you know"]
+            
