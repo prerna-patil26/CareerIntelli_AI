@@ -3,43 +3,193 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CareerIntelli AI - Upload Resume</title>
+    <title>Resume Analyzer</title>
+
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
+
+<style>
+body {
+  background: #020617;
+  overflow-x: hidden;
+}
+</style>
+
 <body>
-    <div class="container">
-        <header>
-            <h1>CareerIntelli AI</h1>
-            <nav>
-                <ul>
-                    <li><a href="{{ url_for('dashboard') }}">Dashboard</a></li>
-                    <li><a href="{{ url_for('logout') }}">Logout</a></li>
-                </ul>
-            </nav>
-        </header>
-        
-        <main>
-            <section class="resume-section">
-                <h2>Upload Your Resume</h2>
-                
-                <form id="resume-form" enctype="multipart/form-data" method="POST">
-                    <div class="form-group">
-                        <label for="resume_file">Select Resume File:</label>
-                        <input type="file" id="resume_file" name="resume_file" accept=".pdf,.docx,.doc,.txt" required>
-                        <p class="help-text">Supported formats: PDF, DOCX, DOC, TXT</p>
-                    </div>
-                    
-                    <button type="submit" class="btn-primary">Upload & Analyze</button>
-                </form>
-                
-                <div id="upload-progress" class="hidden">
-                    <p>Analyzing your resume...</p>
-                    <div class="progress-bar">
-                        <div class="progress-fill"></div>
-                    </div>
-                </div>
-            </section>
-        </main>
+
+<!-- 🌌 BACKGROUND -->
+<div class="bg-animation">
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+</div>
+
+<div class="page-center">
+
+    <!-- HEADER -->
+    <div class="top-bar">
+        <div class="logo">🚀 CareerIntelli AI</div>
+        <a href="{{ url_for('home.dashboard') }}" class="back-btn">← Dashboard</a>
     </div>
+
+    <!-- HERO -->
+    <div class="hero-card">
+        <h1>📄 Resume Analyzer</h1>
+        <p>Upload your resume and get AI-powered insights instantly</p>
+    </div>
+
+    <!-- UPLOAD -->
+    <div class="upload-card">
+
+        <form method="POST" action="{{ url_for('resume.upload_resume') }}" enctype="multipart/form-data">
+
+            <div class="upload-box">
+                <p>📂 Drag & Drop Resume</p>
+                <span>or</span>
+
+                <input type="file" name="file" id="fileInput" hidden required>
+
+                <button type="button" onclick="document.getElementById('fileInput').click()">
+                    Choose File
+                </button>
+
+                <p class="file-name" id="fileName">{% if result and result.filename %}{{ result.filename }}{% else %}No file selected{% endif %}</p>
+                <small>Supported: PDF, DOCX</small>
+            </div>
+
+            <button type="submit" class="upload-btn">
+                🚀 Upload & Analyze
+            </button>
+
+        </form>
+
+        {% if error %}
+            <div class="error-message">
+                <p>{{ error }}</p>
+            </div>
+        {% endif %}
+    </div>
+
+    <!-- RESULT -->
+    {% if result %}
+    <div class="result-section">
+
+        <div class="result-card score-card full-width-card">
+            <h2>ATS Score</h2>
+
+            <div class="circle" style="--score: {{ result.resume_score['percentage'] }}">
+                <div class="inside-circle">
+                    {{ result.resume_score['percentage'] }}%
+                </div>
+            </div>
+
+            <p>AI-powered evaluation</p>
+        </div>
+
+        <div class="result-grid two-column">
+            <!-- SKILLS -->
+            <div class="result-card skills-card">
+                <h3>✔ Skills Detected</h3>
+
+                {% if result.parsed_data['skills'] %}
+                <div class="skill-grid">
+                    {% for skill in result.parsed_data['skills'] %}
+                    <div class="skill-chip" style="--skill-strength: {{ 60 + loop.index0 * 4 }}%;">
+                        <span>{{ skill }}</span>
+                        <span class="skill-strength"></span>
+                    </div>
+                    {% endfor %}
+                </div>
+                {% else %}
+                    <p class="empty-state">No technical skills were detected in the resume.</p>
+                {% endif %}
+            </div>
+
+            {% if result.resume_score['breakdown'] %}
+            <div class="result-card chart-card">
+                <h3>📊 Score Breakdown</h3>
+                <canvas id="scoreChart"></canvas>
+            </div>
+            {% endif %}
+        </div>
+
+        <div class="result-card ai-panel full-width-panel">
+            {% if result.show_basic_suggestions and result.resume_score['suggestions'] %}
+            <div class="ai-block">
+                <h3>💡 Basic Suggestions</h3>
+                <div class="ai-suggestions">
+                    {% for tip in result.resume_score['suggestions'] %}
+                        <div class="ai-tip">💡 {{ tip }}</div>
+                    {% endfor %}
+                </div>
+            </div>
+            {% endif %}
+
+            <div class="ai-block">
+                <h3>🤖 AI Resume Feedback</h3>
+                {% if result.ai_feedback %}
+                <div class="ai-suggestions">
+                    {% for tip in result.ai_feedback %}
+                        <div class="ai-tip">💡 {{ tip }}</div>
+                    {% endfor %}
+                </div>
+                {% else %}
+                <div class="ai-tip">
+                    AI feedback not available.
+                </div>
+                {% endif %}
+            </div>
+        </div>
+
+    </div>
+    {% endif %}
+
+</div>
+
+<!-- JS -->
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+    const fileNameElem = document.getElementById("fileName");
+    const fileInput = document.getElementById("fileInput");
+
+    if (fileInput && fileNameElem) {
+        fileInput.addEventListener("change", function() {
+            if (this.files[0]) {
+                fileNameElem.textContent = this.files[0].name;
+            } else {
+                fileNameElem.textContent = "No file selected";
+            }
+        });
+    }
+});
+</script>
+
+<!-- GRAPH -->
+{% if result and result.resume_score['breakdown'] %}
+<script>
+new Chart(document.getElementById('scoreChart'), {
+    type: 'bar',
+    data: {
+        labels: ['Skills', 'Experience', 'Education', 'Projects'],
+        datasets: [{
+            data: [
+                {{ result.resume_score['breakdown']['skills'] }},
+                {{ result.resume_score['breakdown']['experience'] }},
+                {{ result.resume_score['breakdown']['education'] }},
+                {{ result.resume_score['breakdown']['projects'] }}
+            ]
+        }]
+    },
+    options: {
+        plugins: { legend: { display: false } }
+    }
+});
+</script>
+{% endif %}
+
 </body>
 </html>
