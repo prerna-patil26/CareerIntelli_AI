@@ -13,6 +13,9 @@ class QuestionLoader:
         # ✅ Correct file path (root/data folder)
         self.file_path = os.path.join(
             base_dir,
+
+            "app",
+
             "datasets",
             "career_interview_question_bank_dataset.csv.xlsx"
         )
