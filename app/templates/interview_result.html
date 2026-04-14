@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>AI Interview Dashboard</title>
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/interview.css') }}">
+</head>
+
+<body>
+
+<div class="dashboard">
+
+    <!-- 🎯 MAIN TITLE -->
+    <h1 class="main-title">🎯 Interview Result</h1>
+
+    <!-- 🔵 HERO SCORE -->
+    <div class="hero">
+        <div class="score-ring">
+            <div class="circle">
+                <span id="scoreText">0</span>
+            </div>
+        </div>
+        <h2 id="performanceLabel">Performance</h2>
+    </div>
+
+    <!-- 🔹 MAIN GRID -->
+    <div class="grid">
+
+        <!-- 🧠 LEFT SIDE -->
+        <div>
+
+            <!-- 💬 FEEDBACK HEADING -->
+            <h2 class="section-title">💬 Feedback</h2>
+
+            <div class="feedback-section">
+                <div class="f-card tech">
+                    <h4>🧠 Technical</h4>
+                    <p id="techFeedback"></p>
+                </div>
+
+                <div class="f-card comm">
+                    <h4>💬 Communication</h4>
+                    <p id="commFeedback"></p>
+                </div>
+
+                <div class="f-card conf">
+                    <h4>🎯 Confidence</h4>
+                    <p id="confFeedback"></p>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- 📊 RIGHT SIDE -->
+        <div>
+
+            <!-- 📊 PERFORMANCE HEADING -->
+            <h2 class="section-title">📊 Performance</h2>
+
+            <div class="performance">
+
+                <div class="bar-box">
+                    <span>Technical <b id="techPercent"></b></span>
+                    <div class="bar"><div id="techBar"></div></div>
+                </div>
+
+                <div class="bar-box">
+                    <span>Communication <b id="commPercent"></b></span>
+                    <div class="bar"><div id="commBar"></div></div>
+                </div>
+
+                <div class="bar-box">
+                    <span>Confidence <b id="confPercent"></b></span>
+                    <div class="bar"><div id="confBar"></div></div>
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- 💡 SUGGESTIONS -->
+    <h2 class="section-title">💡 Suggestions</h2>
+    <div class="suggestions" id="suggestionsList"></div>
+
+    <!-- 🔙 BACK BUTTON -->
+    <div class="back-container">
+        <button onclick="goBack()">Back to Interview</button>
+    </div>
+
+</div>
+
+<!-- JS -->
+<script src="{{ url_for('static', filename='js/result.js') }}"></script>
+
+<script>
+function goBack() {
+    window.location.href = "/interview/";
+}
+</script>
+
+</body>
+</html>

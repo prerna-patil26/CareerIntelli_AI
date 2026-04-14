@@ -1,118 +1,285 @@
-/* Interview Page JavaScript */
+// 🎯 Interview Page JavaScript (FINAL NO-ECHO VERSION)
 
 let mediaRecorder;
 let recordedChunks = [];
 let isRecording = false;
-let recordingTime = 0;
-let timerInterval;
+
+let questions = [];
+let currentIndex = 0;
+let answers = [];
+let selectedDomain = "";
+
+let recognition;
 
 document.addEventListener('DOMContentLoaded', function() {
     initializeCamera();
-    loadQuestion();
+    loadDomains();
+
+    // 🔥 AUTO FACE CHECK (ADDED)
+    setInterval(checkFacePosition, 2000);
+
+    if (document.getElementById("finalScore")) {
+        loadResultPage();
+    }
 });
 
-// Initialize camera access
+// 🎥 CAMERA
 async function initializeCamera() {
     try {
         const stream = await navigator.mediaDevices.getUserMedia({ 
-            video: true, 
-            audio: true 
+            video: true,
+            audio: false
         });
-        
-        const videoElement = document.getElementById('interview-video');
-        videoElement.srcObject = stream;
-        
+
+        document.getElementById('interview-video').srcObject = stream;
+
         mediaRecorder = new MediaRecorder(stream);
-        
-        mediaRecorder.ondataavailable = (event) => {
-            recordedChunks.push(event.data);
-        };
-        
-        mediaRecorder.onstop = () => {
-            const blob = new Blob(recordedChunks, { type: 'video/webm' });
-            saveRecording(blob);
-            recordedChunks = [];
-        };
-        
-        console.log('Camera initialized successfully');
+
     } catch (error) {
-        console.error('Error accessing camera:', error);
-        alert('Please allow camera access to use the interview feature');
+        alert('Please allow camera access');
     }
 }
 
-// Start recording
-function startRecording() {
-    if (!isRecording && mediaRecorder) {
-        mediaRecorder.start();
-        isRecording = true;
-        recordingTime = 0;
-        
-        document.getElementById('start-recording').classList.add('hidden');
-        document.getElementById('stop-recording').classList.remove('hidden');
-        
-        startTimer();
-        console.log('Recording started');
+// 📋 LOAD DOMAINS
+function loadDomains() {
+    fetch('/interview/domains')
+        .then(res => res.json())
+        .then(data => displayDomains(data.domains));
+}
+
+function displayDomains(domains) {
+    const ul = document.getElementById("domainList");
+    ul.innerHTML = "";
+
+    domains.forEach(domain => {
+        let li = document.createElement("li");
+        li.innerText = domain;
+
+        li.onclick = (event) => {
+            selectedDomain = domain;
+            document.getElementById("searchBox").value = domain;
+
+            document.querySelectorAll("li").forEach(li => li.classList.remove("selected"));
+            event.target.classList.add("selected");
+        };
+
+        ul.appendChild(li);
+    });
+}
+
+// 🚀 START INTERVIEW
+function startInterview() {
+    if (!selectedDomain) {
+        alert("Please select a domain");
+        return;
+    }
+
+    fetch('/interview/start', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ career: selectedDomain })
+    })
+    .then(res => res.json())
+    .then(data => {
+        questions = data.questions;
+        currentIndex = 0;
+
+        document.getElementById("interviewSection").style.display = "block";
+
+        showQuestion();
+    });
+}
+
+// 🧠 SHOW QUESTION
+function showQuestion() {
+    const question = questions[currentIndex];
+
+    document.getElementById("questionText").innerText = question;
+
+    speak(question);
+
+    if (currentIndex === questions.length - 1) {
+        document.getElementById("nextBtn").innerText = "Submit Interview";
+    } else {
+        document.getElementById("nextBtn").innerText = "Next";
     }
 }
 
-// Stop recording
-function stopRecording() {
-    if (isRecording && mediaRecorder) {
-        mediaRecorder.stop();
-        isRecording = false;
-        
-        document.getElementById('start-recording').classList.remove('hidden');
-        document.getElementById('stop-recording').classList.add('hidden');
-        
-        clearInterval(timerInterval);
-        console.log('Recording stopped');
+// 🔊 SPEAK
+function speak(text) {
+    const speech = new SpeechSynthesisUtterance(text);
+
+    if (recognition) {
+        recognition.stop();
+    }
+
+    window.speechSynthesis.speak(speech);
+}
+
+// 🎤 START MIC
+function startSpeechRecognition() {
+
+    const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+
+    if (!SpeechRecognition) {
+        alert("Speech Recognition not supported. Use Google Chrome.");
+        return;
+    }
+
+    if (recognition) {
+        recognition.stop();
+    }
+
+    recognition = new SpeechRecognition();
+
+    recognition.lang = "en-US";
+    recognition.continuous = true;
+    recognition.interimResults = true;
+
+    let finalTranscript = "";
+
+    recognition.onresult = function(event) {
+
+        let interimTranscript = "";
+
+        for (let i = event.resultIndex; i < event.results.length; i++) {
+
+            let text = event.results[i][0].transcript;
+
+            if (event.results[i].isFinal) {
+                finalTranscript += text + " ";
+            } else {
+                interimTranscript += text;
+            }
+        }
+
+        let fullText = finalTranscript + interimTranscript;
+
+        document.getElementById('answerText').innerText = fullText;
+    };
+
+    recognition.onerror = function(e) {
+        console.log("Speech Error:", e.error);
+    };
+
+    recognition.start();
+}
+
+// ⛔ STOP MIC
+function stopSpeechRecognition() {
+    if (recognition) {
+        recognition.onend = null;
+        recognition.stop();
     }
 }
 
-// Timer management
-function startTimer() {
-    timerInterval = setInterval(() => {
-        recordingTime++;
-        updateTimerDisplay();
-    }, 1000);
-}
-
-function updateTimerDisplay() {
-    const minutes = Math.floor(recordingTime / 60);
-    const seconds = recordingTime % 60;
-    const display = `${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
-    document.getElementById('timer').textContent = display;
-}
-
-// Load question
-function loadQuestion() {
-    // TODO: Fetch question from API and display
-    const questionText = 'Tell me about your experience with software development.';
-    document.getElementById('question-text').textContent = questionText;
-}
-
-// Save recording
-function saveRecording(blob) {
-    const formData = new FormData();
-    formData.append('audio', blob);
-    
-    // TODO: Send to server for processing
-    console.log('Recording saved');
-}
-
-// Utility functions
+// ➡️ NEXT QUESTION
 function nextQuestion() {
-    loadQuestion();
-    recordedChunks = [];
-    recordingTime = 0;
+    let answer = document.getElementById("answerText").innerText;
+
+    answers.push(answer);
+    document.getElementById("answerText").innerText = "";
+
+    currentIndex++;
+
+    if (currentIndex >= questions.length) {
+        submitInterview();
+        return;
+    }
+
+    showQuestion();
 }
 
-function submitAnswer() {
-    if (isRecording) {
-        stopRecording();
+// 📸 CAPTURE IMAGE
+function captureFrame() {
+    const video = document.getElementById("interview-video");
+
+    const canvas = document.createElement("canvas");
+    canvas.width = video.videoWidth;
+    canvas.height = video.videoHeight;
+
+    const ctx = canvas.getContext("2d");
+    ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
+
+    return canvas.toDataURL("image/jpeg");
+}
+
+// 🔥 FACE CHECK
+function checkFacePosition() {
+
+    const image = captureFrame();
+
+    fetch('/interview/check-face', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ image: image })
+    })
+    .then(res => res.json())
+    .then(data => {
+        showWarning(data.warning);
+    });
+}
+
+// 🚀 SUBMIT INTERVIEW (🔥 UPDATED ONLY HERE)
+function submitInterview() {
+
+    // 🔥 EMPTY VALIDATION
+    if (!answers || answers.length === 0 || answers.every(a => a.trim() === "")) {
+        alert("Please answer at least one question!");
+        return;
     }
-    
-    // TODO: Submit answer and move to next question
-    nextQuestion();
+
+    // 🔥 SHOW LOADER
+    document.getElementById("loader").style.display = "flex";
+
+    fetch('/interview/submit', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ answers: answers })
+    })
+    .then(res => res.json())
+    .then(data => {
+
+        localStorage.setItem("total_score", data.total_score);
+        localStorage.setItem("technical_score", data.technical_score);
+        localStorage.setItem("communication_score", data.communication_score);
+        localStorage.setItem("confidence_score", data.confidence_score);
+        localStorage.setItem("feedback", data.feedback);
+        localStorage.setItem("suggestions", JSON.stringify(data.suggestions));
+
+        // 🔥 HIDE LOADER (optional because redirect ho raha hai)
+        document.getElementById("loader").style.display = "none";
+
+        window.location.href = "/interview/result";
+    })
+    .catch(() => {
+        document.getElementById("loader").style.display = "none";
+        alert("Something went wrong!");
+    });
+}
+
+// 📊 RESULT PAGE
+function loadResultPage() {
+    let total = localStorage.getItem("total_score");
+    let tech = localStorage.getItem("technical_score");
+    let comm = localStorage.getItem("communication_score");
+    let conf = localStorage.getItem("confidence_score");
+    let feedback = localStorage.getItem("feedback");
+    let suggestions = JSON.parse(localStorage.getItem("suggestions") || "[]");
+
+    document.getElementById("finalScore").innerText = "Score: " + total;
+    document.getElementById("feedbackText").innerText = feedback;
+
+    document.getElementById("tech").innerText = tech;
+    document.getElementById("comm").innerText = comm;
+    document.getElementById("conf").innerText = conf;
+
+    let ul = document.getElementById("suggestionsList");
+    ul.innerHTML = "";
+
+    suggestions.forEach(s => {
+        let li = document.createElement("li");
+        li.innerText = s;
+        ul.appendChild(li);
+    });
 }

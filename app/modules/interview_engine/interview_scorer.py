@@ -1,75 +1,62 @@
-"""Interview scorer module for calculating interview scores."""
-
-from typing import Dict, Any, List
-
-
 class InterviewScorer:
-    """Calculate and track interview performance scores."""
-    
-    def __init__(self):
-        """Initialize the interview scorer."""
-        self.max_score = 100
-        self.individual_scores = []
-    
-    def add_score(self, score: float) -> None:
-        """
-        Add an individual question score.
-        
-        Args:
-            score: Score for this question (0-1)
-        """
-        self.individual_scores.append(score)
-    
-    def calculate_overall_score(self) -> float:
-        """
-        Calculate overall interview score.
-        
-        Returns:
-            Overall score (0-100)
-        """
-        if not self.individual_scores:
-            return 0
-        
-        average = sum(self.individual_scores) / len(self.individual_scores)
-        return average * self.max_score
-    
-    def get_performance_summary(self) -> Dict[str, Any]:
-        """
-        Get comprehensive performance summary.
-        
-        Returns:
-            Performance summary with various metrics
-        """
-        if not self.individual_scores:
-            return {'error': 'No scores available'}
-        
-        overall_score = self.calculate_overall_score()
-        average_score = sum(self.individual_scores) / len(self.individual_scores)
-        
-        return {
-            'overall_score': overall_score,
-            'average_score': average_score,
-            'total_questions': len(self.individual_scores),
-            'min_score': min(self.individual_scores),
-            'max_score': max(self.individual_scores),
-            'performance_level': self._get_performance_level(overall_score)
-        }
-    
-    def _get_performance_level(self, score: float) -> str:
-        """
-        Determine performance level based on score.
-        
-        Args:
-            score: Overall score
-        
-        Returns:
-            Performance level (Excellent, Good, Average, Poor)
-        """
-        if score >= 80:
-            return 'Excellent'
-        elif score >= 60:
-            return 'Good'
-        elif score >= 40:
-            return 'Average'
+
+    def calculate_score(self, scores):
+        return round(sum(scores) / len(scores), 2)
+
+    def get_detailed_scores(self, scores, answers):
+        total_score = self.calculate_score(scores)
+
+        # 🎯 Technical (based on evaluator)
+        technical_score = round(total_score / 10, 1)
+
+        # 💬 Communication (based on answer length)
+        avg_length = sum(len(ans.split()) for ans in answers) / len(answers)
+
+        if avg_length > 20:
+            communication_score = 8
+        elif avg_length > 10:
+            communication_score = 6
         else:
-            return 'Needs Improvement'
+            communication_score = 4
+
+        # 🎯 Confidence (basic logic)
+        if avg_length > 20:
+            confidence_score = 8
+        elif avg_length > 10:
+            confidence_score = 6
+        else:
+            confidence_score = 5
+
+        return {
+            "total_score": total_score,
+            "technical_score": technical_score,
+            "communication_score": communication_score,
+            "confidence_score": confidence_score
+        }
+
+    def generate_feedback(self, scores_dict):
+        total = scores_dict["total_score"]
+
+        if total > 80:
+            return "Excellent performance! You are interview ready."
+        elif total > 60:
+            return "Good performance, but you can improve."
+        else:
+            return "Needs improvement. Focus on basics."
+
+    def generate_suggestions(self, scores_dict):
+        suggestions = []
+
+        if scores_dict["communication_score"] < 7:
+            suggestions.append("Improve communication clarity")
+
+        if scores_dict["confidence_score"] < 7:
+            suggestions.append("Speak with more confidence")
+
+        if scores_dict["technical_score"] < 7:
+            suggestions.append("Strengthen technical concepts")
+
+        if not suggestions:
+            suggestions.append("Great job! Keep practicing")
+
+        return suggestions
