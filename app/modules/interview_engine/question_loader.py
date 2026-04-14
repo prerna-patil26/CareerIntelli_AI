@@ -5,15 +5,12 @@ import os
 class QuestionLoader:
     def __init__(self):
         current_dir = os.path.dirname(os.path.abspath(__file__))
-
         base_dir = os.path.abspath(os.path.join(current_dir, "../../../"))
 
-        # ✅ FIXED PATH
         self.file_path = os.path.join(
             base_dir,
-            "app",
             "datasets",
-            "interview_question_bank_technical.csv"
+            "career_interview_question_bank_dataset.csv.xlsx"
         )
 
         self.df = None
@@ -28,9 +25,20 @@ class QuestionLoader:
             elif self.file_path.endswith(".xlsx"):
                 self.df = pd.read_excel(self.file_path)
             else:
-                raise ValueError("Unsupported file format. Use CSV or XLSX.")
+                raise ValueError("Unsupported file format.")
 
-            self.df.columns = self.df.columns.str.strip().str.lower()
+            # 🔥 IMPORTANT FIX
+            print("RAW COLUMNS:", self.df.columns)
+
+            # ✅ CLEAN COLUMN NAMES
+            self.df.columns = (
+                self.df.columns
+                .str.strip()
+                .str.lower()
+                .str.replace(" ", "_")
+            )
+
+            print("CLEANED COLUMNS:", self.df.columns)
 
             return self.df
 
