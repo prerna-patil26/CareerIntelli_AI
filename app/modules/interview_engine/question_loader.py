@@ -4,28 +4,25 @@ import os
 
 class QuestionLoader:
     def __init__(self):
-        # Current file directory → interview_engine
         current_dir = os.path.dirname(os.path.abspath(__file__))
 
-        # Go up → modules → app → project root
-        base_dir = os.path.abspath(os.path.join(current_dir, "../../"))
+        base_dir = os.path.abspath(os.path.join(current_dir, "../../../"))
 
-        # ✅ Correct file path (root/data folder)
+        # ✅ FIXED PATH
         self.file_path = os.path.join(
             base_dir,
+            "app",
             "datasets",
-            "career_interview_question_bank_dataset.csv.xlsx"
+            "interview_question_bank_technical.csv"
         )
 
         self.df = None
 
     def load_questions(self):
         try:
-            # ✅ Check if file exists
             if not os.path.exists(self.file_path):
                 raise FileNotFoundError(f"File not found at: {self.file_path}")
 
-            # ✅ Load based on file type
             if self.file_path.endswith(".csv"):
                 self.df = pd.read_csv(self.file_path)
             elif self.file_path.endswith(".xlsx"):
@@ -33,7 +30,6 @@ class QuestionLoader:
             else:
                 raise ValueError("Unsupported file format. Use CSV or XLSX.")
 
-            # ✅ Clean column names (important)
             self.df.columns = self.df.columns.str.strip().str.lower()
 
             return self.df
