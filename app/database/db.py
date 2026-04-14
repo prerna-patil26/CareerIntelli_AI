@@ -1,35 +1,45 @@
-"""Database initialization and configuration module."""
+"""
+Database initialization and configuration module for CareerIntelli AI.
+"""
 
 from flask_sqlalchemy import SQLAlchemy
-import os
 
-
-# Initialize SQLAlchemy
+# Create SQLAlchemy instance (not attached to app yet)
 db = SQLAlchemy()
 
 
 def init_db(app):
     """
-    Initialize database with Flask app.
-    
+    Create database tables.
+
     Args:
         app: Flask application instance
     """
-    #db.init_app(app)
-    
     with app.app_context():
-        # Create all tables
         db.create_all()
-        print("Database initialized successfully")
+        print("✅ Database initialized successfully")
 
 
 def drop_all_tables(app):
     """
-    Drop all database tables (for development only).
-    
+    Drop all database tables (for development/testing only).
+
     Args:
         app: Flask application instance
     """
     with app.app_context():
         db.drop_all()
-        print("All tables dropped")
+        print("⚠️ All database tables dropped")
+
+
+def reset_database(app):
+    """
+    Drop and recreate all tables (development helper).
+
+    Args:
+        app: Flask application instance
+    """
+    with app.app_context():
+        db.drop_all()
+        db.create_all()
+        print("🔄 Database reset successfully")

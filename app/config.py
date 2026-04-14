@@ -1,67 +1,78 @@
-"""Flask application configuration."""
+"""
+Flask Application Configuration
+CareerIntelli AI Project
+"""
 
 import os
 from datetime import timedelta
+from dotenv import load_dotenv
+
+# Load environment variables from .env
+load_dotenv()
 
 
 class Config:
-    """Base configuration."""
-    
-    # Flask
-    SECRET_KEY = os.environ.get('SECRET_KEY') or 'dev-secret-key-change-in-production'
+    """Base configuration"""
+
+    # Flask settings
+    SECRET_KEY = os.getenv("SECRET_KEY", "dev-secret-key-change-in-production")
     DEBUG = False
-    
-    # Database
-    SQLALCHEMY_DATABASE_URI = os.environ.get('DATABASE_URL') or 'sqlite:///careintelli.db'
+
+    # Database configuration
+    SQLALCHEMY_DATABASE_URI = os.getenv("DATABASE_URL") or "sqlite:///careerintelli.db"
     SQLALCHEMY_TRACK_MODIFICATIONS = False
-    
-    # Session
+
+    # Session configuration
     PERMANENT_SESSION_LIFETIME = timedelta(days=7)
     SESSION_COOKIE_SECURE = True
     SESSION_COOKIE_HTTPONLY = True
-    SESSION_COOKIE_SAMESITE = 'Lax'
-    
+    SESSION_COOKIE_SAMESITE = "Lax"
+
+    # Base directory
+    BASE_DIR = os.path.abspath(os.path.dirname(__file__))
+
     # Upload settings
-    UPLOAD_FOLDER = os.path.join(os.path.dirname(__file__), '..', 'uploads')
-    MAX_CONTENT_LENGTH = 50 * 1024 * 1024  # 50 MB max file size
-    
+    UPLOAD_FOLDER = os.path.join(BASE_DIR, "..", "uploads")
+    MAX_CONTENT_LENGTH = 50 * 1024 * 1024  # 50MB
+
     # ML Models path
-    MODELS_PATH = os.path.join(os.path.dirname(__file__), '..', 'trained_models')
-    
+    MODELS_PATH = os.path.join(BASE_DIR, "..", "trained_models")
+
     # Datasets path
-    DATASETS_PATH = os.path.join(os.path.dirname(__file__), '..', 'datasets')
+    DATASETS_PATH = os.path.join(BASE_DIR, "..", "datasets")
 
 
 class DevelopmentConfig(Config):
-    """Development configuration."""
-    
+    """Development configuration"""
+
     DEBUG = True
     SESSION_COOKIE_SECURE = False
 
 
 class ProductionConfig(Config):
-    """Production configuration."""
-    
+    """Production configuration"""
+
     DEBUG = False
-    
-    # In production, require secure database URL
-    SQLALCHEMY_DATABASE_URI = os.environ.get('DATABASE_URL')
-    if not SQLALCHEMY_DATABASE_URI:
-        raise ValueError("DATABASE_URL environment variable must be set in production")
+
+    def __init__(self):
+        db_url = os.getenv("DATABASE_URL")
+        if not db_url:
+            raise ValueError("DATABASE_URL environment variable must be set in production")
+        self.SQLALCHEMY_DATABASE_URI = db_url
 
 
 class TestingConfig(Config):
-    """Testing configuration."""
-    
+    """Testing configuration"""
+
     TESTING = True
-    SQLALCHEMY_DATABASE_URI = 'sqlite:///:memory:'
+    SQLALCHEMY_DATABASE_URI = os.getenv("DATABASE_URL")
     WTF_CSRF_ENABLED = False
 
 
 # Configuration dictionary
 config = {
-    'development': DevelopmentConfig,
-    'production': ProductionConfig,
-    'testing': TestingConfig,
-    'default': DevelopmentConfig
+    "development": DevelopmentConfig,
+    "production": ProductionConfig,
+    "testing": TestingConfig,
+    "default": DevelopmentConfig
 }

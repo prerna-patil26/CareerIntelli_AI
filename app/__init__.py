@@ -1,40 +1,49 @@
 """Flask application initialization."""
 
-from flask import Flask
+import os
+from flask import Flask, render_template
 from flask_cors import CORS
+from dotenv import load_dotenv
+
 from app.config import config
 from app.database.db import db, init_db
-from app.routes import (
-    auth_bp, profile_bp, resume_bp, career_bp,
-    interview_bp, engagement_bp, report_bp
-)
+
+# Import blueprints
+from app.routes.auth_routes import auth_bp
+from app.routes.profile_routes import profile_bp
+from app.routes.resume_routes import resume_bp
+from app.routes.career_routes import career_bp
+from app.routes.interview_routes import interview_bp
+from app.routes.engagement_routes import engagement_bp
+from app.routes.report_routes import report_bp
+from app.routes.home_routes import home_bp
 
 
-def create_app(config_name='development'):
-    """
-    Create and configure Flask application.
-    
-    Args:
-        config_name: Configuration name (development, production, testing)
-    
-    Returns:
-        Flask application instance
-    """
-    app = Flask(__name__, 
-                template_folder='templates',
-                static_folder='static')
-    
+# Load environment variables (.env)
+load_dotenv()
+
+
+def create_app(config_name="development"):
+
+    app = Flask(
+        __name__,
+        template_folder="templates",
+        static_folder="static"
+    )
+
     # Load configuration
     app.config.from_object(config[config_name])
-    
+
     # Enable CORS
     CORS(app)
-    
+
     # Initialize database
     db.init_app(app)
-    init_db(app)
-    
-    # Register blueprints (routes)
+
+    with app.app_context():
+        init_db(app)
+
+    # Register blueprints
     app.register_blueprint(auth_bp)
     app.register_blueprint(profile_bp)
     app.register_blueprint(resume_bp)
@@ -42,17 +51,16 @@ def create_app(config_name='development'):
     app.register_blueprint(interview_bp)
     app.register_blueprint(engagement_bp)
     app.register_blueprint(report_bp)
-    
+    app.register_blueprint(home_bp)
+
     # Home route
-    @app.route('/')
+    @app.route("/")
     def home():
-        """Home page."""
-        return {'message': 'Welcome to CareerIntelli AI API'}, 200
-    
+        return render_template("login.html")
+
     # Health check
-    @app.route('/health')
+    @app.route("/health")
     def health_check():
-        """Health check endpoint."""
-        return {'status': 'healthy'}, 200
-    
+        return {"status": "healthy"}, 200
+
     return app
