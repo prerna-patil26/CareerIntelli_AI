@@ -107,15 +107,15 @@ def skill_similarity(skill1, skill2):
     """
     s1 = normalize_skill(skill1)
     s2 = normalize_skill(skill2)
-    
+
     if s1 == s2:
         return 1.0
-    
+
     if s1 in s2 or s2 in s1:
         shorter = min(len(s1), len(s2))
         longer = max(len(s1), len(s2))
         return shorter / longer if longer > 0 else 0
-    
+
     return SequenceMatcher(None, s1, s2).ratio()
 
 
@@ -125,7 +125,7 @@ def calculate_skill_gaps(roadmap):
     total_gaps = len(missing_steps)
     priority_gaps = [s['skill'] for s in missing_steps[:3]]
     gap_percentage = (total_gaps / roadmap['total_steps']) * 100 if roadmap['total_steps'] > 0 else 0
-    
+
     return {
         'total_gaps': total_gaps,
         'priority_gaps': priority_gaps,
@@ -137,11 +137,11 @@ def get_learning_timeline(roadmap):
     """Estimate learning timeline for remaining skills."""
     missing_count = roadmap['missing_count']
     current_count = roadmap['current_count']
-    
+
     estimated_hours = (current_count * 10) + (missing_count * 20)
     estimated_weeks = estimated_hours / 10
     estimated_months = estimated_weeks / 4
-    
+
     return {
         'estimated_hours': estimated_hours,
         'estimated_weeks': round(estimated_weeks, 1),

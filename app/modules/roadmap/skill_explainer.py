@@ -2,7 +2,7 @@
 
 from __future__ import annotations
 
-from app.roadmap.utils import normalize_text
+from .utils import normalize_text
 
 
 SKILL_DETAILS = {
