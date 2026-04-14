@@ -5,217 +5,129 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>CareerIntelli AI - Profile</title>
 
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
-
-<style>
-
-body{
-    font-family: Arial, sans-serif;
-    background:#f4f6f9;
-}
-
-.container{
-    width:70%;
-    margin:auto;
-}
-
-header{
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
-    padding:15px 0;
-}
-
-nav ul{
-    list-style:none;
-    display:flex;
-    gap:20px;
-}
-
-nav a{
-    text-decoration:none;
-    font-weight:bold;
-}
-
-.profile-section{
-    background:white;
-    padding:30px;
-    border-radius:10px;
-    box-shadow:0 0 10px rgba(0,0,0,0.1);
-}
-
-.profile-header{
-    text-align:center;
-    margin-bottom:25px;
-}
-
-.profile-pic{
-    width:140px;
-    height:140px;
-    border-radius:50%;
-    object-fit:cover;
-    border:4px solid #4CAF50;
-}
-
-.form-group{
-    margin-bottom:15px;
-}
-
-label{
-    font-weight:bold;
-}
-
-input, textarea{
-    width:100%;
-    padding:10px;
-    border:1px solid #ccc;
-    border-radius:5px;
-    margin-top:5px;
-}
-
-textarea{
-    resize:none;
-}
-
-.btn-primary{
-    background:#4CAF50;
-    color:white;
-    padding:12px 20px;
-    border:none;
-    border-radius:6px;
-    cursor:pointer;
-}
-
-.btn-primary:hover{
-    background:#43a047;
-}
-
-.resume-link{
-    display:inline-block;
-    margin-top:10px;
-    color:#2196F3;
-}
-
-</style>
-
 </head>
 
 <body>
 
-<div class="container">
 
-<header>
-
-<h1>CareerIntelli AI</h1>
-
-<nav>
-<ul>
-<li><a href="{{ url_for('auth.dashboard') }}">Dashboard</a></li>
-<li><a href="{{ url_for('auth.logout') }}">Logout</a></li>
-</ul>
-</nav>
-
-</header>
-
-<main>
-
-<section class="profile-section">
-
-<h2>User Profile</h2>
-
-<form method="POST" action="{{ url_for('profile.update_profile') }}" enctype="multipart/form-data">
-
-<div class="profile-header">
-
-{% if profile and profile.profile_photo %}
-<img src="{{ url_for('static', filename=profile.profile_photo) }}" class="profile-pic">
-{% else %}
-<img src="{{ url_for('static', filename='images/default.png') }}" class="profile-pic">
-{% endif %}
-
-<br><br>
-
-<input type="file" name="profile_photo">
-
+<!-- 🌌 BACKGROUND -->
+<div class="bg-animation">
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
 </div>
 
-<div class="form-group">
-<label>First Name</label>
-<input type="text" value="{{ user.first_name }}" readonly>
+<!-- 🔥 TOPBAR -->
+<div class="topbar">
+    <div class="top-actions">
+        <a href="{{ url_for('home.dashboard') }}" class="back-btn">← Dashboard</a>
+    </div>
 </div>
 
-<div class="form-group">
-<label>Last Name</label>
-<input type="text" value="{{ user.last_name }}" readonly>
-</div>
+<div class="page-center">
 
-<div class="form-group">
-<label>Email</label>
-<input type="email" value="{{ user.email }}" readonly>
-</div>
+    <!-- HEADER -->
+    <div class="header">
+        <div>
+            <h1>👤 Profile Settings</h1>
+            <p>Update your personal information and preferences</p>
+        </div>
+    </div>
 
-<div class="form-group">
-<label>Current Role</label>
-<input type="text" name="current_role" value="{{ profile.current_role if profile else '' }}" placeholder="Student / Developer / Analyst">
-</div>
+    <!-- PROFILE FORM -->
+    <div class="profile-card glass">
 
-<div class="form-group">
-<label>Years of Experience</label>
-<input type="number" name="experience" value="{{ profile.years_of_experience if profile else '' }}" placeholder="0">
-</div>
+        <form method="POST" action="{{ url_for('profile.update_profile') }}" enctype="multipart/form-data">
 
-<div class="form-group">
-<label>Skills (comma separated)</label>
+            <!-- PROFILE IMAGE -->
+            <div class="profile-image-section">
 
-<textarea name="skills" rows="4" placeholder="Python, Machine Learning, SQL">{% if profile and profile.skills %}{{ profile.skills | join(', ') }}{% endif %}</textarea>
+                {% if profile and profile.profile_photo %}
+                <img src="{{ url_for('static', filename=profile.profile_photo) }}" class="profile-pic" alt="Profile photo">
+                {% else %}
+                <img src="{{ url_for('static', filename='images/default.png') }}" class="profile-pic" alt="Default profile photo">
+                {% endif %}
 
-</div>
+                <label for="profile_photo">Profile Photo</label>
+                <input id="profile_photo" type="file" name="profile_photo">
+            </div>
 
-<div class="form-group">
-<label>Interests</label>
+            <!-- USER INFO -->
+            <div class="form-grid">
 
-<textarea name="interests" rows="3" placeholder="AI, Data Science, Web Development">{% if profile and profile.interests %}{{ profile.interests | join(', ') }}{% endif %}</textarea>
+                <div class="form-group">
+                    <label>First Name</label>
+                    <input type="text" value="{{ user.first_name }}" readonly title="First name">
+                </div>
 
-</div>
+                <div class="form-group">
+                    <label>Last Name</label>
+                    <input type="text" value="{{ user.last_name }}" readonly title="Last name">
+                </div>
 
-<div class="form-group">
-<label>CGPA</label>
-<input type="number"
-       step="0.01"
-       min="0"
-       max="10"
-       name="cgpa"
-       value="{{ profile.cgpa if profile else '' }}"
-       placeholder="0.00 - 10.00">
-</div>
+                <div class="form-group full">
+                    <label>Email</label>
+                    <input type="email" value="{{ user.email }}" readonly title="Email address">
+                </div>
 
-<label>Upload Resume</label>
+                <div class="form-group">
+                    <label>Current Role</label>
+                    <input type="text" name="current_role"
+                        value="{{ profile.current_role if profile else '' }}" placeholder="Student / Developer / Analyst">
+                </div>
 
-<input type="file" name="resume">
+                <div class="form-group">
+                    <label>Experience</label>
+                    <input type="number" name="experience"
+                        value="{{ profile.years_of_experience if profile else '' }}" placeholder="0">
+                </div>
 
-{% if profile and profile.resume_file %}
+                <div class="form-group full">
+                    <label>Skills</label>
+                    <textarea name="skills" rows="3" placeholder="Python, Machine Learning, SQL">
+{% if profile and profile.skills %}{{ profile.skills | join(', ') }}{% endif %}
+                    </textarea>
+                </div>
 
-<br>
+                <div class="form-group full">
+                    <label>Interests</label>
+                    <textarea name="interests" rows="3" placeholder="AI, Data Science, Web Development">
+{% if profile and profile.interests %}{{ profile.interests | join(', ') }}{% endif %}
+                    </textarea>
+                </div>
 
-<a class="resume-link" href="{{ url_for('static', filename=profile.resume_file) }}" target="_blank">
-View Uploaded Resume
-</a>
+                <div class="form-group">
+                    <label>CGPA</label>
+                    <input type="number" step="0.01" min="0" max="10"
+                        name="cgpa"
+                        value="{{ profile.cgpa if profile else '' }}" placeholder="0.00 - 10.00">
+                </div>
 
-{% endif %}
+                <div class="form-group">
+                    <label>Upload Resume</label>
+                    <input type="file" name="resume" title="Upload resume">
 
-</div>
+                    {% if profile and profile.resume_file %}
+                    <a class="resume-link"
+                       href="{{ url_for('static', filename=profile.resume_file) }}"
+                       target="_blank">
+                       View Resume
+                    </a>
+                    {% endif %}
+                </div>
 
-<button type="submit" class="btn-primary">
-Save Profile
-</button>
+            </div>
 
-</form>
+            <button type="submit" class="btn-primary">
+                Save Profile
+            </button>
 
-</section>
+        </form>
 
-</main>
-
-</div>
+    </div>
 
 </body>
 </html>
