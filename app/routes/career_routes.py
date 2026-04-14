@@ -5,6 +5,7 @@ from flask_login import current_user
 from typing import Dict, List, Optional
 
 from flask import Blueprint, jsonify, redirect, render_template, request, session, url_for
+from app.database.models import User
 
 
 # Keep the blueprint name as ``career_routes`` so existing ``url_for`` calls keep working.
@@ -105,8 +106,18 @@ def career_page():
 @career_bp.route("/dashboard")
 def dashboard():
     """Render the dashboard page."""
+
     # return render_template("dashboard.html")
     return render_template("dashboard.html", user=current_user)
+    if "user_id" not in session:
+        return redirect(url_for("home.login_page"))
+
+    user = User.query.get(session["user_id"])
+    if user is None:
+        session.clear()
+        return redirect(url_for("home.login_page"))
+
+    return render_template("dashboard.html", user=user)
 
 
 @career_bp.route("/career-prediction")
