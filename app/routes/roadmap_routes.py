@@ -37,7 +37,11 @@ def roadmap_page() -> str:
 @roadmap_page_routes.route("/roadmap-display")
 def roadmap_display_page() -> str:
     """Render the visual roadmap display page."""
-    return render_template("roadmap.html")
+    from app.modules.roadmap.roadmap_data import get_all_roles, get_all_skills
+
+    roles = get_all_roles()
+    skills = get_all_skills()
+    return render_template("roadmap.html", roles=roles, skills=skills)
 
 
 @roadmap_api_routes.route("/roadmap", methods=["GET"])

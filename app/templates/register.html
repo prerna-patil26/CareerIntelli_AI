@@ -12,6 +12,10 @@
 </head>
 
 <body class="auth-page">
+    <video class="app-bg-video" autoplay loop muted preload="auto">
+        <source src="{{ url_for('roadmap_page_routes.roadmap_assets', filename='bg.mp4') }}" type="video/mp4">
+    </video>
+    <div class="app-bg-overlay" aria-hidden="true"></div>
 
     <!-- 🔵 TOP LEFT TITLE -->
     <div class="top-header">
