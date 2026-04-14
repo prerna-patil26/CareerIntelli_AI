@@ -24,10 +24,13 @@
                 <a href="{{ url_for('home.resume_upload') }}">📄 Resume</a>
             </li>
             <li>
-                <a href="{{ url_for('home.career_result') }}">🎯 Career</a>
+                <a href="{{ url_for('career_routes.career_page') }}">🎯 Career Prediction</a>
             </li>
             <li>
                 <a href="{{ url_for('home.interview') }}">🎤 Interview</a>
+            </li>
+            <li>
+                <a href="{{ url_for('home.roadmap') }}">🗺️ Roadmap</a>
             </li>
             <li>
                 <a href="{{ url_for('profile.profile_page') }}">👤 Profile</a>
@@ -41,7 +44,7 @@
 
         <div class="top-actions">
             <span class="theme-toggle">🌙</span>
-            <div class="profile-mini" onclick="location.href='{{ url_for('profile.profile_page') }}'">
+            <div class="profile-mini" data-url="{{ url_for('profile.profile_page') }}" onclick="location.href=this.dataset.url">
                 👤
             </div>
         </div>
@@ -52,7 +55,7 @@
         <!-- HEADER -->
         <div class="header">
             <div>
-                <h1>Hi, {{ user.first_name }} 👋</h1>
+                <h1>Hi, {{ user.first_name if user is defined and user and user.first_name else 'User' }} 👋</h1>
                 <p>Let’s build your career with AI</p>
             </div>
         </div>
@@ -62,7 +65,7 @@
             <div class="hero-content">
                 <h2>🚀 Welcome to Your AI Career Hub</h2>
                 <p>Unlock your potential with AI-powered Resume Analysis, Career Predictions, and Interview Practice</p>
-                <button onclick="location.href='{{ url_for('home.resume_upload') }}'">
+                <button type="button" data-url="{{ url_for('home.resume_upload') }}" onclick="location.href=this.dataset.url">
                     🚀 Get Started
                 </button>
             </div>
@@ -103,19 +106,19 @@
 
         <div class="cards">
 
-            <div class="card" onclick="location.href='{{ url_for('home.resume_upload') }}'">
+            <div class="card" data-url="{{ url_for('home.resume_upload') }}" onclick="location.href=this.dataset.url">
                 <h3>📄 Resume Analyzer</h3>
                 <p>Smart ATS score & improvements</p>
             </div>
 
-            <div class="card" onclick="location.href='{{ url_for('home.career_result') }}'">
-                <h3>🎯 Career Insights</h3>
-                <p>AI-powered predictions</p>
+            <div class="card" data-url="{{ url_for('career_routes.career_page') }}" onclick="location.href=this.dataset.url">
+                <h3>🎯 Career Prediction</h3>
+                <p>AI-powered prediction module</p>
             </div>
 
-            <div class="card" onclick="location.href='{{ url_for('home.interview') }}'">
-                <h3>🎤 Mock Interview</h3>
-                <p>Practice with real feedback</p>
+            <div class="card" data-url="{{ url_for('home.roadmap') }}" onclick="location.href=this.dataset.url">
+                <h3>🗺️ Roadmap Explorer</h3>
+                <p>Career roadmap module</p>
             </div>
 
         </div>
