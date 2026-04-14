@@ -9,7 +9,7 @@ class FillerWordDetector:
             base_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), "../../../"))
 
             # 📁 correct path
-            dataset_path = os.path.join(base_dir, "data", "filler_words_dataset.csv")
+            dataset_path = os.path.join(base_dir, "app", "datasets", "filler_words_dataset.csv")
 
             print("✅ FINAL PATH:", dataset_path)  # debug
 
