@@ -7,9 +7,104 @@
 
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+=======
+<link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+
+<style>
+
+body{
+    font-family: Arial, sans-serif;
+    background:#f4f6f9;
+}
+
+.container{
+    width:70%;
+    margin:auto;
+}
+
+header{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    padding:15px 0;
+}
+
+nav ul{
+    list-style:none;
+    display:flex;
+    gap:20px;
+}
+
+nav a{
+    text-decoration:none;
+    font-weight:bold;
+}
+
+.profile-section{
+    background:white;
+    padding:30px;
+    border-radius:10px;
+    box-shadow:0 0 10px rgba(0,0,0,0.1);
+}
+
+.profile-header{
+    text-align:center;
+    margin-bottom:25px;
+}
+
+.profile-pic{
+    width:140px;
+    height:140px;
+    border-radius:50%;
+    object-fit:cover;
+    border:4px solid #4CAF50;
+}
+
+.form-group{
+    margin-bottom:15px;
+}
+
+label{
+    font-weight:bold;
+}
+
+input, textarea{
+    width:100%;
+    padding:10px;
+    border:1px solid #ccc;
+    border-radius:5px;
+    margin-top:5px;
+}
+
+textarea{
+    resize:none;
+}
+
+.btn-primary{
+    background:#4CAF50;
+    color:white;
+    padding:12px 20px;
+    border:none;
+    border-radius:6px;
+    cursor:pointer;
+}
+
+.btn-primary:hover{
+    background:#43a047;
+}
+
+.resume-link{
+    display:inline-block;
+    margin-top:10px;
+    color:#2196F3;
+}
+
+</style>
+
 </head>
 
 <body>
+
 
 <!-- 🌌 BACKGROUND -->
 <div class="bg-animation">
@@ -126,6 +221,119 @@
         </form>
 
     </div>
+
+<div class="container">
+
+<header>
+
+<h1>CareerIntelli AI</h1>
+
+<nav>
+<ul>
+<li><a href="{{ url_for('auth.dashboard') }}">Dashboard</a></li>
+<li><a href="{{ url_for('auth.logout') }}">Logout</a></li>
+</ul>
+</nav>
+
+</header>
+
+<main>
+
+<section class="profile-section">
+
+<h2>User Profile</h2>
+
+<form method="POST" action="{{ url_for('profile.update_profile') }}" enctype="multipart/form-data">
+
+<div class="profile-header">
+
+{% if profile and profile.profile_photo %}
+<img src="{{ url_for('static', filename=profile.profile_photo) }}" class="profile-pic">
+{% else %}
+<img src="{{ url_for('static', filename='images/default.png') }}" class="profile-pic">
+{% endif %}
+
+<br><br>
+
+<input type="file" name="profile_photo">
+
+</div>
+
+<div class="form-group">
+<label>First Name</label>
+<input type="text" value="{{ user.first_name }}" readonly>
+</div>
+
+<div class="form-group">
+<label>Last Name</label>
+<input type="text" value="{{ user.last_name }}" readonly>
+</div>
+
+<div class="form-group">
+<label>Email</label>
+<input type="email" value="{{ user.email }}" readonly>
+</div>
+
+<div class="form-group">
+<label>Current Role</label>
+<input type="text" name="current_role" value="{{ profile.current_role if profile else '' }}" placeholder="Student / Developer / Analyst">
+</div>
+
+<div class="form-group">
+<label>Years of Experience</label>
+<input type="number" name="experience" value="{{ profile.years_of_experience if profile else '' }}" placeholder="0">
+</div>
+
+<div class="form-group">
+<label>Skills (comma separated)</label>
+
+<textarea name="skills" rows="4" placeholder="Python, Machine Learning, SQL">{% if profile and profile.skills %}{{ profile.skills | join(', ') }}{% endif %}</textarea>
+
+</div>
+
+<div class="form-group">
+<label>Interests</label>
+
+<textarea name="interests" rows="3" placeholder="AI, Data Science, Web Development">{% if profile and profile.interests %}{{ profile.interests | join(', ') }}{% endif %}</textarea>
+
+</div>
+
+<div class="form-group">
+<label>CGPA</label>
+<input type="number"
+       step="0.01"
+       min="0"
+       max="10"
+       name="cgpa"
+       value="{{ profile.cgpa if profile else '' }}"
+       placeholder="0.00 - 10.00">
+</div>
+
+<label>Upload Resume</label>
+
+<input type="file" name="resume">
+
+{% if profile and profile.resume_file %}
+
+<br>
+
+<a class="resume-link" href="{{ url_for('static', filename=profile.resume_file) }}" target="_blank">
+View Uploaded Resume
+</a>
+
+{% endif %}
+
+</div>
+
+<button type="submit" class="btn-primary">
+Save Profile
+</button>
+
+</form>
+
+</section>
+
+</main>
 
 </div>
 
