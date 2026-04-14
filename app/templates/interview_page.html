@@ -2,39 +2,60 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Interview - CareerIntelli AI</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <title>AI Interview</title>
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/interview.css') }}">
 </head>
+
 <body>
-    <div class="container">
-        <header>
-            <h1>CareerIntelli AI - Interview</h1>
-        </header>
-        
-        <main>
-            <section class="interview-section">
-                <div class="video-container">
-                    <video id="interview-video" width="400" autoplay></video>
-                </div>
-                
-                <div class="interview-content">
-                    <h2 id="question-number">Question 1 of 5</h2>
-                    <div class="question-box">
-                        <p id="question-text">Loading question...</p>
-                    </div>
-                    
-                    <div class="interview-controls">
-                        <button id="start-recording" class="btn-primary" onclick="startRecording()">Start Recording</button>
-                        <button id="stop-recording" class="btn-danger hidden" onclick="stopRecording()">Stop Recording</button>
-                    </div>
-                    
-                    <div class="timer" id="timer">00:00</div>
-                </div>
-            </section>
-        </main>
+    <!-- 🔥 LOADER -->
+<div id="loader" style="display:none;">
+    <div class="loader-box">
+        <div class="spinner"></div>
+        <p>Analyzing your interview...</p>
     </div>
-    
-    <script src="{{ url_for('static', filename='js/interview.js') }}"></script>
+</div>
+
+<div class="main-container">
+
+    <!-- 🎥 CAMERA -->
+    <div class="camera-section">
+        <video id="interview-video" autoplay></video>
+        <div class="bot-icon">🤖</div>
+    </div>
+
+    <!-- 🧠 RIGHT PANEL -->
+    <div class="question-section">
+
+        <h2>Select Domain</h2>
+
+        <input type="text" id="searchBox" placeholder="Search domain...">
+        <ul id="domainList"></ul>
+
+        <button onclick="startInterview()">Start Interview</button>
+
+        <div id="interviewSection" style="display:none;">
+
+            <h3 id="questionText"></h3>
+
+            <!-- ✅ UPDATED BUTTONS ONLY -->
+            <button onclick="startSpeechRecognition()">🎤 Start Speaking</button>
+            <button onclick="stopSpeechRecognition()">⛔ Stop</button>
+
+            <p><b>Your Answer:</b></p>
+            <p id="answerText"></p>
+
+            <button id="nextBtn" onclick="nextQuestion()">Next</button>
+            
+        </div>
+
+    </div>
+
+</div>
+<div id="warningBox" style="display:none;"></div>
+
+<!-- ✅ ONLY THIS JS -->
+<script src="{{ url_for('static', filename='js/interview.js') }}"></script>
+
 </body>
 </html>

@@ -15,7 +15,7 @@ def init_db(app):
     Args:
         app: Flask application instance
     """
-    db.init_app(app)
+    #db.init_app(app)
     
     with app.app_context():
         # Create all tables
