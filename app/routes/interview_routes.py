@@ -57,7 +57,6 @@ speech_metrics = SpeechMetrics()
 def interview_page():
     return render_template('interview_page.html')
 
-
 # -------------------------------
 # START INTERVIEW
 # -------------------------------
