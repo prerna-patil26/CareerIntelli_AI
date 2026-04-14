@@ -53,10 +53,9 @@ speech_metrics = SpeechMetrics()
 # -------------------------------
 # 🆕 INTERVIEW PAGE
 # -------------------------------
-@interview_bp.route('/')
+@interview_bp.route('/interview-page')
 def interview_page():
     return render_template('interview_page.html')
-
 
 # -------------------------------
 # START INTERVIEW

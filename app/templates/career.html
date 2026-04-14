@@ -8,6 +8,10 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='css/career.css') }}">
 </head>
 <body>
+    <video class="app-bg-video" autoplay loop muted preload="auto">
+        <source src="{{ url_for('roadmap_page_routes.roadmap_assets', filename='bg.mp4') }}" type="video/mp4">
+    </video>
+    <div class="app-bg-overlay" aria-hidden="true"></div>
     <!-- Neural Background Animation -->
     <canvas id="neural-canvas" aria-hidden="true"></canvas>
     <div class="background-wash" aria-hidden="true"></div>

@@ -14,6 +14,31 @@ body {
               linear-gradient(180deg, #030613 0%, #050a1b 35%, #080f24 100%);
   color: #f8fbff;
   background-attachment: fixed;
+  position: relative;
+  overflow-x: hidden;
+}
+
+body > *:not(.app-bg-video):not(.app-bg-overlay) {
+  position: relative;
+  z-index: 2;
+}
+
+.app-bg-video {
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  z-index: 0;
+  pointer-events: none;
+}
+
+.app-bg-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  background: linear-gradient(180deg, rgba(2, 6, 23, 0.58), rgba(2, 6, 23, 0.68));
 }
 img {
   max-width: 100%;
@@ -56,6 +81,13 @@ img {
   position: absolute;
   top: 25px;
   left: 50px;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  z-index: 3;
+}
+
+.top-brand {
   font-size: 28px;
   font-weight: 600;
   letter-spacing: 0.5px;
@@ -247,7 +279,7 @@ input:-webkit-autofill:focus {
 .dashboard {
   display: flex;
   min-height: 100vh;
-  background: #020617;
+  background: transparent;
 }
 
 .topbar {
@@ -283,7 +315,8 @@ input:-webkit-autofill:focus {
 .sidebar {
   width: 220px;
   padding: 25px 20px;
-  background: linear-gradient(180deg, #020617, #0f172a);
+  background: rgba(2, 6, 23, 0.72);
+  backdrop-filter: blur(18px);
   border-right: 1px solid rgba(255,255,255,0.08);
 }
 
@@ -330,6 +363,7 @@ input:-webkit-autofill:focus {
   padding: 30px;
   max-width: 1100px;
   margin: auto;
+  background: transparent;
 }
 
 /* ================= TOPBAR ================= */
@@ -395,10 +429,11 @@ input:-webkit-autofill:focus {
 .hero {
   padding: 40px;
   border-radius: 20px;
-  background: linear-gradient(135deg, rgba(255,255,255,0.03), #7b2ff7);
+  background: linear-gradient(135deg, rgba(255,255,255,0.08), rgba(123,47,247,0.35));
   margin-bottom: 25px;
   text-align: center;
   box-shadow: 0 0 40px rgba(123,47,247,0.4);
+  backdrop-filter: blur(14px);
 }
 
 .hero h2 {
@@ -432,9 +467,10 @@ input:-webkit-autofill:focus {
 .analytics-card {
   padding: 25px;
   border-radius: 20px;
-  background: rgba(255,255,255,0.05);
+  background: rgba(255,255,255,0.07);
   margin-bottom: 25px;
   border: 1px solid rgba(255,255,255,0.08);
+  backdrop-filter: blur(14px);
 }
 
 .fake-chart {
@@ -457,10 +493,11 @@ input:-webkit-autofill:focus {
   flex: 1;
   padding: 20px;
   border-radius: 15px;
-  background: rgba(255,255,255,0.05);
+  background: rgba(255,255,255,0.07);
   border: 1px solid rgba(255,255,255,0.1);
   text-align: center;
   transition: 0.3s;
+  backdrop-filter: blur(14px);
 }
 
 .stat-card:hover {
@@ -502,12 +539,13 @@ input:-webkit-autofill:focus {
   flex: 1;
   padding: 25px;
   border-radius: 16px;
-  background: rgba(255,255,255,0.05);
+  background: rgba(255,255,255,0.07);
   border: 1px solid rgba(255,255,255,0.08);
   cursor: pointer;
   transition: all 0.3s ease;
   position: relative;
   overflow: hidden;
+  backdrop-filter: blur(14px);
 }
 
 /* GLOW EFFECT */
