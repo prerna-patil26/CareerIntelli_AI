@@ -1,7 +1,7 @@
 """Career page routes and career prediction API routes."""
 
 from __future__ import annotations
-
+from flask_login import current_user
 from typing import Dict, List, Optional
 
 from flask import Blueprint, jsonify, redirect, render_template, request, session, url_for
@@ -99,25 +99,26 @@ def _predict_career(payload: dict) -> tuple:
 @career_bp.route("/career")
 def career_page():
     """Render the career prediction page."""
-    return render_template("career.html")
+    return render_template("career.html", user=current_user)
 
 
 @career_bp.route("/dashboard")
 def dashboard():
     """Render the dashboard page."""
-    return render_template("dashboard.html")
+    # return render_template("dashboard.html")
+    return render_template("dashboard.html", user=current_user)
 
 
 @career_bp.route("/career-prediction")
 def career_prediction_page():
     """Render the career prediction input page."""
-    return render_template("career.html")
+    return render_template("career.html", user=current_user)
 
 
 @career_bp.route("/career-result")
 def career_result_page():
     """Render the career prediction result page."""
-    return render_template("career_result.html")
+    return render_template("career_result.html", user=current_user)
 
 
 @career_bp.route("/profile")
