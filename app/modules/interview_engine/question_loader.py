@@ -5,7 +5,9 @@ import os
 class QuestionLoader:
     def __init__(self):
         current_dir = os.path.dirname(os.path.abspath(__file__))
-        base_dir = os.path.abspath(os.path.join(current_dir, "../../../"))
+
+        # ✅ FIXED PATH
+        base_dir = os.path.abspath(os.path.join(current_dir, "../../"))
 
         self.file_path = os.path.join(
             base_dir,
@@ -17,6 +19,8 @@ class QuestionLoader:
 
     def load_questions(self):
         try:
+            print("📂 FINAL PATH:", self.file_path)
+
             if not os.path.exists(self.file_path):
                 raise FileNotFoundError(f"File not found at: {self.file_path}")
 
@@ -27,10 +31,7 @@ class QuestionLoader:
             else:
                 raise ValueError("Unsupported file format.")
 
-            # 🔥 IMPORTANT FIX
-            print("RAW COLUMNS:", self.df.columns)
-
-            # ✅ CLEAN COLUMN NAMES
+            # ✅ CLEAN COLUMNS
             self.df.columns = (
                 self.df.columns
                 .str.strip()
@@ -38,7 +39,7 @@ class QuestionLoader:
                 .str.replace(" ", "_")
             )
 
-            print("CLEANED COLUMNS:", self.df.columns)
+            print("✅ LOADED COLUMNS:", self.df.columns)
 
             return self.df
 
