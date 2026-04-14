@@ -2,7 +2,7 @@
 
 from __future__ import annotations
 
-from app.roadmap.utils import normalize_role, slugify
+from .utils import normalize_role, slugify
 
 
 ROLE_ROADMAPS = {

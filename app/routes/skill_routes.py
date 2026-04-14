@@ -4,7 +4,7 @@ from __future__ import annotations
 
 from flask import Blueprint, render_template
 
-from app.roadmap.skill_explainer import get_skill_details
+from app.modules.roadmap.skill_explainer import get_skill_details
 
 
 skill_routes = Blueprint("skill_routes", __name__)

@@ -20,14 +20,14 @@ def roadmap_assets(filename: str):
 
 def _get_all_roles():
     """Lazy-load roles."""
-    from app.roadmap.roadmap_data import get_all_roles
+    from app.modules.roadmap.roadmap_data import get_all_roles
     return get_all_roles()
 
 
 @roadmap_page_routes.route("/roadmap")
 def roadmap_page() -> str:
     """Render the roadmap builder page."""
-    from app.roadmap.roadmap_data import get_all_roles, get_all_skills
+    from app.modules.roadmap.roadmap_data import get_all_roles, get_all_skills
 
     roles = get_all_roles()
     skills = get_all_skills()
@@ -43,7 +43,7 @@ def roadmap_display_page() -> str:
 @roadmap_api_routes.route("/roadmap", methods=["GET"])
 def roadmap_api() -> tuple:
     """Return roadmap data as JSON with graph structure."""
-    from app.roadmap.roadmap_generator import generate_roadmap
+    from app.modules.roadmap.roadmap_generator import generate_roadmap
     
     role = (request.args.get("role") or "").strip()
     if not role:
@@ -66,7 +66,7 @@ def roadmap_api() -> tuple:
 @roadmap_api_routes.route("/roadmap/roles", methods=["GET"])
 def roadmap_roles_api() -> tuple:
     """Return available roadmap roles with info."""
-    from app.roadmap.roadmap_data import get_all_roles, get_role_info
+    from app.modules.roadmap.roadmap_data import get_all_roles, get_role_info
     
     try:
         roles = get_all_roles()
@@ -85,7 +85,7 @@ def roadmap_roles_api() -> tuple:
 @roadmap_api_routes.route("/roadmap/skills", methods=["GET"])
 def roadmap_skills_api() -> tuple:
     """Return all available skills with metadata."""
-    from app.roadmap.roadmap_data import get_all_skills, get_skill_info
+    from app.modules.roadmap.roadmap_data import get_all_skills, get_skill_info
     
     try:
         all_skills = get_all_skills()
@@ -104,7 +104,7 @@ def roadmap_skills_api() -> tuple:
 @roadmap_api_routes.route("/roadmap/skill/<skill_name>", methods=["GET"])
 def roadmap_skill_detail_api(skill_name: str) -> tuple:
     """Return detailed information about a specific skill."""
-    from app.roadmap.roadmap_data import get_skill_info, get_roadmap_data_manager
+    from app.modules.roadmap.roadmap_data import get_skill_info, get_roadmap_data_manager
     
     try:
         skill_info = get_skill_info(skill_name)
@@ -125,7 +125,7 @@ def roadmap_skill_detail_api(skill_name: str) -> tuple:
 @roadmap_api_routes.route("/roadmap/graph", methods=["GET"])
 def roadmap_graph_api() -> tuple:
     """Return graph structure for visualization."""
-    from app.roadmap.roadmap_data import build_skill_graph
+    from app.modules.roadmap.roadmap_data import build_skill_graph
     
     try:
         role = request.args.get("role", "").strip()
@@ -145,7 +145,7 @@ def roadmap_graph_api() -> tuple:
 @roadmap_api_routes.route("/roadmap/guidance", methods=["POST"])
 def roadmap_guidance_api() -> tuple:
     """Generate AI guidance for a roadmap."""
-    from app.roadmap.ai_generator import generate_guidance
+    from app.modules.roadmap.ai_generator import generate_guidance
     
     try:
         data = request.get_json() or {}
@@ -178,7 +178,7 @@ def roadmap_guidance_api() -> tuple:
 @roadmap_api_routes.route("/roadmap/buddy", methods=["POST"])
 def roadmap_buddy_api() -> tuple:
     """Generate a friendly buddy chatbot response."""
-    from app.roadmap.ai_generator import generate_buddy_response
+    from app.modules.roadmap.ai_generator import generate_buddy_response
     
     try:
         data = request.get_json() or {}

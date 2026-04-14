@@ -149,7 +149,8 @@ class RoadmapDataManager:
         self._build_skill_hierarchy()
 
     def _load_dataset(self) -> None:
-        dataset_path = os.path.join(os.path.dirname(__file__), "../datasets/career_prediction_dataset.csv")
+        base_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", ".."))
+        dataset_path = os.path.join(base_dir, "datasets", "career_prediction_dataset.csv")
         if not os.path.exists(dataset_path):
             raise FileNotFoundError(f"Dataset not found at {dataset_path}")
 
@@ -314,17 +315,17 @@ def get_role_skills(role: str) -> List[str]:
     return get_roadmap_data_manager().get_role_skills(role)
 
 
-def get_all_skills() -> List[str]:
-    return get_roadmap_data_manager().get_all_skills()
+def get_role_info(role: str) -> Optional[Dict]:
+    return get_roadmap_data_manager().get_role_info(role)
 
 
 def get_skill_info(skill: str) -> Optional[Dict]:
     return get_roadmap_data_manager().get_skill_info(skill)
 
 
-def get_role_info(role: str) -> Optional[Dict]:
-    return get_roadmap_data_manager().get_role_info(role)
-
-
 def build_skill_graph(role: str, user_skills: List[str]) -> Dict:
     return get_roadmap_data_manager().build_skill_graph(role, user_skills)
+
+
+def get_all_skills() -> List[str]:
+    return get_roadmap_data_manager().get_all_skills()
