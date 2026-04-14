@@ -8,12 +8,12 @@ class QuestionLoader:
         current_dir = os.path.dirname(os.path.abspath(__file__))
 
         # Go up → modules → app → project root
-        base_dir = os.path.abspath(os.path.join(current_dir, "../../../"))
+        base_dir = os.path.abspath(os.path.join(current_dir, "../../"))
 
         # ✅ Correct file path (root/data folder)
         self.file_path = os.path.join(
             base_dir,
-            "data",
+            "datasets",
             "career_interview_question_bank_dataset.csv.xlsx"
         )
 
