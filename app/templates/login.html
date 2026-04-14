@@ -5,31 +5,67 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>CareerIntelli AI - Login</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Poppins:wght@400;500&display=swap" rel="stylesheet">
 </head>
 <body class="auth-page">
+    <!-- 🔵 TOP LEFT TITLE -->
+    <div class="top-header">
+        <video autoplay loop muted playsinline class="logo-video">
+            <source src="{{ url_for('static', filename='videos/logo large (1).mp4') }}" type="video/mp4">
+        </video>
+    </div>
+    <!-- 🔵 RIGHT SIDE LOGIN -->
     <div class="auth-container">
         <div class="auth-box">
-            <h1>CareerIntelli AI</h1>
-            <h2>Login</h2>
-            
-            <form id="login-form" method="POST">
-                <div class="form-group">
-                    <label for="email">Email:</label>
-                    <input type="email" id="email" name="email" required>
+            <h2>Welcome Back</h2>
+            <p class="subtitle">Sign in to continue your career journey</p>
+            {% if error %}
+                <p style="color: red; text-align: center; margin-bottom: 15px;">
+                    {{ error }}
+                </p>
+            {% endif %}
+            <!-- 🔥 FORM -->
+            <form method="POST" action="{{ url_for('auth.login_page') }}" onsubmit="showLoading()">
+                <!-- EMAIL -->
+                <div class="input-group">
+                    <input type="email" name="email" required placeholder=" ">
+                    <label>Email</label>
                 </div>
-                
-                <div class="form-group">
-                    <label for="password">Password:</label>
-                    <input type="password" id="password" name="password" required>
+                <!-- PASSWORD -->
+                <div class="input-group password-group">
+                    <input type="password" name="password" id="password" required placeholder=" ">
+                    <label>Password</label>
+                    <span class="toggle-password" onclick="togglePassword()">👁</span>
                 </div>
-                
-                <button type="submit" class="btn-primary">Login</button>
+                <!-- BUTTON -->
+                <button type="submit" id="loginBtn">
+                    <span id="btnText">Login</span>
+                </button>
             </form>
-            
+
+            <!-- LINK -->
             <p class="auth-link">
-                Don't have an account? <a href="{{ url_for('register') }}">Register here</a>
+                Don't have an account? 
+                <a href="{{ url_for('auth.register_page') }}">Create Account</a>
             </p>
         </div>
     </div>
+
+    <!-- 🔥 JAVASCRIPT -->
+    <script>
+        function togglePassword() {
+            const pass = document.getElementById("password");
+            pass.type = pass.type === "password" ? "text" : "password";
+        }
+
+        function showLoading() {
+            const btn = document.getElementById("loginBtn");
+            const text = document.getElementById("btnText");
+
+            btn.classList.add("loading");
+            text.innerText = "Logging in...";
+        }
+    </script>
+
 </body>
 </html>

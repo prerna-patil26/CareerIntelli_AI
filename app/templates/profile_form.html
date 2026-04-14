@@ -1,52 +1,133 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CareerIntelli AI - Profile</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CareerIntelli AI - Profile</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
 </head>
+
 <body>
-    <div class="container">
-        <header>
-            <h1>CareerIntelli AI</h1>
-            <nav>
-                <ul>
-                    <li><a href="{{ url_for('dashboard') }}">Dashboard</a></li>
-                    <li><a href="{{ url_for('logout') }}">Logout</a></li>
-                </ul>
-            </nav>
-        </header>
-        
-        <main>
-            <section class="profile-section">
-                <h2>Complete Your Profile</h2>
-                
-                <form id="profile-form" method="POST">
-                    <div class="form-group">
-                        <label for="current_role">Current Role:</label>
-                        <input type="text" id="current_role" name="current_role" placeholder="e.g., Software Engineer">
-                    </div>
-                    
-                    <div class="form-group">
-                        <label for="target_role">Target Role:</label>
-                        <input type="text" id="target_role" name="target_role" placeholder="e.g., Senior Software Engineer">
-                    </div>
-                    
-                    <div class="form-group">
-                        <label for="experience">Years of Experience:</label>
-                        <input type="number" id="experience" name="experience" min="0" max="100">
-                    </div>
-                    
-                    <div class="form-group">
-                        <label for="skills">Skills (comma-separated):</label>
-                        <textarea id="skills" name="skills" rows="4" placeholder="Python, JavaScript, React, Django..."></textarea>
-                    </div>
-                    
-                    <button type="submit" class="btn-primary">Save Profile</button>
-                </form>
-            </section>
-        </main>
+
+<!-- 🌌 BACKGROUND -->
+<div class="bg-animation">
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+</div>
+
+<!-- 🔥 TOPBAR -->
+<div class="topbar">
+    <div class="top-actions">
+        <a href="{{ url_for('home.dashboard') }}" class="back-btn">← Dashboard</a>
     </div>
+</div>
+
+<div class="page-center">
+
+    <!-- HEADER -->
+    <div class="header">
+        <div>
+            <h1>👤 Profile Settings</h1>
+            <p>Update your personal information and preferences</p>
+        </div>
+    </div>
+
+    <!-- PROFILE FORM -->
+    <div class="profile-card glass">
+
+        <form method="POST" action="{{ url_for('profile.update_profile') }}" enctype="multipart/form-data">
+
+            <!-- PROFILE IMAGE -->
+            <div class="profile-image-section">
+
+                {% if profile and profile.profile_photo %}
+                <img src="{{ url_for('static', filename=profile.profile_photo) }}" class="profile-pic">
+                {% else %}
+                <img src="{{ url_for('static', filename='images/default.png') }}" class="profile-pic">
+                {% endif %}
+
+                <input type="file" name="profile_photo">
+            </div>
+
+            <!-- USER INFO -->
+            <div class="form-grid">
+
+                <div class="form-group">
+                    <label>First Name</label>
+                    <input type="text" value="{{ user.first_name }}" readonly>
+                </div>
+
+                <div class="form-group">
+                    <label>Last Name</label>
+                    <input type="text" value="{{ user.last_name }}" readonly>
+                </div>
+
+                <div class="form-group full">
+                    <label>Email</label>
+                    <input type="email" value="{{ user.email }}" readonly>
+                </div>
+
+                <div class="form-group">
+                    <label>Current Role</label>
+                    <input type="text" name="current_role"
+                        value="{{ profile.current_role if profile else '' }}">
+                </div>
+
+                <div class="form-group">
+                    <label>Experience</label>
+                    <input type="number" name="experience"
+                        value="{{ profile.years_of_experience if profile else '' }}">
+                </div>
+
+                <div class="form-group full">
+                    <label>Skills</label>
+                    <textarea name="skills" rows="3">
+{% if profile and profile.skills %}{{ profile.skills | join(', ') }}{% endif %}
+                    </textarea>
+                </div>
+
+                <div class="form-group full">
+                    <label>Interests</label>
+                    <textarea name="interests" rows="3">
+{% if profile and profile.interests %}{{ profile.interests | join(', ') }}{% endif %}
+                    </textarea>
+                </div>
+
+                <div class="form-group">
+                    <label>CGPA</label>
+                    <input type="number" step="0.01" min="0" max="10"
+                        name="cgpa"
+                        value="{{ profile.cgpa if profile else '' }}">
+                </div>
+
+                <div class="form-group">
+                    <label>Upload Resume</label>
+                    <input type="file" name="resume">
+
+                    {% if profile and profile.resume_file %}
+                    <a class="resume-link"
+                       href="{{ url_for('static', filename=profile.resume_file) }}"
+                       target="_blank">
+                       View Resume
+                    </a>
+                    {% endif %}
+                </div>
+
+            </div>
+
+            <button type="submit" class="btn-primary">
+                Save Profile
+            </button>
+
+        </form>
+
+    </div>
+
+</div>
+
 </body>
 </html>
