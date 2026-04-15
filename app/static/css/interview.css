@@ -1,263 +1,206 @@
-/* 🌑 BODY */
+/* ========================= */
+/* 🌑 ROOT THEME */
+/* ========================= */
+:root {
+    --bg-dark: #0B0F14;
+    --glass-light: rgba(255, 255, 255, 0.05);
+    --glass-hover: rgba(255, 255, 255, 0.08);
+    --glass-border: rgba(255, 255, 255, 0.1);
+    --text-primary: #FFFFFF;
+    --text-secondary: rgba(255, 255, 255, 0.7);
+    --accent-cyan: #22D3EE;
+    --accent-purple: #A855F7;
+}
+
+
+#neural-canvas {
+    position: fixed;
+    inset: 0;
+    z-index: 1;
+}
+
+.background-wash {
+    position: fixed;
+    inset: 0;
+    z-index: 2;
+    pointer-events: none;
+
+    background:
+        radial-gradient(circle at 20% 30%, rgba(34,211,238,0.15), transparent 35%),
+        radial-gradient(circle at 80% 70%, rgba(168,85,247,0.1), transparent 40%);
+}
+
+/* ========================= */
+/* 🌌 BODY */
+/* ========================= */
 body {
     margin: 0;
-    font-family: 'Inter', sans-serif;
+    font-family: 'Poppins', sans-serif;
+    color: var(--text-primary);
     background: transparent;
-    color: #E2E8F0;
-    position: relative;
 }
 
-body > *:not(.app-bg-video):not(.app-bg-overlay) {
-    position: relative;
-    z-index: 2;
-}
-
+/* BG */
 .app-bg-video {
     position: fixed;
     inset: 0;
+    object-fit: cover;
     width: 100%;
     height: 100%;
-    object-fit: cover;
     z-index: 0;
-    pointer-events: none;
 }
 
 .app-bg-overlay {
     position: fixed;
     inset: 0;
     z-index: 1;
-    pointer-events: none;
-    background: linear-gradient(180deg, rgba(2, 6, 23, 0.58), rgba(2, 6, 23, 0.68));
+    background: linear-gradient(180deg, rgba(2,6,23,0.4), rgba(2,6,23,0.7));
 }
 
-/* 🧩 MAIN LAYOUT */
-.main-container {
+body > *:not(.app-bg-video):not(.app-bg-overlay) {
+    position: relative;
+    z-index: 5;
+}
+
+/* ========================= */
+/* 🎥 INTERVIEW PAGE */
+/* ========================= */
+.interview-page .main-container {
     display: flex;
     height: 100vh;
-    background: transparent;
 }
 
-/* 🎥 LEFT SIDE (✅ UPDATED) */
-.camera-section {
+/* LEFT */
+.interview-page .camera-section {
     width: 55%;
-    background: rgba(2, 6, 23, 0.68);
     display: flex;
     align-items: center;
     justify-content: center;
-    position: relative;
-    backdrop-filter: blur(14px);
+    background: var(--glass-light);
+    backdrop-filter: blur(12px);
+    border-right: 1px solid var(--glass-border);
 }
 
-/* 🎥 VIDEO (✅ UPDATED) */
-video {
+.interview-page video {
     width: 80%;
-    max-width: 500px;
-    border-radius: 12px;
-    border: 2px solid #334155;
-    box-shadow: 0 0 20px rgba(34, 211, 238, 0.2);
+    border-radius: 16px;
+    box-shadow: 0 0 30px rgba(34,211,238,0.2);
 }
 
-/* 🤖 BOT ICON (✅ UPDATED) */
-.bot-icon {
+/* BOT */
+.interview-page .bot-icon {
     position: absolute;
     bottom: 25px;
     right: 25px;
-
-    background: linear-gradient(135deg, #1E3A8A, #7C3AED);
-    padding: 18px;
+    background: linear-gradient(135deg, var(--accent-cyan), var(--accent-purple));
+    padding: 16px;
     border-radius: 50%;
-    font-size: 28px;
+    transition: 0.3s;
+}
+
+/* RIGHT PANEL */
+.interview-page .question-section {
+    width: 45%;
+    padding: 40px;
+    background: var(--glass-light);
+    backdrop-filter: blur(16px);
+}
+
+/* TEXT */
+.interview-page h2 {
+    font-size: 26px;
+    background: linear-gradient(135deg, #fff, var(--accent-cyan));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+/* INPUT */
+.interview-page input {
+    width: 100%;
+    padding: 14px;
+    border-radius: 14px;
+    border: 1px solid var(--glass-border);
+    background: var(--glass-light);
+    color: white;
+}
+
+.interview-page input:focus {
+    border-color: var(--accent-cyan);
+    box-shadow: 0 0 15px rgba(34,211,238,0.3);
+}
+
+/* LIST */
+.interview-page ul {
+    margin-top: 10px;
+    max-height: 150px;
+    overflow-y: auto;
+    border-radius: 12px;
+    background: var(--glass-light);
+    border: 1px solid var(--glass-border);
+}
+
+.interview-page li {
+    padding: 12px;
+}
+
+.interview-page li:hover {
+    background: rgba(34,211,238,0.1);
+}
+
+.interview-page li.selected {
+    background: linear-gradient(135deg, var(--accent-cyan), var(--accent-purple));
+    color: black;
+}
+
+/* BUTTON FIX */
+.interview-page button {
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+
+    width: auto;
+    min-width: 140px;
+
+    padding: 12px 20px;
+    margin-top: 12px;
+
+    border-radius: 999px;
+    border: none;
+
+    background: linear-gradient(135deg, var(--accent-cyan), var(--accent-purple));
+    color: black;
+    font-weight: 600;
 
     cursor: pointer;
     transition: 0.3s;
 }
 
-/* ✨ BOT HOVER (✅ UPDATED) */
-.bot-icon:hover {
-    box-shadow: 0 0 20px #22D3EE;
-    transform: scale(1.15);
+.interview-page button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 0 20px rgba(34,211,238,0.5);
 }
 
-/* 🧠 RIGHT SIDE */
-.question-section {
-    width: 50%;
-    padding: 40px;
-    background: rgba(30, 41, 59, 0.75);
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    backdrop-filter: blur(14px);
-}
-
-/* 🔤 HEADINGS */
-h2, h3 {
-    font-family: 'Poppins', sans-serif;
-}
-
-/* 🔍 INPUT */
-input {
-    padding: 10px;
-    border-radius: 8px;
-    border: 1px solid #334155;
-    background-color: #0F172A;
-    color: #E2E8F0;
-    margin-bottom: 10px;
-}
-
-/* 📋 LIST */
-ul {
-    list-style: none;
-    padding: 0;
-    border: 1px solid #334155;
-    border-radius: 8px;
-    max-height: 150px;
-    overflow-y: auto;
-    background-color: #0F172A;
-}
-
-li {
-    padding: 10px;
-    cursor: pointer;
-}
-
-li:hover {
-    background-color: #1E3A8A;
-}
-
-li.selected {
-    background-color: #7C3AED;
-}
-
-/* 🔘 BUTTON (✅ UPDATED) */
-button {
-    width: 100%;
-    margin-top: 15px;
-    padding: 12px;
-    font-size: 15px;
-    border-radius: 8px;
-    border: none;
-    background: linear-gradient(135deg, #1E3A8A, #7C3AED);
-    color: white;
-    cursor: pointer;
-}
-
-button:hover {
-    box-shadow: 0 0 10px #22D3EE;
-}
-
-/* 📝 ANSWER */
-#answerText {
-    color: #22D3EE;
-    font-weight: bold;
-}
-
-/* 📊 RESULT PAGE */
-.result-container {
-    width: 500px;
-    margin: 100px auto;
-    background-color: #1E293B;
-    padding: 30px;
-    border-radius: 12px;
-    text-align: center;
-}
-
-.score-box {
-    background: linear-gradient(135deg, #22D3EE, #7C3AED);
-    padding: 20px;
-    border-radius: 10px;
-    margin-bottom: 20px;
-}
-
-.feedback-box {
-    margin-top: 20px;
-}
-
+/* ========================= */
 /* 🎯 RESULT PAGE */
-
-.result-container {
-    width: 600px;
-    margin: 40px auto;
-    text-align: center;
-}
-
-.score-card {
-    background: linear-gradient(135deg, #22D3EE, #7C3AED);
-    padding: 20px;
-    border-radius: 12px;
-    margin-bottom: 20px;
-    font-size: 22px;
-}
-
-.card {
-    background-color: #1E293B;
-    padding: 20px;
-    border-radius: 12px;
-    margin-bottom: 15px;
-    text-align: left;
-}
-
-.card h3 {
-    margin-bottom: 10px;
-}
-
-ul {
-    padding-left: 20px;
-}
-
-li {
-    margin-bottom: 5px;
-}
-#warningBox {
-    position: absolute;
-    top: 10px;
-    left: 50%;
-    transform: translateX(-50%);
-
-    background-color: #dc2626;
-    color: white;
-
-    padding: 10px 20px;
-    border-radius: 8px;
-
-    font-weight: bold;
-    z-index: 1000;
-
-    box-shadow: 0 0 10px rgba(255,0,0,0.5);
-}
-/* 🌌 BACKGROUND */
-body {
-    margin: 0;
-    font-family: 'Segoe UI', sans-serif;
-    background: radial-gradient(circle at top, #1e293b, #020617);
-    color: white;
-}
-
-/* 🔥 MAIN */
-.dashboard {
+/* ========================= */
+.result-page .dashboard {
     max-width: 1100px;
     margin: auto;
     padding: 40px 20px;
 }
 
-/* 🔵 HERO SCORE */
-.hero {
-    text-align: center;
-    margin-bottom: 40px;
-}
-
-.score-ring {
+/* HERO */
+.result-page .score-ring {
     width: 150px;
     height: 150px;
-    margin: auto;
     border-radius: 50%;
-    background: conic-gradient(#06b6d4, #7c3aed);
+    background: conic-gradient(var(--accent-cyan), var(--accent-purple));
     display: flex;
     align-items: center;
     justify-content: center;
-    box-shadow: 0 0 40px rgba(124, 58, 237, 0.6);
 }
 
-.circle {
+.result-page .circle {
     width: 120px;
     height: 120px;
     background: #020617;
@@ -267,174 +210,69 @@ body {
     justify-content: center;
 }
 
-#scoreText {
-    font-size: 28px;
-    font-weight: bold;
-}
-
-/* 🔥 GRID */
-.grid {
+/* GRID */
+.result-page .grid {
     display: grid;
     grid-template-columns: 2fr 1fr;
     gap: 20px;
 }
 
-/* 🧠 FEEDBACK */
-.feedback-section {
-    display: flex;
-    gap: 15px;
-}
-
-.f-card {
-    flex: 1;
-    padding: 15px;
+/* CARDS */
+.result-page .f-card,
+.result-page .performance {
+    background: var(--glass-light);
+    border: 1px solid var(--glass-border);
     border-radius: 16px;
+    padding: 15px;
     backdrop-filter: blur(12px);
-    background: rgba(30, 41, 59, 0.6);
-    transition: 0.3s;
 }
 
-.f-card:hover {
-    transform: translateY(-5px);
+/* BAR */
+.result-page .bar {
+    background: rgba(255,255,255,0.1);
 }
 
-/* COLOR CODING */
-.tech { border-left: 4px solid #06b6d4; }
-.comm { border-left: 4px solid #7c3aed; }
-.conf { border-left: 4px solid #ec4899; }
-
-/* 📊 PERFORMANCE */
-.performance {
-    padding: 15px;
-    border-radius: 16px;
-    background: rgba(30, 41, 59, 0.6);
+.result-page .bar div {
+    background: linear-gradient(90deg, var(--accent-cyan), var(--accent-purple));
 }
 
-.bar-box {
-    margin-bottom: 15px;
+/* SUGGESTIONS */
+.result-page .suggestions div {
+    background: var(--glass-light);
+    border-radius: 20px;
+    padding: 10px;
 }
 
-.bar {
-    height: 18px;
-    background: #334155;
-    border-radius: 10px;
-    overflow: hidden;
+.result-page .suggestions div:hover {
+    background: linear-gradient(90deg, var(--accent-cyan), var(--accent-purple));
 }
 
-.bar div {
-    height: 100%;
-    width: 0%;
-    background: linear-gradient(90deg, #06b6d4, #7c3aed);
-    transition: width 1s ease;
+/* BACK BUTTON */
+.result-page .back-container button {
+    padding: 12px 25px;
 }
 
-/* 💡 SUGGESTIONS */
-.suggestions {
-    margin-top: 30px;
-    display: flex;
-    flex-wrap: wrap;
-    gap: 10px;
-}
-
-.suggestions div {
-    padding: 10px 15px;
-    border-radius: 30px;
-    background: rgba(30, 41, 59, 0.7);
-    transition: 0.3s;
-}
-
-.suggestions div:hover {
-    background: #7c3aed;
-    transform: scale(1.05);
-}
-/* 🎯 MAIN TITLE */
-.main-title {
-    text-align: center;
-    font-size: 28px;
-    margin-bottom: 20px;
-}
-
-/* 🔹 SECTION HEADINGS */
-.section-title {
-    margin: 20px 0 10px;
-    font-size: 18px;
-    opacity: 0.9;
-}
-
-/* 🔙 BACK BUTTON */
-.back-container {
-    text-align: center;
-    margin-top: 30px;
-}
-
-.back-container button {
-    padding: 12px 30px;
-    border: none;
-    border-radius: 30px;
-    background: linear-gradient(90deg, #06b6d4, #7c3aed);
-    color: white;
-    font-size: 16px;
-    cursor: pointer;
-    transition: 0.3s;
-}
-
-.back-container button:hover {
-    transform: scale(1.05);
-    box-shadow: 0 0 20px rgba(124, 58, 237, 0.6);
-}
-.dashboard {
-    animation: fadeIn 0.6s ease;
-}
-
-@keyframes fadeIn {
-    from {
-        opacity: 0;
-        transform: scale(0.95);
-    }
-    to {
-        opacity: 1;
-        transform: scale(1);
-    }
-}
-/* 🔥 LOADER OVERLAY */
+/* ========================= */
+/* LOADER */
+/* ========================= */
 #loader {
     position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(15, 23, 42, 0.9);
+    inset: 0;
+    background: rgba(11,15,20,0.85);
     display: flex;
-    align-items: center;
     justify-content: center;
-    z-index: 9999;
+    align-items: center;
 }
 
-/* 📦 BOX */
-.loader-box {
-    text-align: center;
-    color: #E2E8F0;
-}
-
-/* 🔄 SPINNER */
 .spinner {
     width: 50px;
     height: 50px;
-    border: 5px solid #1E293B;
-    border-top: 5px solid #22D3EE;
+    border: 5px solid rgba(255,255,255,0.1);
+    border-top: 5px solid var(--accent-cyan);
     border-radius: 50%;
     animation: spin 1s linear infinite;
-    margin: auto;
 }
 
-/* ✨ TEXT */
-.loader-box p {
-    margin-top: 15px;
-    font-size: 16px;
-}
-
-/* 🔄 ANIMATION */
 @keyframes spin {
-    0% { transform: rotate(0deg); }
     100% { transform: rotate(360deg); }
 }
