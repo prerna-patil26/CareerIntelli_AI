@@ -1,16 +1,28 @@
 /* =========================
    INDEX PAGE CUSTOM STYLE
 ========================= */
+body{
+    overflow: hidden;
+    height: 100vh;
+}
+
+.logo-top {
+    position: fixed !important;   /* 🔥 force fix */
+    top: 10px;
+    left: 30px;
+    z-index: 9999;               /* 🔥 sabse upar */
+    pointer-events: none;        /* click issue avoid */
+}
 
 .logo-video {
-    width: 160px;
+    width: 140px;
     height: auto;
-    mix-blend-mode: screen;
 }
 /* HERO BUTTON WRAPPER */
 .hero .button {
     margin: 8px;
-    color: black;
+    color: white;
+    text-decoration: none;
 }
 
 /* CTA SECTION */
