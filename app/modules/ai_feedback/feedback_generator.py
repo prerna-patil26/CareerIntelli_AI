@@ -5,17 +5,27 @@ from google.genai import types
 
 class FeedbackGenerator:
     def __init__(self):
-        self.api_key = "AIzaSyD6L6n1PV_BymX6YyyLIpL8AINuMeA9AH4"   # 🔥 yaha apni key daalo
-        self.model = "gemini-3.1-flash-lite-preview"
+        # ✅ IMPORTANT: Put your real API key here
+        self.api_key = "AIzaSyD3iP0w3XM9FgXIOEpul9pLge2HPF2cyMM"
+
+        # ✅ Correct model name (stable & working)
+        self.model = "gemini-2.5-flash"
+
+        # ✅ Initialize client
         self.client = genai.Client(api_key=self.api_key)
 
     def generate_feedback(self, answers):
+
         prompt = f"""
 You are a highly strict and professional AI interviewer.
+
 Analyze the candidate answers deeply and realistically:
 {answers}
+
 Evaluate like a real interviewer panel.
+
 Return STRICT JSON only:
+
 {{
     "score": 0-10,
     "technical": "Detailed evaluation of technical understanding with strengths and weaknesses",
@@ -25,6 +35,7 @@ Return STRICT JSON only:
         "Give 3-5 very specific and actionable improvements"
     ]
 }}
+
 RULES:
 - Be specific to the answers
 - No generic feedback
@@ -32,6 +43,7 @@ RULES:
 """
 
         try:
+            # 🔥 API CALL
             response = self.client.models.generate_content(
                 model=self.model,
                 contents=prompt,
@@ -41,22 +53,15 @@ RULES:
                 ),
             )
 
-            # ✅ FIX (NEW SDK parsing)
-            if not response.candidates:
-                raise Exception("No response from Gemini")
-
-            content = response.candidates[0].content.parts[0].text
-
+            # 🔍 DEBUG OUTPUT
+            content = response.text
             print("🔍 GEMINI RAW RESPONSE:", content)
 
-            # JSON extract
+            # ✅ CLEAN JSON RESPONSE
             start = content.find("{")
             end = content.rfind("}") + 1
-
-            if start == -1 or end == 0:
-                raise Exception("Invalid JSON format")
-
             clean_json = content[start:end]
+
             parsed = json.loads(clean_json)
 
             return parsed
@@ -64,6 +69,7 @@ RULES:
         except Exception as e:
             print("❌ Gemini Error:", e)
 
+            # ✅ FALLBACK (only if API fails)
             return {
                 "score": 6,
                 "technical": "Basic understanding present but needs improvement.",
