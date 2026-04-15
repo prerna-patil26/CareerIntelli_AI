@@ -1,0 +1,98 @@
+/* =========================
+   INDEX PAGE CUSTOM STYLE
+========================= */
+
+.logo-video {
+    width: 160px;
+    height: auto;
+    mix-blend-mode: screen;
+}
+/* HERO BUTTON WRAPPER */
+.hero .button {
+    margin: 8px;
+    color: black;
+}
+
+/* CTA SECTION */
+.cta-section {
+    text-align: center;
+    margin-top: 60px;
+}
+
+/* CTA HEADING */
+.cta-section h2 {
+    font-size: 2rem;
+    margin-bottom: 20px;
+    background: linear-gradient(135deg, #fff, #22d3ee);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+/* FEATURE CARDS IMPROVEMENT */
+.result-section {
+    transition: all 0.3s ease, transform 0.3s ease;
+}
+
+/* HOVER EFFECT */
+.result-section:hover {
+    transform: translateY(-6px) scale(1.02);
+    border-color: #22d3ee;
+    box-shadow: 0 20px 50px rgba(34, 211, 238, 0.25);
+}
+
+/* ICON SPACING */
+.result-section h3 {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+/* HERO TEXT IMPROVE */
+.hero h1 {
+    text-shadow: 0 0 40px rgba(34, 211, 238, 0.3);
+}
+
+.hero-copy {
+    font-size: 1.1rem;
+    opacity: 0.9;
+}
+
+/* BUTTON IMPROVEMENT */
+.button-primary {
+    position: relative;
+    overflow: hidden;
+}
+
+/* GLOW EFFECT */
+.button-primary::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(circle, rgba(255,255,255,0.3), transparent 70%);
+    opacity: 0;
+    transition: opacity 0.3s;
+}
+
+.button-primary:hover::after {
+    opacity: 0.3;
+}
+
+/* SECONDARY BUTTON HOVER */
+.button-secondary:hover {
+    box-shadow: 0 0 20px rgba(34, 211, 238, 0.3);
+}
+
+/* RESPONSIVE */
+@media (max-width: 700px) {
+    .hero h1 {
+        font-size: 2rem;
+    }
+
+    .hero-copy {
+        font-size: 0.95rem;
+    }
+
+    .cta-section h2 {
+        font-size: 1.5rem;
+    }
+}
