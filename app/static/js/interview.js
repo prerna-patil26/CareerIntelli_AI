@@ -10,21 +10,24 @@ let answers = [];
 let selectedDomain = "";
 
 let recognition;
-let interviewStarted = false; // ✅ ADDED
+let interviewStarted = false;
+
+// ✅ ADDED (store interval globally)
+let faceInterval = null;
 
 document.addEventListener('DOMContentLoaded', function() {
     initializeCamera();
     loadDomains();
 
-    // 🔥 FIXED FACE CHECK (optimized)
-    setInterval(() => {
-        if (!interviewStarted) return; // ✅ ADDED
+    // 🔥 FIXED FACE CHECK (store interval)
+    faceInterval = setInterval(() => {
+        if (!interviewStarted) return;
 
         const video = document.getElementById("interview-video");
         if (!video || video.videoWidth === 0) return;
 
         checkFacePosition();
-    }, 3000); // ✅ CHANGED (1000 → 3000)
+    }, 3000);
 
     if (document.getElementById("finalScore")) {
         loadResultPage();
@@ -89,7 +92,7 @@ function startInterview() {
         return;
     }
 
-    interviewStarted = true; // ✅ ADDED
+    interviewStarted = true;
 
     fetch('/interview/start', {
         method: 'POST',
@@ -212,7 +215,7 @@ function checkFacePosition() {
     })
     .then(res => res.json())
     .then(data => showWarning(data.warning))
-    .catch(err => console.log("Face check error:", err)); // ✅ ADDED
+    .catch(err => console.log("Face check error:", err));
 }
 
 // 🔥 WARNING
@@ -232,9 +235,18 @@ function showWarning(message) {
 
 // 🚀 SUBMIT
 function submitInterview() {
+
+    console.log("🔥 SUBMIT STARTED");
+
     if (!answers.length || answers.every(a => a.trim() === "")) {
         alert("Please answer at least one question!");
         return;
+    }
+
+    // ✅ MOST IMPORTANT FIX (STOP FACE CHECK)
+    if (faceInterval) {
+        clearInterval(faceInterval);
+        console.log("🛑 Face detection stopped");
     }
 
     document.getElementById("loader").style.display = "flex";
