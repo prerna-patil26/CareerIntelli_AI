@@ -1,51 +1,57 @@
 import json
 import os
-import time
 from google import genai
 from google.genai import types
-
-try:
-    from openai import OpenAI
-except ImportError:
-    OpenAI = None
+from openai import OpenAI
 
 
 class FeedbackGenerator:
     def __init__(self):
-        # ✅ API KEY
         self.api_key = os.getenv("GEMINI_API_KEY")
-
-        # ✅ OPENROUTER KEY
         self.openrouter_key = os.getenv("OPENROUTER_API_KEY")
 
-        # ✅ MULTIPLE MODELS
-        self.models = [
-            "gemini-3.1-flash-lite-preview",
-            "gemini-2.5-flash",
-            "gemini-1.5-flash"
+        # Gemini models — tried one by one, 1 attempt each
+        # Source: https://ai.google.dev/gemini-api/docs/models
+        self.gemini_models = [
+            "gemini-3.1-flash-lite-preview",  # Gemma 4 31B — fastest & cheapest Gemini 3 series
+            "gemini-3-flash-preview",          # Gemini 3 Flash — frontier-class, free tier
+            "gemini-2.5-flash",                # Gemini 2.5 Flash — stable production fallback
         ]
 
-        # ✅ CLIENTS
-        self.client = genai.Client(api_key=self.api_key) if self.api_key else None
+        # OpenRouter free models — tried one by one, 1 attempt each
+        self.openrouter_models = [
+            "google/gemma-4-31b-it:free",
+            "z-ai/glm-4.5-air:free",
+            "arcee-ai/trinity-large-preview:free",
+            "minimax/minimax-m2.5:free",
+        ]
+
+        self.gemini_client = None
+        if self.api_key:
+            try:
+                self.gemini_client = genai.Client(api_key=self.api_key)
+            except Exception as exc:
+                print(f"⚠️ Gemini client unavailable: {exc}")
 
         self.or_client = None
-        if OpenAI and self.openrouter_key:
-            self.or_client = OpenAI(
-                api_key=self.openrouter_key,
-                base_url="https://openrouter.ai/api/v1"
-            )
+        if self.openrouter_key:
+            try:
+                self.or_client = OpenAI(
+                    api_key=self.openrouter_key,
+                    base_url="https://openrouter.ai/api/v1"
+                )
+            except Exception as exc:
+                print(f"⚠️ OpenRouter client unavailable: {exc}")
 
-    def generate_feedback(self, answers):
-
-        prompt = f"""
-You are a highly strict and professional AI interviewer.
+    def _build_prompt(self, answers):
+        return f"""You are a highly strict and professional AI interviewer.
 
 Analyze the candidate answers deeply and realistically:
 {answers}
 
 Evaluate like a real interviewer panel.
 
-Return STRICT JSON only:
+Return STRICT JSON only — no markdown, no extra text:
 
 {{
     "score": 0-10,
@@ -55,74 +61,64 @@ Return STRICT JSON only:
     "suggestions": [
         "Give 3-5 very specific and actionable improvements"
     ]
-}}
+}}"""
 
-RULES:
-- Be specific to the answers
-- No generic feedback
-- No extra text outside JSON
-"""
+    def _parse_json(self, content):
+        """Extract and parse JSON from model response."""
+        start = content.find("{")
+        end = content.rfind("}") + 1
+        if start == -1 or end == 0:
+            raise ValueError("No JSON object found in response")
+        return json.loads(content[start:end])
 
-        # 🔁 TRY GEMINI
-        for model in self.models:
-            print(f"👉 Trying model: {model}")
+    def generate_feedback(self, answers):
+        prompt = self._build_prompt(answers)
 
-            for attempt in range(1):   # ⚡ FAST (only 1 try)
+        # ── GEMINI MODELS (1 attempt each) ──────────────────────────────────
+        if self.gemini_client is not None:
+            for model in self.gemini_models:
+                print(f"👉 Trying Gemini: {model}")
                 try:
-                    response = self.client.models.generate_content(
+                    response = self.gemini_client.models.generate_content(
                         model=model,
                         contents=prompt,
                         config=types.GenerateContentConfig(
-                            max_output_tokens=500,
+                            max_output_tokens=2000,  # enough for full JSON
                             temperature=0.4,
                         ),
-                        timeout=8   # ⚡ prevent long wait
                     )
-
-                    content = response.text
-                    print("🔍 GEMINI RAW RESPONSE:", content)
-
-                    start = content.find("{")
-                    end = content.rfind("}") + 1
-
-                    if start == -1 or end == -1:
-                        raise ValueError("Invalid JSON from AI")
-
-                    return json.loads(content[start:end])
+                    print(f"🔍 {model} RESPONSE:", response.text)
+                    result = self._parse_json(response.text)
+                    print(f"✅ Success: {model}")
+                    return result
 
                 except Exception as e:
-                    print(f"❌ {model} Error:", e)
-                    break
+                    print(f"❌ {model} failed: {e}")
+                    continue  # move to next model immediately
 
-        # 🔥 OPENROUTER FALLBACK
-        print("👉 Trying OpenRouter fallback...")
+        # ── OPENROUTER MODELS (1 attempt each) ──────────────────────────────
+        if self.or_client is not None:
+            for model in self.openrouter_models:
+                print(f"👉 Trying OpenRouter: {model}")
+                try:
+                    response = self.or_client.chat.completions.create(
+                        model=model,
+                        messages=[{"role": "user", "content": prompt}],
+                        temperature=0.4,
+                        max_tokens=2000,
+                    )
+                    content = response.choices[0].message.content
+                    print(f"🔍 OpenRouter ({model}) RESPONSE:", content)
+                    result = self._parse_json(content)
+                    print(f"✅ Success: {model}")
+                    return result
 
-        try:
-            if not self.or_client:
-                raise RuntimeError("OpenRouter client is unavailable")
+                except Exception as e:
+                    print(f"❌ OpenRouter ({model}) failed: {e}")
+                    continue  # move to next model immediately
 
-            response = self.or_client.chat.completions.create(
-                model="openchat/openchat-7b",   # ⚡ faster model
-                messages=[
-                    {"role": "user", "content": prompt}
-                ],
-                temperature=0.4,
-                timeout=10
-            )
-
-            content = response.choices[0].message.content
-            print("🔍 OPENROUTER RESPONSE:", content)
-
-            start = content.find("{")
-            end = content.rfind("}") + 1
-
-            if start != -1 and end != -1:
-                return json.loads(content[start:end])
-
-        except Exception as e:
-            print("❌ OpenRouter Error:", e)
-
-        # ✅ FINAL FALLBACK
+        # ── FINAL FALLBACK (only if ALL models fail) ─────────────────────────
+        print("⚠️ All models exhausted. Returning default feedback.")
         return {
             "score": 6,
             "technical": "Basic understanding present but needs improvement.",
