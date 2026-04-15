@@ -1,19 +1,10 @@
 """Resume parser module for extracting text and data from resume files."""
 
+import importlib
 import re
 import logging
 from typing import Dict, Any
 import docx
-
-try:
-    from pdfminer.high_level import extract_text as pdfminer_extract_text
-except ImportError:
-    pdfminer_extract_text = None
-
-try:
-    import fitz
-except ImportError:
-    fitz = None
 
 logger = logging.getLogger(__name__)
 
@@ -104,13 +95,13 @@ class ResumeParser:
         """
         if file_path.endswith(".pdf"):
             try:
-                if pdfminer_extract_text is not None:
-                    text = pdfminer_extract_text(file_path)
-                elif fitz is not None:
+                try:
+                    pdfminer_high_level = importlib.import_module("pdfminer.high_level")
+                    text = pdfminer_high_level.extract_text(file_path)
+                except ImportError:
+                    fitz = importlib.import_module("fitz")
                     with fitz.open(file_path) as pdf_document:
                         text = "\n".join(page.get_text() for page in pdf_document)
-                else:
-                    raise ImportError("No PDF text extraction library is available")
                 if not text:
                     raise ValueError("PDF extraction resulted in empty text")
                 return text
