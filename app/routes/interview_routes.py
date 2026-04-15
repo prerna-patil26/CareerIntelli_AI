@@ -35,7 +35,7 @@ face_detector = FaceDetector()
 engagement_tracker = EngagementTracker()
 confidence_estimator = ConfidenceEstimator()
 
-# ✅ FIXED BLUEPRINT (IMPORTANT 🔥)
+# ✅ FIXED BLUEPRINT
 interview_bp = Blueprint("interview", __name__, url_prefix="/interview")
 
 # ✅ Modules
@@ -96,7 +96,7 @@ def interview_result():
 
 
 # -------------------------------
-# SUBMIT ANSWERS
+# SUBMIT ANSWERS (🔥 FIXED)
 # -------------------------------
 @interview_bp.route('/submit', methods=['POST'])
 def submit_answers():
@@ -132,9 +132,11 @@ def submit_answers():
     # 🎯 MANUAL SCORE
     manual_score = scorer.calculate_score(scores)
 
-    # 🔥 AI FEEDBACK
+    # 🔥 AI FEEDBACK (✅ FIXED HERE)
     try:
-        ai_result = feedback_generator.generate_feedback(answers)
+        combined_answers = "\n".join(answers)  # ⭐ IMPORTANT FIX
+        ai_result = feedback_generator.generate_feedback(combined_answers)
+        print("AI RESULT:", ai_result)
     except Exception as e:
         print("❌ Gemini ERROR:", e)
         ai_result = {

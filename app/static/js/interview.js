@@ -10,19 +10,21 @@ let answers = [];
 let selectedDomain = "";
 
 let recognition;
+let interviewStarted = false; // ✅ ADDED
 
 document.addEventListener('DOMContentLoaded', function() {
     initializeCamera();
     loadDomains();
 
-    // 🔥 FIXED FACE CHECK (faster + safe)
+    // 🔥 FIXED FACE CHECK (optimized)
     setInterval(() => {
-        const video = document.getElementById("interview-video");
+        if (!interviewStarted) return; // ✅ ADDED
 
+        const video = document.getElementById("interview-video");
         if (!video || video.videoWidth === 0) return;
 
         checkFacePosition();
-    }, 1000);
+    }, 3000); // ✅ CHANGED (1000 → 3000)
 
     if (document.getElementById("finalScore")) {
         loadResultPage();
@@ -38,7 +40,6 @@ async function initializeCamera() {
         });
 
         document.getElementById('interview-video').srcObject = stream;
-
         mediaRecorder = new MediaRecorder(stream);
 
     } catch (error) {
@@ -46,7 +47,7 @@ async function initializeCamera() {
     }
 }
 
-// 📋 LOAD DOMAINS (🔥 FIXED)
+// 📋 LOAD DOMAINS
 function loadDomains() {
     fetch('/interview/domains')
         .then(res => {
@@ -54,11 +55,9 @@ function loadDomains() {
             return res.json();
         })
         .then(data => {
-            console.log("✅ Domains:", data);
             displayDomains(data.domains || []);
         })
-        .catch(err => {
-            console.error("❌ Domain load error:", err);
+        .catch(() => {
             alert("Domain load failed!");
         });
 }
@@ -90,6 +89,8 @@ function startInterview() {
         return;
     }
 
+    interviewStarted = true; // ✅ ADDED
+
     fetch('/interview/start', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -109,45 +110,34 @@ function startInterview() {
 // 🧠 SHOW QUESTION
 function showQuestion() {
     const question = questions[currentIndex];
-
     document.getElementById("questionText").innerText = question;
 
     speak(question);
 
-    if (currentIndex === questions.length - 1) {
-        document.getElementById("nextBtn").innerText = "Submit Interview";
-    } else {
-        document.getElementById("nextBtn").innerText = "Next";
-    }
+    document.getElementById("nextBtn").innerText =
+        (currentIndex === questions.length - 1) ? "Submit Interview" : "Next";
 }
 
 // 🔊 SPEAK
 function speak(text) {
     const speech = new SpeechSynthesisUtterance(text);
 
-    if (recognition) {
-        recognition.stop();
-    }
-
+    if (recognition) recognition.stop();
     window.speechSynthesis.speak(speech);
 }
 
 // 🎤 START MIC
 function startSpeechRecognition() {
-
     const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
 
     if (!SpeechRecognition) {
-        alert("Speech Recognition not supported. Use Google Chrome.");
+        alert("Speech Recognition not supported. Use Chrome.");
         return;
     }
 
-    if (recognition) {
-        recognition.stop();
-    }
+    if (recognition) recognition.stop();
 
     recognition = new SpeechRecognition();
-
     recognition.lang = "en-US";
     recognition.continuous = true;
     recognition.interimResults = true;
@@ -155,11 +145,9 @@ function startSpeechRecognition() {
     let finalTranscript = "";
 
     recognition.onresult = function(event) {
-
         let interimTranscript = "";
 
         for (let i = event.resultIndex; i < event.results.length; i++) {
-
             let text = event.results[i][0].transcript;
 
             if (event.results[i].isFinal) {
@@ -169,13 +157,8 @@ function startSpeechRecognition() {
             }
         }
 
-        let fullText = finalTranscript + interimTranscript;
-
-        document.getElementById('answerText').innerText = fullText;
-    };
-
-    recognition.onerror = function(e) {
-        console.log("Speech Error:", e.error);
+        document.getElementById('answerText').innerText =
+            finalTranscript + interimTranscript;
     };
 
     recognition.start();
@@ -214,15 +197,12 @@ function captureFrame() {
     canvas.width = video.videoWidth;
     canvas.height = video.videoHeight;
 
-    const ctx = canvas.getContext("2d");
-    ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
-
+    canvas.getContext("2d").drawImage(video, 0, 0);
     return canvas.toDataURL("image/jpeg");
 }
 
 // 🔥 FACE CHECK
 function checkFacePosition() {
-
     const image = captureFrame();
 
     fetch('/interview/check-face', {
@@ -231,12 +211,11 @@ function checkFacePosition() {
         body: JSON.stringify({ image: image })
     })
     .then(res => res.json())
-    .then(data => {
-        showWarning(data.warning);
-    });
+    .then(data => showWarning(data.warning))
+    .catch(err => console.log("Face check error:", err)); // ✅ ADDED
 }
 
-// 🔥 WARNING FUNCTION (ADDED FIX)
+// 🔥 WARNING
 function showWarning(message) {
     const box = document.getElementById("warningBox");
 
@@ -251,10 +230,9 @@ function showWarning(message) {
     }
 }
 
-// 🚀 SUBMIT INTERVIEW
+// 🚀 SUBMIT
 function submitInterview() {
-
-    if (!answers || answers.length === 0 || answers.every(a => a.trim() === "")) {
+    if (!answers.length || answers.every(a => a.trim() === "")) {
         alert("Please answer at least one question!");
         return;
     }
@@ -268,7 +246,6 @@ function submitInterview() {
     })
     .then(res => res.json())
     .then(data => {
-
         localStorage.setItem("total_score", data.total_score);
         localStorage.setItem("technical_score", data.technical_score);
         localStorage.setItem("communication_score", data.communication_score);
@@ -277,37 +254,10 @@ function submitInterview() {
         localStorage.setItem("suggestions", JSON.stringify(data.suggestions));
 
         document.getElementById("loader").style.display = "none";
-
         window.location.href = "/interview/result";
     })
     .catch(() => {
         document.getElementById("loader").style.display = "none";
         alert("Something went wrong!");
-    });
-}
-
-// 📊 RESULT PAGE
-function loadResultPage() {
-    let total = localStorage.getItem("total_score");
-    let tech = localStorage.getItem("technical_score");
-    let comm = localStorage.getItem("communication_score");
-    let conf = localStorage.getItem("confidence_score");
-    let feedback = localStorage.getItem("feedback");
-    let suggestions = JSON.parse(localStorage.getItem("suggestions") || "[]");
-
-    document.getElementById("finalScore").innerText = "Score: " + total;
-    document.getElementById("feedbackText").innerText = feedback;
-
-    document.getElementById("tech").innerText = tech;
-    document.getElementById("comm").innerText = comm;
-    document.getElementById("conf").innerText = conf;
-
-    let ul = document.getElementById("suggestionsList");
-    ul.innerHTML = "";
-
-    suggestions.forEach(s => {
-        let li = document.createElement("li");
-        li.innerText = s;
-        ul.appendChild(li);
     });
 }
