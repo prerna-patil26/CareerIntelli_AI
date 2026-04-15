@@ -1,0 +1,333 @@
+/* =========================
+   AUTH PAGE (LOGIN + REGISTER)
+========================= */
+:root {
+    --bg-dark: #0B0F14;
+    --glass-light: rgba(255, 255, 255, 0.05);
+    --glass-hover: rgba(255, 255, 255, 0.08);
+    --glass-border: rgba(255, 255, 255, 0.1);
+    --text-primary: #FFFFFF;
+    --text-secondary: rgba(255, 255, 255, 0.7);
+    --text-muted: rgba(255, 255, 255, 0.5);
+    --glow-cyan: rgba(34, 211, 238, 0.15);
+    --glow-purple: rgba(168, 85, 247, 0.1);
+    --accent-cyan: #22D3EE;
+    --accent-purple: #A855F7;
+    --shadow-glow: 0 8px 32px rgba(34, 211, 238, 0.1);
+    --shadow-lg: 0 20px 60px rgba(0, 0, 0, 0.4);
+}
+/* LOGO */
+.logo-top {
+    /* position: fixed; */
+    top: 0;
+    left: 0;
+    z-index: 9999;
+    padding: 10px 20px;
+}
+
+
+.logo-top h1{
+   /* font-size: clamp(4.5rem, 7vw, 6rem); */
+    font-family: 'Poppins', sans-serif;
+    font-weight: 650;
+   padding-top: 50px;
+   font-size: clamp(5.5rem, 7vw, 7rem);
+    line-height: 1.1;
+    letter-spacing: -0.02em;
+    color: var(--text-primary);
+    background: linear-gradient(135deg, var(--text-primary) 0%, var(--accent-cyan) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    animation: fade-up 0.8s ease-out 0.2s both;
+}
+
+.logo-img {
+    width: 160px;
+    
+    filter: brightness(1.5) contrast(1.2);
+}
+
+.logo-video {
+    width: 160px;
+    height: auto;
+    mix-blend-mode: screen;
+}
+
+/* BACKGROUND */
+body.auth-page {
+    background: url("/static/images/bg_1.jfif") no-repeat center center/cover;
+    min-height: 100vh;
+    position: relative;
+    display: flex;
+}
+
+body.auth-page::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: rgba(2, 6, 23, 0.75);
+    z-index: 0;
+}
+
+/* CONTENT ABOVE BG */
+.auth-container,
+.login-left,
+.logo-top {
+    position: relative;
+    z-index: 1;
+}
+
+
+.logo-top p {
+    color: #94a3b8;
+    margin-top: 10px;
+}
+
+/* TOP HEADER (REGISTER PAGE) */
+.top-header {
+    position: absolute;
+    top: 25px;
+    left: 50px;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    z-index: 3;
+}
+
+/* CONTAINER */
+.auth-container {
+    width: 100%;
+    display: flex;
+    justify-content: flex-end;
+    align-items: flex-start;
+    padding-top: 80px;
+    padding-right: 10%;
+    height: 100vh;
+}
+
+/* BOX */
+.auth-box {
+    backdrop-filter: blur(20px);
+    background: rgba(255,255,255,0.05);
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 20px;
+    padding: 40px;
+    width: 420px;
+    color: white;
+    text-align: center;
+    animation: fadeUp 0.6s ease;
+}
+
+/* ANIMATION */
+@keyframes fadeUp {
+    from {
+        opacity: 0;
+        transform: translateY(25px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* TITLE */
+.auth-box h2 {
+    font-size: 28px;
+    margin-bottom: 20px;
+    background: linear-gradient(90deg, #60eaff, #3bbefc, #7c6cff);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+/* SUBTITLE */
+.subtitle {
+    font-size: 14px;
+    color: #94a3b8;
+    margin-bottom: 20px;
+}
+
+/* INPUT GROUP */
+.input-group {
+    position: relative;
+    margin-bottom: 24px;
+}
+
+/* INPUT */
+.input-group input {
+    width: 100%;
+    padding: 14px;
+    border-radius: 8px;
+    border: 1px solid rgba(255,255,255,0.2);
+    font-size: 15px;
+    outline: none;
+    transition: 0.3s;
+    backdrop-filter: blur(8px);
+    background: rgba(0, 0, 0, 0.4) !important;
+    color: white !important;
+}
+
+
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+input:-webkit-autofill:active {
+    -webkit-box-shadow: 0 0 0 1000px rgba(0, 0, 0, 0.4) inset !important;
+    -webkit-text-fill-color: white !important;
+    transition: background-color 9999s ease-in-out 0s;
+}
+
+/* LABEL */
+.input-group label {
+    position: absolute;
+    top: 50%;
+    left: 14px;
+    transform: translateY(-50%);
+    color: #aaa;
+    font-size: 13px;
+    pointer-events: none;
+    transition: 0.25s ease;
+}
+
+/* FLOAT EFFECT */
+.input-group input:focus + label,
+.input-group input:not(:placeholder-shown) + label {
+    top: -8px;
+    left: 10px;
+    font-size: 12px;
+    color: #aaa;
+}
+
+/* INPUT STATES */
+.input-group input:focus {
+    border-color: #22d3ee;
+    /* box-shadow: 0 0 12px rgba(34, 211, 238, 0.7); */
+    box-shadow: 
+        0 0 15px rgba(34, 211, 238, 0.4),
+        0 0 40px rgba(167, 139, 250, 0.5);
+
+}
+
+.input-group input:not(:placeholder-shown) {
+    border-color: rgba(0, 242, 254, 0.6);
+
+}
+
+/* PASSWORD */
+.password-group {
+    position: relative;
+}
+
+.toggle-password {
+    position: absolute;
+    right: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    cursor: pointer;
+    font-size: 16px;
+}
+
+/* BUTTON */
+.auth-box button {
+    width: 100%;
+    padding: 14px;
+    border-radius: 50px;
+    border: none;
+
+    /* TEXT */
+    color: whitesmoke;
+    font-size: 16px;
+    font-weight: 550;
+
+    /* GRADIENT (same as image) */
+    background: linear-gradient(90deg, #22d3ee, #a78bfa);
+    background-size: 200% 200%;
+    animation: gradientMove 4s ease infinite;
+
+    cursor: pointer;
+    transition: all 0.3s ease;
+
+    /* SOFT GLOW */
+    box-shadow: 
+        0 0 10px rgba(34, 211, 238, 0.2),
+        0 0 25px rgba(167, 139, 250, 0.3);
+
+    position: relative;
+    overflow: hidden;
+}
+
+@keyframes gradientMove {
+    0% { background-position: 100% }
+    50% { background-position: 0% }
+    100% { background-position: 100% }
+}
+.auth-box button:hover {
+    transform: scale(1.04);
+
+    box-shadow: 
+        0 0 15px rgba(34, 211, 238, 0.4),
+        0 0 40px rgba(167, 139, 250, 0.5);
+}
+
+.auth-box button:active {
+    transform: scale(0.98);
+}
+
+.auth-box button::before {
+    content: "";
+    position: absolute;
+    inset: -8px;
+    border-radius: 60px;
+    background: linear-gradient(90deg, #22d3ee, #a78bfa);
+    filter: blur(20px);
+    opacity: 0.6;
+    z-index: -1;
+}
+/* LINK */
+.auth-link {
+    margin-top: 18px;
+    font-size: 13.5px;
+    color: #94a3b8;
+}
+
+.auth-link a {
+    background: linear-gradient(to right, #67e8f9, #a78bfa);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    text-decoration: none;
+    font-weight: 500;
+}
+
+.auth-link a:hover {
+    text-shadow: 0 0 8px #00f2fe;
+}
+
+/* ROW (REGISTER) */
+.row {
+    display: flex;
+    gap: 18px;
+}
+
+.row .input-group {
+    flex: 1;
+}
+
+/* LOADING */
+.loading {
+    opacity: 0.7;
+    pointer-events: none;
+}
+
+.features {
+    margin-top: 25px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    color: #cbd5f5;
+    font-size: 14px;
+}
+
+.features span {
+    opacity: 0.8;
+}
+
