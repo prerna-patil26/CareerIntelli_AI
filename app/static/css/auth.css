@@ -17,13 +17,26 @@
     --shadow-lg: 0 20px 60px rgba(0, 0, 0, 0.4);
 }
 /* LOGO */
-.logo-top {
-    /* position: fixed; */
-    top: 0;
-    left: 0;
-    z-index: 9999;
-    padding: 10px 20px;
+
+html, body {
+    height: 100%;
+    overflow: hidden;
 }
+
+.logo-top {
+    position: absolute;
+    left: 80px;
+    top: 80px;
+    max-width: 500px;
+
+}
+
+.logo-top img {
+    width: 140px;
+    height: auto;
+    margin-bottom: 20px;
+}
+
 
 
 .logo-top h1{
@@ -55,6 +68,7 @@
     
     filter: brightness(1.5) contrast(1.2);
 }
+
 
 .logo-video {
     width: 160px;
