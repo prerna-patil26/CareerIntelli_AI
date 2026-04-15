@@ -20,7 +20,7 @@ class QuestionLoader:
 
     def load_questions(self):
         try:
-            print("📂 FINAL PATH:", self.file_path)
+            print("FINAL PATH:", self.file_path)
 
             if not os.path.exists(self.file_path):
                 raise FileNotFoundError(f"File not found at: {self.file_path}")
@@ -37,7 +37,7 @@ class QuestionLoader:
                 .str.replace(" ", "_")
             )
 
-            print("✅ LOADED COLUMNS:", self.df.columns)
+            print("LOADED COLUMNS:", self.df.columns)
 
             return self.df
 

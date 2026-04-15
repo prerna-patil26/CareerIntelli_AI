@@ -3,7 +3,11 @@ import os
 import time
 from google import genai
 from google.genai import types
-from openai import OpenAI
+
+try:
+    from openai import OpenAI
+except ImportError:
+    OpenAI = None
 
 
 class FeedbackGenerator:
@@ -22,12 +26,14 @@ class FeedbackGenerator:
         ]
 
         # ✅ CLIENTS
-        self.client = genai.Client(api_key=self.api_key)
+        self.client = genai.Client(api_key=self.api_key) if self.api_key else None
 
-        self.or_client = OpenAI(
-            api_key=self.openrouter_key,
-            base_url="https://openrouter.ai/api/v1"
-        )
+        self.or_client = None
+        if OpenAI and self.openrouter_key:
+            self.or_client = OpenAI(
+                api_key=self.openrouter_key,
+                base_url="https://openrouter.ai/api/v1"
+            )
 
     def generate_feedback(self, answers):
 
@@ -92,6 +98,9 @@ RULES:
         print("👉 Trying OpenRouter fallback...")
 
         try:
+            if not self.or_client:
+                raise RuntimeError("OpenRouter client is unavailable")
+
             response = self.or_client.chat.completions.create(
                 model="openchat/openchat-7b",   # ⚡ faster model
                 messages=[
