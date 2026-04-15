@@ -8,6 +8,9 @@
 </head>
 
 <body class="result-page">
+    <div class="result-top-nav">
+    <a class="dashboard-btn" href="{{ url_for('home.dashboard') }}">Dashboard</a>
+</div>
     <video class="app-bg-video" autoplay loop muted preload="auto">
         <source src="{{ url_for('roadmap_page_routes.roadmap_assets', filename='bg.mp4') }}" type="video/mp4">
     </video>
@@ -95,6 +98,7 @@
     </div>
 
 </div>
+
 
 {% set chatbot_page = 'interview-result' %}
 {% include 'shared/chatbot_widget.html' %}

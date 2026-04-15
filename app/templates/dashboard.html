@@ -6,6 +6,7 @@
 <title>CareerIntelli AI - Dashboard</title>
 
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
 <link rel="stylesheet" href="{{ url_for('static', filename='css/base.css') }}">
 <link rel="stylesheet" href="{{ url_for('static', filename='css/dashboard.css') }}">
 </head>
@@ -15,36 +16,71 @@
     <source src="{{ url_for('roadmap_page_routes.roadmap_assets', filename='bg.mp4') }}" type="video/mp4">
 </video>
 <div class="app-bg-overlay" aria-hidden="true"></div>
-<div class="dashboard">
+<div class="dashboard-page">
+    <input type="checkbox" id="sidebar-toggle" class="sidebar-toggle">
 
-    <!-- SIDEBAR -->
-    <div class="sidebar">
-        <div class="logo">🚀 CareerIntelli AI</div>
-        <ul>
-            <li class="active">
-                <a href="{{ url_for('home.dashboard') }}">📊 Dashboard</a>
-            </li>
-            <li>
-                <a href="{{ url_for('home.resume_upload') }}">📄 Resume</a>
-            </li>
-            <li>
-                <a href="{{ url_for('career_routes.career_page') }}">🎯 Career Prediction</a>
-            </li>
-            <li>
-                <a href="{{ url_for('home.interview') }}">🎤 Interview</a>
-            </li>
-            <li>
-                <a href="{{ url_for('home.roadmap') }}">🗺️ Roadmap</a>
-            </li>
-            <li>
-                <a href="{{ url_for('profile.profile_page') }}">👤 Profile</a>
-            </li>
-        </ul>
-    </div>
+    <aside class="dashboard-sidebar" id="nav-bar">
+        <div class="sidebar-panel">
+            <div class="sidebar-header" id="nav-header">
+                <a class="sidebar-brand" id="nav-title" href="{{ url_for('home.dashboard') }}">
+                    <span class="sidebar-brand-name">CareerIntelli AI</span>
+                </a>
 
-    <div class="main">
+                <label for="sidebar-toggle" class="sidebar-toggle-button" aria-label="Toggle sidebar">
+                    <span id="nav-toggle-burger"></span>
+                </label>
+            </div>
 
-        <!-- 🔥 TOPBAR (CLEANED) -->
+            <nav class="sidebar-nav" id="nav-content" aria-label="Dashboard navigation">
+                <div class="sidebar-highlight" id="nav-content-highlight" aria-hidden="true"></div>
+
+                <a class="nav-button {% if sidebar_active == 'dashboard' %}active{% endif %}" data-nav-item="dashboard" href="{{ url_for('home.dashboard') }}">
+                    <i class="fa-solid fa-gauge-high"></i>
+                    <span>Dashboard</span>
+                </a>
+                <a class="nav-button {% if sidebar_active == 'resume' %}active{% endif %}" data-nav-item="resume" href="{{ url_for('home.resume_upload') }}">
+                    <i class="fa-solid fa-file-lines"></i>
+                    <span>Resume</span>
+                </a>
+                <a class="nav-button {% if sidebar_active == 'career' %}active{% endif %}" data-nav-item="career" href="{{ url_for('career_routes.career_page') }}">
+                    <i class="fa-solid fa-brain"></i>
+                    <span>Career Prediction</span>
+                </a>
+                <a class="nav-button {% if sidebar_active == 'interview' %}active{% endif %}" data-nav-item="interview" href="{{ url_for('home.interview') }}">
+                    <i class="fa-solid fa-microphone-lines"></i>
+                    <span>Interview</span>
+                </a>
+                <a class="nav-button {% if sidebar_active == 'roadmap' %}active{% endif %}" data-nav-item="roadmap" href="{{ url_for('home.roadmap') }}">
+                    <i class="fa-solid fa-route"></i>
+                    <span>Roadmap</span>
+                </a>
+            </nav>
+
+            <footer class="sidebar-footer" id="nav-footer">
+                <div class="sidebar-user-card" id="nav-footer-heading">
+                    <a class="sidebar-avatar" id="nav-footer-avatar" href="{{ url_for('profile.profile_page') }}" aria-label="Open profile">
+                        {% if profile and profile.profile_photo %}
+                        <img src="{{ url_for('static', filename=profile.profile_photo) }}" alt="Profile photo">
+                        {% else %}
+                        <span>{{ (user.first_name[:1] if user and user.first_name else 'U')|upper }}</span>
+                        {% endif %}
+                    </a>
+
+                    <div class="sidebar-user-meta">
+                        <span class="sidebar-user-name">{{ user.first_name if user and user.first_name else 'User' }}{% if user and user.last_name %} {{ user.last_name }}{% endif %}</span>
+                        <span class="sidebar-user-subtitle">CareerIntelli AI</span>
+                    </div>
+
+                    <button type="button" class="sidebar-logout" data-url="{{ url_for('auth.logout') }}" onclick="location.href=this.dataset.url" aria-label="Logout">
+                        <i class="fa-solid fa-right-from-bracket"></i>
+                        <span>Logout</span>
+                    </button>
+                </div>
+            </footer>
+        </div>
+    </aside>
+
+    <main class="dashboard-main">
         <div class="topbar">
             <div class="topbar-title">
                 <h1>Hi, {{ user.first_name if user is defined and user and user.first_name else 'User' }} 👋</h1>
@@ -57,13 +93,16 @@
                 <div class="top-actions">
                     <span class="theme-toggle">🌙</span>
                     <div class="profile-mini" data-url="{{ url_for('profile.profile_page') }}" onclick="location.href=this.dataset.url">
-                        👤
+                        {% if profile and profile.profile_photo %}
+                        <img src="{{ url_for('static', filename=profile.profile_photo) }}" alt="Profile photo">
+                        {% else %}
+                        <span>{{ (user.first_name[:1] if user and user.first_name else 'U')|upper }}</span>
+                        {% endif %}
                     </div>
                 </div>
             </div>
         </div>
 
-        <!-- HERO -->
         <div class="hero">
             <div class="hero-content">
                 <h2>🚀 Welcome to Your AI Career Hub</h2>
@@ -74,16 +113,13 @@
             </div>
         </div>
 
-        <!-- ANALYTICS -->
         <div class="analytics-card">
             <h3>Career Progress</h3>
             <p>Your improvement this week</p>
             <div class="fake-chart"></div>
         </div>
 
-        <!-- STATS -->
         <div class="stats">
-
             <div class="stat-card">
                 <h4>Total Resumes</h4>
                 <p>3</p>
@@ -101,14 +137,11 @@
                 <p>2</p>
                 <span class="growth">+5%</span>
             </div>
-
         </div>
 
-        <!-- ACTIONS -->
         <h2 class="section-title">Explore</h2>
 
         <div class="cards">
-
             <div class="card" data-url="{{ url_for('home.resume_upload') }}" onclick="location.href=this.dataset.url">
                 <h3>📄 Resume Analyzer</h3>
                 <p>Smart ATS score & improvements</p>
@@ -123,15 +156,44 @@
                 <h3>🗺️ Roadmap Explorer</h3>
                 <p>Career roadmap module</p>
             </div>
-
         </div>
-
-    </div>
-
+    </main>
 </div>
 
 {% set chatbot_page = 'dashboard' %}
 {% include 'shared/chatbot_widget.html' %}
+
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+    const nav = document.getElementById('nav-content');
+    const highlight = document.getElementById('nav-content-highlight');
+    const links = Array.from(document.querySelectorAll('.nav-button'));
+    const activeLink = document.querySelector('.nav-button.active') || links[0];
+
+    const moveHighlight = (element) => {
+        if (!element || !highlight || !nav) {
+            return;
+        }
+
+        highlight.style.top = `${element.offsetTop}px`;
+        highlight.style.height = `${element.offsetHeight}px`;
+        highlight.style.opacity = '1';
+    };
+
+    const resetHighlight = () => moveHighlight(activeLink);
+
+    links.forEach((link) => {
+        link.addEventListener('mouseenter', () => moveHighlight(link));
+        link.addEventListener('focus', () => moveHighlight(link));
+    });
+
+    if (nav) {
+        nav.addEventListener('mouseleave', resetHighlight);
+    }
+
+    resetHighlight();
+});
+</script>
 
 </body>
 </html>

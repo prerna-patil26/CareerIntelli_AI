@@ -1,5 +1,5 @@
 from flask import Blueprint, render_template, session, redirect, url_for, request
-from app.database.models import User
+from app.database.models import User, Profile
 
 home_bp = Blueprint("home", __name__)
 
@@ -28,8 +28,17 @@ def dashboard():
         return redirect(url_for("home.login_page"))
 
     user = User.query.get(session["user_id"])
+    if not user:
+        return redirect(url_for("home.login_page"))
 
-    return render_template("dashboard.html", user=user)
+    profile = Profile.query.filter_by(user_id=user.id).first()
+
+    return render_template(
+        "dashboard.html",
+        user=user,
+        profile=profile,
+        sidebar_active="dashboard"
+    )
 
 
 # ---------------------------

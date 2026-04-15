@@ -3,7 +3,7 @@ html,
 body {
     width: 100%;
     height: 100%;
-    overflow: hidden;
+    /* overflow: hidden; */
 }
 
 body {
@@ -13,7 +13,7 @@ body {
     color: #E2E8F0;
     position: relative;
     min-height: 100vh;
-    overflow-x: hidden;
+    /* overflow-x: hidden; */
 }
 
 body > *:not(.app-bg-video):not(.app-bg-overlay) {
@@ -847,4 +847,11 @@ body {
 @keyframes spin {
     0% { transform: rotate(0deg); }
     100% { transform: rotate(360deg); }
+}
+.result-top-nav {
+    position: fixed !important;
+    top: 20px !important;
+    right: 20px !important;
+    left: auto !important;   /* 🔥 important */
+    z-index: 9999 !important;
 }
