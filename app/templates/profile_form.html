@@ -6,136 +6,246 @@
 <title>CareerIntelli AI - Profile</title>
 
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/career.css') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/profile.css') }}">
+
 </head>
 
 <body>
 
+<!-- 🎥 BACKGROUND -->
 <video class="app-bg-video" autoplay loop muted preload="auto">
     <source src="{{ url_for('roadmap_page_routes.roadmap_assets', filename='bg.mp4') }}" type="video/mp4">
 </video>
-<div class="app-bg-overlay" aria-hidden="true"></div>
+<div class="app-bg-overlay"></div>
 
+<!-- 🌌 NEURAL BG -->
+<canvas id="neural-canvas"></canvas>
+<div class="background-wash"></div>
 
-<!-- 🌌 BACKGROUND -->
-<div class="bg-animation">
-    <span></span>
-    <span></span>
-    <span></span>
-    <span></span>
+<!-- 🔝 NAV -->
+<div class="career-top-nav">
+    <a href="{{ url_for('home.dashboard') }}" class="career-dashboard-btn">Dashboard</a>
 </div>
 
-<!-- 🔥 TOPBAR -->
-<div class="topbar">
-    <div class="top-actions">
-        <a href="{{ url_for('home.dashboard') }}" class="back-btn">← Dashboard</a>
+<!-- 🔥 MAIN -->
+<main class="page-shell">
+
+    <!-- 🔥 TOAST HERE (OUTSIDE HERO) -->
+    <div class="flash-container">
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                {% for category, message in messages %}
+                    <div class="flash-message {{ category }}">
+                        ✅ {{ message }}
+                    </div>
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
     </div>
-</div>
 
-<div class="page-center">
+    <!-- HERO -->
+    <section class="hero">
+        <p class="eyebrow">👤 Profile</p>
+        <h1>Your Profile Dashboard</h1>
+        <p class="hero-copy">
+            Manage your personal details, skills, and career information in one place.
+        </p>
+    </section>
 
-    <!-- HEADER -->
-    <div class="header">
-        <div>
-            <h1>👤 Profile Settings</h1>
-            <p>Update your personal information and preferences</p>
+
+    <!-- ================= VIEW MODE ================= -->
+    <section id="profileView" class="result-layout">
+
+        <!-- PROFILE CARD -->
+        <div class="result-section profile-card">
+            {% if profile and profile.profile_photo %}
+            <img src="{{ url_for('static', filename=profile.profile_photo) }}" class="profile-pic">
+            {% else %}
+            <img src="{{ url_for('static', filename='images/default.png') }}" class="profile-pic">
+            {% endif %}
+
+            <h2>{{ user.first_name }} {{ user.last_name }}</h2>
+            <p class="role">{{ profile.current_role if profile else 'No role added' }}</p>
         </div>
+
+        <!-- INFO CARD -->
+        <div class="result-section info-card">
+            <p><strong>Email:</strong> {{ user.email }}</p>
+            <p><strong>Experience:</strong> {{ profile.years_of_experience if profile else '0' }} years</p>
+            <p><strong>Skills:</strong> {{ profile.skills | join(', ') if profile and profile.skills else 'Not added' }}</p>
+            <p><strong>Interests:</strong> {{ profile.interests | join(', ') if profile and profile.interests else 'Not added' }}</p>
+            <p><strong>CGPA:</strong> {{ profile.cgpa if profile else 'N/A' }}</p>
+
+            {% if profile and profile.resume_file %}
+            <a class="button button-secondary"
+               href="{{ url_for('static', filename=profile.resume_file) }}"
+               target="_blank">
+               View Resume
+            </a>
+            {% endif %}
+        </div>
+
+    </section>
+
+    <!-- EDIT BUTTON -->
+    <div class="step-actions" id="editBtnContainer">
+     <button class="button button-primary" onclick="toggleEdit()">Edit Profile</button>
     </div>
 
-    <!-- PROFILE FORM -->
-    <div class="profile-card glass">
 
-        <form method="POST" action="{{ url_for('profile.update_profile') }}" enctype="multipart/form-data">
+    <!-- ================= EDIT MODE ================= -->
+    <form id="profileForm" style="display:none;" method="POST" enctype="multipart/form-data">
 
-            <!-- PROFILE IMAGE -->
-            <div class="profile-image-section">
+        <!-- 🔥 PROFILE IMAGE TOP CENTER -->
+        <div class="profile-top-center">
 
-                {% if profile and profile.profile_photo %}
-                <img src="{{ url_for('static', filename=profile.profile_photo) }}" class="profile-pic" alt="Profile photo">
-                {% else %}
-                <img src="{{ url_for('static', filename='images/default.png') }}" class="profile-pic" alt="Default profile photo">
-                {% endif %}
+            <div class="profile-upload-wrapper">
 
-                <label for="profile_photo">Profile Photo</label>
-                <input id="profile_photo" type="file" name="profile_photo">
-            </div>
+                <img 
+                src="{{ url_for('static', filename=profile.profile_photo if profile and profile.profile_photo else 'images/default.png') }}" 
+                class="profile-pic" id="profilePreview">
 
-            <!-- USER INFO -->
-            <div class="form-grid">
-
-                <div class="form-group">
-                    <label>First Name</label>
-                    <input type="text" value="{{ user.first_name }}" readonly title="First name">
+                <div class="upload-overlay">
+                    <span>＋</span>
                 </div>
 
-                <div class="form-group">
-                    <label>Last Name</label>
-                    <input type="text" value="{{ user.last_name }}" readonly title="Last name">
-                </div>
-
-                <div class="form-group full">
-                    <label>Email</label>
-                    <input type="email" value="{{ user.email }}" readonly title="Email address">
-                </div>
-
-                <div class="form-group">
-                    <label>Current Role</label>
-                    <input type="text" name="current_role"
-                        value="{{ profile.current_role if profile else '' }}" placeholder="Student / Developer / Analyst">
-                </div>
-
-                <div class="form-group">
-                    <label>Experience</label>
-                    <input type="number" name="experience"
-                        value="{{ profile.years_of_experience if profile else '' }}" placeholder="0">
-                </div>
-
-                <div class="form-group full">
-                    <label>Skills</label>
-                    <textarea name="skills" rows="3" placeholder="Python, Machine Learning, SQL">
-{% if profile and profile.skills %}{{ profile.skills | join(', ') }}{% endif %}
-                    </textarea>
-                </div>
-
-                <div class="form-group full">
-                    <label>Interests</label>
-                    <textarea name="interests" rows="3" placeholder="AI, Data Science, Web Development">
-{% if profile and profile.interests %}{{ profile.interests | join(', ') }}{% endif %}
-                    </textarea>
-                </div>
-
-                <div class="form-group">
-                    <label>CGPA</label>
-                    <input type="number" step="0.01" min="0" max="10"
-                        name="cgpa"
-                        value="{{ profile.cgpa if profile else '' }}" placeholder="0.00 - 10.00">
-                </div>
-
-                <div class="form-group">
-                    <label>Upload Resume</label>
-                    <input type="file" name="resume" title="Upload resume">
-
-                    {% if profile and profile.resume_file %}
-                    <a class="resume-link"
-                       href="{{ url_for('static', filename=profile.resume_file) }}"
-                       target="_blank">
-                       View Resume
-                    </a>
-                    {% endif %}
-                </div>
+                <input type="file" name="profile_photo" id="profileInput" hidden>
 
             </div>
 
-            <button type="submit" class="btn-primary">
-                Save Profile
-            </button>
+        </div>
 
-        </form>
+        <!-- 🔥 FORM GRID -->
+        <section class="result-layout">
 
-    </div>
+            <div class="result-section">
+                <h3>Current Role</h3>
+                <input type="text" name="current_role"
+                    value="{{ profile.current_role if profile else '' }}">
+            </div>
 
-    {% set chatbot_page = 'profile' %}
-    {% include 'shared/chatbot_widget.html' %}
+            <div class="result-section">
+                <h3>Experience</h3>
+                <input type="number" name="experience"
+                    value="{{ profile.years_of_experience if profile else '' }}">
+            </div>
+
+            <div class="result-section">
+                <h3>Skills</h3>
+                <textarea name="skills">{{ profile.skills | join(', ') if profile and profile.skills else '' }}</textarea>
+            </div>
+
+            <div class="result-section">
+                <h3>Interests</h3>
+                <textarea name="interests">{{ profile.interests | join(', ') if profile and profile.interests else '' }}</textarea>
+            </div>
+
+            <div class="result-section">
+                <h3>CGPA</h3>
+                <input type="number" step="0.01" name="cgpa"
+                    value="{{ profile.cgpa if profile else '' }}">
+            </div>
+
+            <div class="result-section">
+                <h3>Resume</h3>
+                <div class="upload-resume-wrapper">
+
+                    <button type="button" class="button button-primary" onclick="document.getElementById('resumeInput').click()">
+                        Upload Resume
+                    </button>
+
+                    <span id="fileName">No file chosen</span>
+
+                    <input type="file" name="resume" id="resumeInput" hidden>
+
+                </div>
+            </div>
+
+        </section>
+
+        <!-- BUTTONS -->
+        <div class="step-actions">
+            <button class="button button-primary">Save Changes</button>
+            <button type="button" class="button" onclick="toggleEdit()">Cancel</button>
+        </div>
+
+    </form>
+
+</main>
+
+<script src="{{ url_for('static', filename='js/career.js') }}"></script>
+
+<!-- 🔥 TOGGLE SCRIPT -->
+
+<script>
+function toggleEdit() {
+    const view = document.getElementById("profileView");
+    const form = document.getElementById("profileForm");
+    const btn = document.getElementById("editBtnContainer");
+
+    if (form.style.display === "none") {
+        form.style.display = "block";
+        view.style.display = "none";
+        btn.style.display = "none";   // 🔥 hide button
+    } else {
+        form.style.display = "none";
+        view.style.display = "grid";
+        btn.style.display = "flex";  // 🔥 show button back
+    }
+}
+
+
+        setTimeout(() => {
+    const flash = document.querySelector(".flash-container");
+    if (flash) {
+        flash.style.opacity = "0";
+        flash.style.transition = "0.5s";
+    }
+}, 2500);
+
+
+/* CLICK → OPEN FILE */
+document.addEventListener("DOMContentLoaded", function () {
+    const wrapper = document.querySelector(".profile-upload-wrapper");
+    const input = document.getElementById("profileInput");
+    const preview = document.getElementById("profilePreview");
+
+    if (wrapper) {
+        wrapper.addEventListener("click", () => {
+            input.click();
+        });
+    }
+
+    /* PREVIEW IMAGE */
+    input.addEventListener("change", function () {
+        const file = this.files[0];
+        if (file) {
+            preview.src = URL.createObjectURL(file);
+        }
+    });
+});
+
+document.querySelectorAll("textarea").forEach(el => {
+
+    // 🔥 initial height (small)
+    el.style.height = "60px";
+
+    el.addEventListener("input", function () {
+        this.style.height = "60px"; // reset to base
+        this.style.height = this.scrollHeight + "px"; // grow step-by-step
+    });
+
+});
+
+const resumeInput = document.getElementById("resumeInput");
+const fileName = document.getElementById("fileName");
+
+resumeInput.addEventListener("change", function () {
+    fileName.textContent = this.files[0]?.name || "No file chosen";
+});
+
+</script>
 
 </body>
 </html>

@@ -1,6 +1,6 @@
 from flask import Blueprint, render_template, session, redirect, url_for, request
 from app.database.models import User, Profile
-
+from flask import flash
 home_bp = Blueprint("home", __name__)
 
 @home_bp.route("/")
@@ -61,6 +61,61 @@ def resume_upload():
     return render_template("resume_upload.html")
 
 
+from app import db   # 🔥 ADD THIS IMPORT
+
+@home_bp.route("/api/profile/profile", methods=["GET", "POST"])
+def profile():
+
+    # ✅ LOGIN CHECK
+    if "user_id" not in session:
+        return redirect(url_for("home.login_page"))
+
+    user = User.query.get(session["user_id"])
+
+    if not user:
+        return redirect(url_for("home.login_page"))
+
+    # 🔥 GET PROFILE
+    profile = Profile.query.filter_by(user_id=user.id).first()
+
+    # =========================
+    # POST (SAVE DATA)
+    # =========================
+    if request.method == "POST":
+
+        # 👉 GET FORM DATA
+        current_role = request.form.get("current_role")
+        experience = request.form.get("experience")
+        skills = request.form.get("skills")
+        interests = request.form.get("interests")
+        cgpa = request.form.get("cgpa")
+
+        # 👉 CREATE PROFILE IF NOT EXISTS
+        if not profile:
+            profile = Profile(user_id=user.id)
+            db.session.add(profile)
+
+        # 👉 UPDATE VALUES
+        profile.current_role = current_role
+        profile.years_of_experience = experience
+        profile.skills = skills.split(",") if skills else []
+        profile.interests = interests.split(",") if interests else []
+        profile.cgpa = cgpa
+
+        db.session.commit()
+
+        flash("Profile Updated Successfully ✅", "success")   # 🔥 ADD THIS
+
+        return redirect(url_for("home.profile"))
+
+    # =========================
+    # GET (SHOW DATA)
+    # =========================
+    return render_template(
+        "profile.html",
+        user=user,
+        profile=profile
+    )
 # ---------------------------
 # OTHER ROUTES
 # ---------------------------
