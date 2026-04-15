@@ -35,8 +35,8 @@ face_detector = FaceDetector()
 engagement_tracker = EngagementTracker()
 confidence_estimator = ConfidenceEstimator()
 
-# ✅ Blueprint
-interview_bp = Blueprint("interview", __name__)
+# ✅ FIXED BLUEPRINT (IMPORTANT 🔥)
+interview_bp = Blueprint("interview", __name__, url_prefix="/interview")
 
 # ✅ Modules
 loader = QuestionLoader()
@@ -53,9 +53,10 @@ speech_metrics = SpeechMetrics()
 # -------------------------------
 # 🆕 INTERVIEW PAGE
 # -------------------------------
-@interview_bp.route('/interview-page')
+@interview_bp.route('/')
 def interview_page():
     return render_template('interview_page.html')
+
 
 # -------------------------------
 # START INTERVIEW
@@ -95,7 +96,7 @@ def interview_result():
 
 
 # -------------------------------
-# SUBMIT ANSWERS (FINAL)
+# SUBMIT ANSWERS
 # -------------------------------
 @interview_bp.route('/submit', methods=['POST'])
 def submit_answers():
@@ -111,8 +112,6 @@ def submit_answers():
 
     if not answers:
         return jsonify({"error": "Answers required"}), 400
-
-    print("SUBMIT API HIT")
 
     scores = []
     total_fillers = 0
@@ -133,18 +132,11 @@ def submit_answers():
     # 🎯 MANUAL SCORE
     manual_score = scorer.calculate_score(scores)
 
-    # 🔥 GEMINI AI
-    print("👉 Before AI call")
-
+    # 🔥 AI FEEDBACK
     try:
         ai_result = feedback_generator.generate_feedback(answers)
-
-        if not isinstance(ai_result, dict):
-            raise Exception("Invalid AI response")
-
     except Exception as e:
         print("❌ Gemini ERROR:", e)
-
         ai_result = {
             "score": 5,
             "technical": "Basic understanding present but needs improvement.",
@@ -157,15 +149,12 @@ def submit_answers():
             ]
         }
 
-    print("👉 After AI call")
-
     # 🔥 AI SCORE
     try:
         ai_score = float(ai_result.get("score", 5))
     except:
         ai_score = 5
 
-    # 🔥 FINAL SCORE
     final_score = round((manual_score * 0.6) + (ai_score * 10 * 0.4), 2)
 
     # 🎯 BREAKDOWN
@@ -180,14 +169,10 @@ def submit_answers():
         try:
             image = decode_image(image_data)
             faces = face_detector.detect_faces(image)
-            face_count = len(faces)
             face_position = face_detector.get_face_position(image, faces)
-        except Exception as e:
-            print("FACE ERROR:", e)
-            face_count = 0
+        except:
             face_position = "no_face"
     else:
-        face_count = 0
         face_position = "no_face"
 
     # ⚠️ WARNING
@@ -198,34 +183,22 @@ def submit_answers():
     else:
         warning = ""
 
-    # 🎯 ENGAGEMENT
-    engagement_score = engagement_tracker.calculate_engagement(face_count)
-
     # 🎯 CONFIDENCE
+    engagement_score = engagement_tracker.calculate_engagement(1)
+
     confidence_score = confidence_estimator.estimate_confidence(
         engagement_score,
         communication_score
     )
 
-    if face_position == "center":
-        confidence_score += 5
-    elif face_position in ["left", "right"]:
-        confidence_score -= 5
-    elif face_position == "no_face":
-        confidence_score -= 15
-
-    confidence_score = max(0, min(100, confidence_score))
-
-    # 🔥 FINAL FEEDBACK
+    # 🔥 FINAL FEEDBACK FORMAT
     feedback = (
-        f"Technical: {ai_result.get('technical')}\n"
-        f"Communication: {ai_result.get('communication')}\n"
-        f"Confidence: {ai_result.get('confidence')}"
+        f"{ai_result.get('technical')}\n"
+        f"{ai_result.get('communication')}\n"
+        f"{ai_result.get('confidence')}"
     )
 
     suggestions = ai_result.get("suggestions", [])
-
-    print("RETURN SUCCESS")
 
     return jsonify({
         "total_score": float(final_score),
@@ -263,6 +236,5 @@ def check_face():
 
         return jsonify({"warning": warning})
 
-    except Exception as e:
-        print("FACE ERROR:", e)
+    except:
         return jsonify({"warning": ""})
