@@ -31,7 +31,7 @@
     font-family: 'Poppins', sans-serif;
     font-weight: 650;
    padding-top: 50px;
-   font-size: clamp(5.5rem, 7vw, 7rem);
+   font-size: clamp(5rem, 6.4vw, 7rem);
     line-height: 1.1;
     letter-spacing: -0.02em;
     color: var(--text-primary);
@@ -40,6 +40,14 @@
     -webkit-text-fill-color: transparent;
     background-clip: text;
     animation: fade-up 0.8s ease-out 0.2s both;
+}
+.logo-top p{
+
+    font-size: 16px;
+    color: #a0aec0; /* soft gray */
+    margin-top: 10px;
+    max-width: 420px;
+    line-height: 1.5;
 }
 
 .logo-img {
@@ -96,15 +104,6 @@ body.auth-page::before {
 }
 
 /* CONTAINER */
-/* .auth-container {
-    width: 100%;
-    display: flex;
-    justify-content: flex-end;
-    align-items: flex-start;
-    padding-top: 80px;
-    padding-right: 10%;
-    height: 100vh;
-} */
 
 .auth-container {
     width: 100%;
