@@ -24,11 +24,12 @@ html, body {
 }
 
 .logo-top {
-    position: absolute;
-    left: 80px;
-    top: 80px;
-    max-width: 500px;
-
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;   /* 🔥 vertical center */
+    align-items: flex-start;   /* left alignment */
+    padding-left: 80px;
 }
 
 .logo-top img {
@@ -38,14 +39,19 @@ html, body {
 }
 
 
+.logo-top .subtitle {
+    margin-top: 15px;
+}
+
 
 .logo-top h1{
    /* font-size: clamp(4.5rem, 7vw, 6rem); */
+    margin: 0;
+    line-height: 1.1;
     font-family: 'Poppins', sans-serif;
     font-weight: 650;
-   padding-top: 50px;
-   font-size: clamp(5rem, 6.4vw, 7rem);
-    line-height: 1.1;
+    font-size: clamp(5rem, 6vw, 7rem);
+
     letter-spacing: -0.02em;
     color: var(--text-primary);
     background: linear-gradient(135deg, var(--text-primary) 0%, var(--accent-cyan) 100%);
