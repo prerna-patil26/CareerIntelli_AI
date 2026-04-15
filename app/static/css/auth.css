@@ -23,6 +23,12 @@ body {
 }
 
 .logo-top {
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;   /* 🔥 vertical center */
+    align-items: flex-start;   /* left alignment */
+    padding-left: 80px;
     position: fixed;
     top: 0;
     left: 0;
@@ -36,6 +42,21 @@ body {
     margin-bottom: 20px;
 }
 
+
+
+.logo-top .subtitle {
+    margin-top: 15px;
+}
+
+
+.logo-top h1{
+   /* font-size: clamp(4.5rem, 7vw, 6rem); */
+    margin: 0;
+    line-height: 1.1;
+    font-family: 'Poppins', sans-serif;
+    font-weight: 650;
+    font-size: clamp(5rem, 6vw, 7rem);
+}
 .logo-top h1 {
     font-family: 'Poppins', sans-serif;
     font-weight: 650;
