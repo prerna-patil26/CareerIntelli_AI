@@ -96,6 +96,9 @@
 
 </div>
 
+{% set chatbot_page = 'interview-result' %}
+{% include 'shared/chatbot_widget.html' %}
+
 <!-- JS -->
 <script src="{{ url_for('static', filename='js/result.js') }}"></script>
 
