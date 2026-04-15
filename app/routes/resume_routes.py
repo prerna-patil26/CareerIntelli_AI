@@ -95,11 +95,11 @@ def upload_resume():
     """
     try:
         # ---------- FILE VALIDATION ----------
-        if "file" not in request.files:
+        file = request.files.get("file") or request.files.get("resume")
+        if not file:
             logger.warning("Resume upload attempt with no file provided")
             return render_template("resume_upload.html", error="No file provided")
 
-        file = request.files["file"]
         is_valid, error_msg = validate_file(file)
         
         if not is_valid:
