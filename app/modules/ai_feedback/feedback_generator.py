@@ -5,7 +5,7 @@ from google.genai import types
 
 class FeedbackGenerator:
     def __init__(self):
-        self.api_key = "AIzaSyD6L6n1PV_BymX6YyyLIpL8AINuMeA9AH4"
+        self.api_key = "AIzaSyD6L6n1PV_BymX6YyyLIpL8AINuMeA9AH4"   # 🔥 yaha apni key daalo
         self.model = "gemini-3.1-flash-lite-preview"
         self.client = genai.Client(api_key=self.api_key)
 
@@ -30,6 +30,7 @@ RULES:
 - No generic feedback
 - No extra text outside JSON
 """
+
         try:
             response = self.client.models.generate_content(
                 model=self.model,
@@ -40,18 +41,29 @@ RULES:
                 ),
             )
 
-            content = response.text
+            # ✅ FIX (NEW SDK parsing)
+            if not response.candidates:
+                raise Exception("No response from Gemini")
+
+            content = response.candidates[0].content.parts[0].text
+
             print("🔍 GEMINI RAW RESPONSE:", content)
 
-            # Clean and parse JSON
+            # JSON extract
             start = content.find("{")
             end = content.rfind("}") + 1
+
+            if start == -1 or end == 0:
+                raise Exception("Invalid JSON format")
+
             clean_json = content[start:end]
             parsed = json.loads(clean_json)
+
             return parsed
 
         except Exception as e:
             print("❌ Gemini Error:", e)
+
             return {
                 "score": 6,
                 "technical": "Basic understanding present but needs improvement.",
