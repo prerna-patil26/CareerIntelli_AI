@@ -23,10 +23,10 @@
         </video> -->
         <h1>Step Into Your Future</h1>
         <p class="subtitle">
-        Leverage AI to analyze your resume, uncover hidden gaps, and get personalized improvement suggestions.
-Optimize your profile, enhance your skills, and move closer to your dream career with confidence.
+            <span id="typing-text"></span>
+            <span class="cursor">|</span>
         </p>
-
+                
     </div>
 
 
@@ -85,6 +85,43 @@ Optimize your profile, enhance your skills, and move closer to your dream career
             btn.classList.add("loading");
             text.innerText = "Logging in...";
         }
+
+        const texts = [
+            "Analyze your resume, uncover hidden gaps, and get smart AI-driven improvement suggestions.",
+            "Discover better career paths, optimize your profile, and boost your chances of getting hired.",
+            "Leverage AI to refine your skills, strengthen your resume, and move closer to your dream career."
+        ];
+
+        let index = 0;
+        let charIndex = 0;
+        let isDeleting = false;
+
+        const typingElement = document.getElementById("typing-text");
+
+        function typeEffect() {
+            let currentText = texts[index];
+
+            if (isDeleting) {
+                typingElement.textContent = currentText.substring(0, charIndex--);
+            } else {
+                typingElement.textContent = currentText.substring(0, charIndex++);
+            }
+
+            let speed = isDeleting ? 40 : 70;
+
+            if (!isDeleting && charIndex === currentText.length) {
+                speed = 1500; // pause after typing
+                isDeleting = true;
+            } else if (isDeleting && charIndex === 0) {
+                isDeleting = false;
+                index = (index + 1) % texts.length;
+                speed = 300;
+            }
+
+            setTimeout(typeEffect, speed);
+        }
+
+        typeEffect();
     </script>
 
 </body>

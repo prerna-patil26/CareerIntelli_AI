@@ -34,6 +34,7 @@ body {
     left: 0;
     z-index: 9999;
     padding: 10px 20px;
+    max-width: 700px;
 }
 
 .logo-top img {
@@ -56,12 +57,10 @@ body {
     font-family: 'Poppins', sans-serif;
     font-weight: 650;
     font-size: clamp(5rem, 6vw, 7rem);
-}
-.logo-top h1 {
     font-family: 'Poppins', sans-serif;
     font-weight: 650;
     padding-top: 50px;
-    font-size: clamp(5rem, 6.4vw, 7rem);
+    font-size: clamp(5rem, 6.3vw, 7rem);
     line-height: 1.1;
     letter-spacing: -0.02em;
     color: var(--text-primary);
@@ -76,8 +75,9 @@ body {
     font-size: 16px;
     color: #a0aec0;
     margin-top: 10px;
-    max-width: 420px;
-    line-height: 1.5;
+    width: 100%;
+    max-width: 650px;
+    line-height: 1.6;
 }
 
 .logo-img {
@@ -181,6 +181,8 @@ body.auth-page::before {
     color: #94a3b8;
     margin-top: -10px;
     margin-bottom: 20px;
+    max-width: 900px; 
+    line-height: 1.6;
 }
 
 .input-group {
@@ -340,3 +342,17 @@ input:-webkit-autofill:active {
     opacity: 0.8;
 }
 
+.cursor {
+    display: inline-block;
+    margin-left: 5px;
+    animation: blink 1s infinite;
+}
+
+@keyframes blink {
+    0%, 50%, 100% { opacity: 1; }
+    25%, 75% { opacity: 0; }
+}
+.subtitle {
+    font-size: 1.1rem;
+    min-height: 50px; /* jumping avoid karega */
+}
