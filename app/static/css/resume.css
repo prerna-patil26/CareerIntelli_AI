@@ -171,3 +171,358 @@
     color: red;
     margin-top: 10px;
 }
+
+
+
+/* =========================
+   RESUME UPLOAD UI
+========================= */
+
+.upload-card {
+  max-width: 500px;
+  margin: 40px auto;
+  padding: 30px;
+  border-radius: 20px;
+  background: rgba(255,255,255,0.05);
+  border: 1px solid rgba(255,255,255,0.08);
+  backdrop-filter: blur(10px);
+  text-align: center;
+}
+
+.upload-box {
+  padding: 40px 20px;
+  border: 2px dashed rgba(255,255,255,0.2);
+  border-radius: 15px;
+  margin-bottom: 20px;
+  transition: 0.3s;
+}
+
+.upload-box:hover {
+  border-color: #7b2ff7;
+  box-shadow: 0 0 20px rgba(123,47,247,0.3);
+}
+
+.upload-box p {
+  font-size: 18px;
+  margin-bottom: 10px;
+}
+
+.upload-box span {
+  display: block;
+  margin: 10px 0;
+  color: #94a3b8;
+}
+
+.upload-box button {
+  padding: 10px 20px;
+  border-radius: 10px;
+  border: none;
+  background: linear-gradient(135deg, #4facfe, #7b2ff7);
+  color: white;
+  cursor: pointer;
+}
+
+.file-name {
+  margin-top: 10px;
+  font-size: 14px;
+  color: #4facfe;
+  font-weight: 500;
+  display: block;
+}
+
+.upload-btn {
+  width: 100%;
+  padding: 14px;
+  border-radius: 16px;
+  border: none;
+  background: linear-gradient(135deg, #5d7dff, #9c4eff);
+  color: white;
+  font-weight: 600;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.upload-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 0 28px rgba(93, 125, 255, 0.35);
+}
+
+/* ================= RESULT UI ================= */
+
+.result-section {
+  margin-top: 30px;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.result-grid {
+  display: grid;
+  gap: 22px;
+  width: 100%;
+}
+
+.result-grid.two-column {
+  grid-template-columns: 1fr 1fr;
+  align-items: stretch;
+}
+
+@media (max-width: 1180px) {
+  .result-grid.two-column {
+    grid-template-columns: 1fr;
+  }
+}
+
+.full-width-card {
+  width: 100%;
+}
+
+.full-width-panel {
+  width: 100%;
+}
+
+/* FILE INFO CARD */
+.file-info-card {
+  background: rgba(79,172,254,0.1);
+  border: 1px solid rgba(79,172,254,0.3);
+  padding: 16px 22px;
+  border-radius: 14px;
+  margin-bottom: 8px;
+}
+
+.file-name-display {
+  margin: 0;
+  font-size: 14px;
+  color: #e0f2fe;
+}
+
+.file-name-display strong {
+  color: #4facfe;
+}
+
+/* SCORE CARD */
+.score-card {
+  text-align: center;
+  padding: 30px;
+  border-radius: 24px;
+  background: linear-gradient(135deg, #4facfe, #7b2ff7);
+  box-shadow: 0 0 40px rgba(123,47,247,0.35);
+  min-height: 280px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 15px;
+}
+
+.skills-card {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  min-height: 340px;
+}
+
+.ai-panel {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.ai-block {
+  background: rgba(255,255,255,0.06);
+  border: 1px solid rgba(255,255,255,0.12);
+  border-radius: 22px;
+  padding: 22px;
+}
+
+.ai-block h3 {
+  margin-bottom: 16px;
+  font-size: 18px;
+}
+
+.chart-card {
+  min-height: 360px;
+}
+
+.ai-tip {
+  margin-bottom: 12px;
+}
+
+.empty-state {
+  color: #cbd5e1;
+  font-size: 14px;
+  font-style: italic;
+}
+
+.score-card h2 {
+  margin: 0;
+  font-size: 28px;
+  order: 1;
+}
+
+.score-card .circle {
+  order: 2;
+}
+
+.score-card p {
+  margin: 0;
+  order: 3;
+  font-size: 14px;
+  opacity: 0.95;
+}
+
+/* CIRCLE */
+.score-circle {
+  width: 120px;
+  height: 120px;
+  margin: 0 auto 15px;
+  border-radius: 50%;
+  background: white;
+  color: #4facfe;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 28px;
+  font-weight: bold;
+}
+
+/* RESULT CARDS */
+.result-card {
+  padding: 25px;
+  border-radius: 22px;
+  background: rgba(12, 20, 46, 0.88);
+  border: 1px solid rgba(79, 132, 255, 0.15);
+}
+
+.result-card h3 {
+  margin-bottom: 15px;
+}
+
+/* SKILLS */
+.skills {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.skill-tag {
+  padding: 8px 14px;
+  border-radius: 20px;
+  background: linear-gradient(135deg, #4facfe, #7b2ff7);
+  font-size: 13px;
+}
+
+/* DANGER */
+.result-card.danger {
+  border-color: rgba(239,68,68,0.4);
+}
+
+.danger-tag {
+  background: linear-gradient(135deg, #ef4444, #dc2626);
+}
+/* ================= NEXT LEVEL RESULT ================= */
+
+/* SCORE CIRCLE */
+.circle-wrap {
+  width: 150px;
+  height: 150px;
+  margin: 0 auto;
+  position: relative;
+}
+
+/* Removed conflicting .circle definition - using ANIMATED SCORE CIRCLE below */
+
+/* SKILL TAGS */
+.skill-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-top: 14px;
+}
+
+.skill-chip {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 10px 16px;
+  min-width: 110px;
+  max-width: 220px;
+  border-radius: 999px;
+  background: rgba(255,255,255,0.08);
+  color: #fff;
+  font-size: 14px;
+  font-weight: 500;
+  overflow: hidden;
+  border: 1px solid rgba(255,255,255,0.12);
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.skill-chip::before {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: var(--skill-strength, 70%);
+  height: 4px;
+  background: linear-gradient(90deg, #4facfe, #7b2ff7);
+  border-radius: 999px;
+  opacity: 0.95;
+}
+
+.skill-strength {
+  display: none;
+}
+
+/* AI Suggestions */
+
+
+.ai-card {
+    margin-top: 20px;
+    background: rgba(255,255,255,0.03);
+    border-radius: 16px;
+    padding: 20px;
+    border: 1px solid rgba(255,255,255,0.08);
+}
+
+.ai-subtitle {
+    font-size: 14px;
+    color: #aaa;
+    margin-bottom: 15px;
+}
+
+.ai-suggestions {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.ai-tip {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    background: rgba(255,255,255,0.04);
+    padding: 12px 15px;
+    border-radius: 10px;
+    border-left: 3px solid #7c5cff;
+    transition: 0.3s;
+}
+
+.ai-tip:hover {
+    transform: translateX(5px);
+    background: rgba(124,92,255,0.1);
+}
+
+.ai-icon {
+    font-size: 18px;
+}
+
+.ai-tip p {
+    margin: 0;
+    font-size: 14px;
+}
+
+.ai-tip.success {
+    border-left: 3px solid #4CAF50;
+}

@@ -96,7 +96,7 @@ body.auth-page::before {
 }
 
 /* CONTAINER */
-.auth-container {
+/* .auth-container {
     width: 100%;
     display: flex;
     justify-content: flex-end;
@@ -104,7 +104,20 @@ body.auth-page::before {
     padding-top: 80px;
     padding-right: 10%;
     height: 100vh;
+} */
+
+.auth-container {
+    width: 100%;
+    display: flex;
+
+    justify-content: center;
+    align-items: center;
+
+    height: 100vh;
+    padding: 0;
 }
+
+
 
 /* BOX */
 .auth-box {

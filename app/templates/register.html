@@ -10,6 +10,9 @@
 
     <link rel="stylesheet" href="{{ url_for('static', filename='css/base.css') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/auth.css') }}">
+    <style>
+
+    </style>
 </head>
 
 <body class="auth-page">
@@ -17,14 +20,18 @@
         <source src="{{ url_for('roadmap_page_routes.roadmap_assets', filename='bg.mp4') }}" type="video/mp4">
     </video>
     <div class="app-bg-overlay" aria-hidden="true"></div>
+    <div class="logo-top">
+        <!-- <video autoplay loop muted playsinline class="logo-video">
+            <source src="{{ url_for('static', filename='videos/logo large.gif') }}" type="video/gif">
+        </video> -->
+        <video autoplay loop muted playsinline class="logo-video">
+            <source src="{{ url_for('static', filename='videos/logo3.mp4') }}" type="video/mp4">
+        </video>
 
-    <!-- 🔵 TOP LEFT TITLE -->
-    <div class="top-header">
-        CareerIntelli AI
     </div>
 
     <!-- 🔵 RIGHT SIDE FORM -->
-    <div class="auth-container" style="padding-top: 40px; justify-content: center;  
+    <div class="auth-container" style="padding-top: 20px; justify-content: center;  
   padding-right: 0; max-width: 1200px;
   margin: auto;">
         <div class="auth-box" style="max-width: 420px;
