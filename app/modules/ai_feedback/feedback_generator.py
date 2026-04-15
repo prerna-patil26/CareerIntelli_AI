@@ -71,7 +71,7 @@ Return STRICT JSON only — no markdown, no extra text:
                     model=model,
                     contents=prompt,
                     config=types.GenerateContentConfig(
-                        max_output_tokens=2000,  # enough for full JSON
+                        max_output_tokens=1500,  # enough for full JSON
                         temperature=0.4,
                     ),
                 )
@@ -92,7 +92,7 @@ Return STRICT JSON only — no markdown, no extra text:
                     model=model,
                     messages=[{"role": "user", "content": prompt}],
                     temperature=0.4,
-                    max_tokens=2000,
+                    max_tokens=1500,
                 )
                 content = response.choices[0].message.content
                 print(f"🔍 OpenRouter ({model}) RESPONSE:", content)

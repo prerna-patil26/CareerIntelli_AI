@@ -2,6 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>AI Interview</title>
 
     <link rel="stylesheet" href="{{ url_for('static', filename='css/interview.css') }}">
@@ -12,51 +13,84 @@
         <source src="{{ url_for('roadmap_page_routes.roadmap_assets', filename='bg.mp4') }}" type="video/mp4">
     </video>
     <div class="app-bg-overlay" aria-hidden="true"></div>
-    <!-- 🔥 LOADER -->
-<div id="loader" style="display:none;">
-    <div class="loader-box">
-        <div class="spinner"></div>
-        <p>Analyzing your interview...</p>
-    </div>
-</div>
 
-<div class="main-container">
-
-    <!-- 🎥 CAMERA -->
-    <div class="camera-section">
-        <video id="interview-video" autoplay></video>
-        <div class="bot-icon">🤖</div>
+    <div class="top-nav">
+        <a class="dashboard-btn" href="{{ url_for('home.dashboard') }}">Dashboard</a>
     </div>
 
-    <!-- 🧠 RIGHT PANEL -->
-    <div class="question-section">
+    <main class="interview-shell">
+        <section class="intro-screen" id="introScreen">
+            <div class="intro-copy">
+                <p class="intro-eyebrow">✨ AI Career Guidance</p>
+                <h1>AI Interview</h1>
+                <p class="intro-subtitle">Enter a focused interview environment built to test your clarity, confidence, and technical depth with real-time AI-backed guidance.</p>
+                <img class="intro-first-image" src="{{ url_for('roadmap_page_routes.roadmap_assets', filename='first.png') }}" alt="AI interview illustration">
+                <button type="button" class="start-interview-btn" id="startInterviewBtn">Let's Start the Interview</button>
+            </div>
+        </section>
 
-        <h2>Select Domain</h2>
+        <section class="popup-overlay" id="startPopup" aria-hidden="true">
+            <div class="popup-card" role="status" aria-live="polite">
+                <div class="popup-glow"></div>
+                <div class="popup-robot-wrap">
+                    <img class="popup-robot" src="{{ url_for('roadmap_page_routes.roadmap_assets', filename='robo.png') }}" alt="AI robot loading">
+                </div>
+                <div class="popup-copy">
+                    <p class="popup-eyebrow">AI Interview Mode</p>
+                    <h2>Loading your interview room</h2>
+                    <p>Your personalized questions and face-check tools are getting ready. Please wait a moment.</p>
+                </div>
+                <div class="popup-spinner-row">
+                    <span></span><span></span><span></span>
+                </div>
+            </div>
+        </section>
 
-        <input type="text" id="searchBox" placeholder="Search domain...">
-        <ul id="domainList"></ul>
-
-        <button onclick="startInterview()">Start Interview</button>
-
-        <div id="interviewSection" style="display:none;">
-
-            <h3 id="questionText"></h3>
-
-            <!-- ✅ UPDATED BUTTONS ONLY -->
-            <button onclick="startSpeechRecognition()">🎤 Start Speaking</button>
-            <button onclick="stopSpeechRecognition()">⛔ Stop</button>
-
-            <p><b>Your Answer:</b></p>
-            <p id="answerText"></p>
-
-            <button id="nextBtn" onclick="nextQuestion()">Next</button>
-            
+        <!-- 🔥 LOADER -->
+        <div id="loader">
+            <div class="loader-box">
+                <div class="spinner"></div>
+                <p>Analyzing your interview...</p>
+            </div>
         </div>
 
-    </div>
+        <div class="main-container" id="interviewApp" hidden>
+            <!-- 🎥 CAMERA -->
+            <div class="camera-section">
+                <video id="interview-video" autoplay></video>
+                <div class="bot-icon">🤖</div>
+            </div>
 
-</div>
-<div id="warningBox" style="display:none;"></div>
+            <!-- 🧠 RIGHT PANEL -->
+            <div class="question-section">
+
+                <h2>Select Domain</h2>
+
+                <input type="text" id="searchBox" placeholder="Search domain...">
+                <ul id="domainList"></ul>
+
+                <button type="button" onclick="startInterview()">Start Interview</button>
+
+                <div id="interviewSection">
+
+                    <h3 id="questionText"></h3>
+
+                    <!-- ✅ UPDATED BUTTONS ONLY -->
+                    <button type="button" onclick="startSpeechRecognition()">🎤 Start Speaking</button>
+                    <button type="button" onclick="stopSpeechRecognition()">⛔ Stop</button>
+
+                    <p><b>Your Answer:</b></p>
+                    <p id="answerText"></p>
+
+                    <button id="nextBtn" type="button" onclick="nextQuestion()">Next</button>
+                
+                </div>
+
+            </div>
+        </div>
+    </main>
+
+    <div id="warningBox"></div>
 
 {% set chatbot_page = 'interview' %}
 {% include 'shared/chatbot_widget.html' %}
