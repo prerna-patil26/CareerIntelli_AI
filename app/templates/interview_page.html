@@ -58,6 +58,9 @@
 </div>
 <div id="warningBox" style="display:none;"></div>
 
+{% set chatbot_page = 'interview' %}
+{% include 'shared/chatbot_widget.html' %}
+
 <!-- ✅ ONLY THIS JS -->
 <script src="{{ url_for('static', filename='js/interview.js') }}"></script>
 

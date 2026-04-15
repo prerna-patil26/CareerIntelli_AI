@@ -18,6 +18,7 @@ from app.routes.engagement_routes import engagement_bp
 from app.routes.report_routes import report_bp
 from app.routes.home_routes import home_bp
 from app.routes.roadmap_routes import roadmap_page_routes, roadmap_api_routes
+from app.routes.chatbot_routes import chatbot_bp
 
 
 # Load environment variables (.env)
@@ -55,6 +56,7 @@ def create_app(config_name="development"):
     app.register_blueprint(home_bp)
     app.register_blueprint(roadmap_page_routes)
     app.register_blueprint(roadmap_api_routes)
+    app.register_blueprint(chatbot_bp)
 
     # Home route
     @app.route("/")

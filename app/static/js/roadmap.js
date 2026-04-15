@@ -1,7 +1,5 @@
 /* ==================== AI CAREER ROADMAP - VIDEO EDITION ==================== */
 
-const GEMINI_API_KEY = 'AIzaSyAcSlqQOMxNQ-NpIO-4sR2reYxkhH44JLg';
-
 let appState = {
     allRoles: [],
     allSkills: [],
@@ -23,7 +21,6 @@ document.addEventListener('DOMContentLoaded', async () => {
     await loadRolesAndSkills();
     setupEventListeners();
     initializePageTransitions();
-    setupChatSuggestions();
     
     console.log('✓ App initialized');
 });
@@ -147,11 +144,6 @@ function setupEventListeners() {
         timelineForm.addEventListener('submit', onTimelineSubmit);
     }
 
-    const globalBackBtn = document.getElementById('global-back-btn');
-    if (globalBackBtn) {
-        globalBackBtn.addEventListener('click', goBackToPreviousPage);
-    }
-
     const globalProgressBtn = document.getElementById('global-progress-btn');
     if (globalProgressBtn) {
         globalProgressBtn.addEventListener('click', () => switchToPage(3));
@@ -167,11 +159,6 @@ function setupEventListeners() {
         }
     });
     
-    // Chat input enter key
-    document.getElementById('chat-input').addEventListener('keypress', (e) => {
-        if (e.key === 'Enter') sendChatMessage();
-    });
-
     document.addEventListener('click', (event) => {
         const rippleTarget = event.target.closest('.top-right-button, .btn-generate, .btn-small, .timeline-add-btn, .timeline-action-btn, .btn-action');
         if (rippleTarget) {
@@ -524,12 +511,7 @@ function goBackToPreviousPage() {
 }
 
 function updateTopControls() {
-    const backBtn = document.getElementById('global-back-btn');
     const progressBtn = document.getElementById('global-progress-btn');
-
-    if (backBtn) {
-        backBtn.disabled = appState.currentPage === 1 && appState.pageHistory.length === 0;
-    }
     if (progressBtn) {
         progressBtn.disabled = appState.currentPage === 3;
     }
@@ -730,114 +712,6 @@ function deleteTimelineEntry(planId) {
         }
     }
     renderProgressPage();
-}
-
-// ============ VIDEO CHATBOT ============
-function toggleChatPanel() {
-    const panel = document.getElementById('chat-panel');
-    panel.classList.toggle('open');
-    
-    if (panel.classList.contains('open')) {
-        document.getElementById('chat-input').focus();
-    }
-}
-
-function setupChatSuggestions() {
-    document.querySelectorAll('[data-chat-suggestion]').forEach((button) => {
-        button.addEventListener('click', () => {
-            const input = document.getElementById('chat-input');
-            if (input) {
-                input.value = button.dataset.chatSuggestion || '';
-                sendChatMessage();
-            }
-        });
-    });
-}
-
-async function sendChatMessage(overrideMessage = '') {
-    const input = document.getElementById('chat-input');
-    const messagesDiv = document.getElementById('chat-messages');
-    
-    const message = (overrideMessage || input.value).trim();
-    if (!message) return;
-    
-    // Add user message
-    const userMsg = document.createElement('div');
-    userMsg.className = 'message user';
-    userMsg.textContent = message;
-    messagesDiv.appendChild(userMsg);
-    
-    input.value = '';
-    messagesDiv.scrollTop = messagesDiv.scrollHeight;
-    
-    try {
-        const prompt = `Act as a career guide and mentor.
-
-Only provide guidance related to:
-
-* skills
-* career roadmap
-* learning path
-
-Do NOT answer unrelated questions.
-
-Keep answers short, helpful, and clear.
-
-Speak like a friendly buddy guiding the user.
-
-Current role: ${appState.selectedRole}
-Known skills: ${appState.selectedSkills.join(', ')}
-User message: ${message}`;
-        
-        const response = await fetch('https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=' + GEMINI_API_KEY, {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({
-                contents: [{ parts: [{ text: prompt }] }]
-            })
-        });
-        
-        let botText = "Keep learning! You're doing great! 🚀";
-        
-        if (response.ok) {
-            const data = await response.json();
-            botText = data.candidates?.[0]?.content?.parts?.[0]?.text || botText;
-        }
-        
-        const botMsg = document.createElement('div');
-        botMsg.className = 'message bot';
-        const bubble = document.createElement('div');
-        bubble.className = 'message-text typing-message';
-        botMsg.appendChild(bubble);
-        messagesDiv.appendChild(botMsg);
-        typeMessage(bubble, botText);
-    } catch (error) {
-        console.error('Chat error:', error);
-        const botMsg = document.createElement('div');
-        botMsg.className = 'message bot';
-        const bubble = document.createElement('div');
-        bubble.className = 'message-text typing-message';
-        botMsg.appendChild(bubble);
-        messagesDiv.appendChild(botMsg);
-        typeMessage(bubble, "I'm here to help! Keep exploring your career path. 🌟");
-    }
-    
-    messagesDiv.scrollTop = messagesDiv.scrollHeight;
-}
-
-function typeMessage(element, text) {
-    let index = 0;
-    element.textContent = '';
-
-    const step = () => {
-        element.textContent = text.slice(0, index);
-        index += 1;
-        if (index <= text.length) {
-            setTimeout(step, 18);
-        }
-    };
-
-    step();
 }
 
 function createRipple(target, event) {
