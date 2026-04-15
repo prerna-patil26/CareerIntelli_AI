@@ -14,10 +14,12 @@ let interviewStarted = false;
 
 // ✅ ADDED (store interval globally)
 let faceInterval = null;
+let interviewLaunchTimer = null;
 
 document.addEventListener('DOMContentLoaded', function() {
     initializeCamera();
     loadDomains();
+    wireInterviewLaunch();
 
     // 🔥 FIXED FACE CHECK (store interval)
     faceInterval = setInterval(() => {
@@ -48,6 +50,37 @@ async function initializeCamera() {
     } catch (error) {
         alert('Please allow camera access');
     }
+}
+
+function wireInterviewLaunch() {
+    const startButton = document.getElementById('startInterviewBtn');
+
+    if (!startButton) return;
+
+    startButton.addEventListener('click', () => {
+        const popup = document.getElementById('startPopup');
+        if (popup) {
+            popup.classList.add('is-visible');
+            popup.setAttribute('aria-hidden', 'false');
+        }
+
+        if (interviewLaunchTimer) {
+            clearTimeout(interviewLaunchTimer);
+        }
+
+        interviewLaunchTimer = setTimeout(() => {
+            if (popup) {
+                popup.classList.remove('is-visible');
+                popup.setAttribute('aria-hidden', 'true');
+            }
+
+            document.body.classList.add('interview-ready');
+            const interviewApp = document.getElementById('interviewApp');
+            if (interviewApp) {
+                interviewApp.hidden = false;
+            }
+        }, 2000);
+    });
 }
 
 // 📋 LOAD DOMAINS
@@ -92,6 +125,11 @@ function startInterview() {
         return;
     }
 
+    const loader = document.getElementById("loader");
+    if (loader) {
+        loader.classList.add("is-visible");
+    }
+
     interviewStarted = true;
 
     fetch('/interview/start', {
@@ -103,6 +141,10 @@ function startInterview() {
     .then(data => {
         questions = data.questions;
         currentIndex = 0;
+
+        if (loader) {
+            loader.classList.remove("is-visible");
+        }
 
         document.getElementById("interviewSection").style.display = "block";
 

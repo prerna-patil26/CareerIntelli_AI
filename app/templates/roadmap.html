@@ -87,23 +87,64 @@
             overflow-x: hidden;
         }
 
-        /* Title Styling - Match Career Page */
-        .page-title {
-            font-size: 3rem;
-            font-weight: 800;
-            background: linear-gradient(135deg, #ffffff, #10B981);
+        /* Hero Styling - Match Career Page */
+        .roadmap-hero,
+        .roadmap-header,
+        .page3-hero {
+            text-align: center;
+        }
+
+        .roadmap-eyebrow {
+            margin-bottom: 12px;
+            font-size: 0.85rem;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            color: #22D3EE;
+            opacity: 0.9;
+            text-shadow: 0 0 20px rgba(34, 211, 238, 0.3);
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+        }
+
+        .roadmap-title {
+            font-size: clamp(2.4rem, 5vw, 4.5rem);
+            line-height: 1.1;
+            letter-spacing: -0.02em;
+            color: #ffffff;
+            background: linear-gradient(135deg, #ffffff 0%, #22D3EE 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
-            text-shadow: 0 0 30px rgba(16, 185, 129, 0.3);
-            margin-bottom: 1rem;
-            animation: typing 0.5s ease;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
         }
 
-        .page-subtitle {
-            font-size: 1.1rem;
+        .roadmap-copy,
+        .page3-subtitle {
+            max-width: 760px;
+            margin: 16px auto 0;
+            font-size: 1.05rem;
+            line-height: 1.7;
             color: rgba(255, 255, 255, 0.7);
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+        }
+
+        .roadmap-header {
+            margin-bottom: 3rem;
+        }
+
+        .page3-hero {
             margin-bottom: 2rem;
+        }
+
+        .page3-title {
+            font-size: clamp(2rem, 4vw, 3rem);
+            line-height: 1.1;
+            letter-spacing: -0.02em;
+            color: #ffffff;
+            background: linear-gradient(135deg, #ffffff 0%, #22D3EE 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
         }
 
         /* ============ PAGE 1: INPUT ============ */
@@ -664,8 +705,11 @@
         <!-- PAGE 1: INPUT -->
         <div id="page1" class="view active">
             <div class="page1-container">
-                <h1 class="page-title">🚀 AI Career Roadmap</h1>
-                <p class="page-subtitle">Design your personalized learning journey with AI</p>
+                <div class="roadmap-hero">
+                    <p class="roadmap-eyebrow">✨ AI Career Guidance</p>
+                    <h1 class="roadmap-title">AI Career Roadmap</h1>
+                    <p class="roadmap-copy">Discover the skills you already have, the gaps that matter most, and a step-by-step learning journey tailored to your target role. Your roadmap is built to turn your current profile into a clear plan for growth.</p>
+                </div>
 
                 <div class="form-section">
                     <form id="roadmap-form">
@@ -701,10 +745,11 @@
         <!-- PAGE 2: ROADMAP -->
         <div id="page2" class="view">
             <div class="page2-container">
-                <heading class="roadmap-header">
-                    <h1 class="page-title" id="roadmap-title">Your Career Roadmap 🚀</h1>
-                    <p class="page-subtitle">Interactive learning path personalized for you</p>
-                </heading>
+                <header class="roadmap-header">
+                    <p class="roadmap-eyebrow">✨ AI Career Guidance</p>
+                    <h1 class="roadmap-title" id="roadmap-title">Your Career Roadmap</h1>
+                    <p class="roadmap-copy">Interactive learning path personalized for your target role, current strengths, and the exact skills you still need to build.</p>
+                </header>
 
                 <div class="neural-roadmap" id="roadmap-container"></div>
             </div>
@@ -714,8 +759,8 @@
         <div id="page3" class="view">
             <div class="page3-container">
                 <div class="page3-hero">
-                    <h1 class="page3-title">Your Learning Timeline 📅</h1>
-                    <p class="page3-subtitle">Track your completed skills and plan your next steps.</p>
+                    <h1 class="page3-title">Your Learning Timeline</h1>
+                    <p class="page3-subtitle">Track your completed skills, monitor progress, and keep your next learning steps organized in one place.</p>
                 </div>
 
                 <div class="stats-grid" id="stats-grid"></div>
