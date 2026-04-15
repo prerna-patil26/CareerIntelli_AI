@@ -4,17 +4,24 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>CareerIntelli AI - Login</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/base.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/auth.css') }}">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@600;700;800&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Poppins:wght@400;500&display=swap" rel="stylesheet">
 </head>
 <body class="auth-page">
-    <!-- 🔵 TOP LEFT TITLE -->
-    <div class="top-header">
-        <span class="top-brand">CareerIntelli AI</span>
-        <video autoplay loop muted class="logo-video">
-            <source src="{{ url_for('static', filename='videos/logo large (1).mp4') }}" type="video/mp4">
+    <div class="logo-top">
+        <!-- <video autoplay loop muted playsinline class="logo-video">
+            <source src="{{ url_for('static', filename='videos/logo large.gif') }}" type="video/gif">
+        </video> -->
+        <video autoplay loop muted playsinline class="logo-video">
+            <source src="{{ url_for('static', filename='videos/logo3.mp4') }}" type="video/mp4">
         </video>
+        <h1>Your Career, Powered by AI </h1>
+
     </div>
+
+
     <!-- 🔵 RIGHT SIDE LOGIN -->
     <div class="auth-container">
         <div class="auth-box">
@@ -46,7 +53,8 @@
 
             <!-- LINK -->
             <p class="auth-link">
-                Don't have an account? 
+              Don't have an account?
+               
                 <a href="{{ url_for('auth.register_page') }}">Create Account</a>
             </p>
         </div>
