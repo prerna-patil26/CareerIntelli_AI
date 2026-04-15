@@ -1,4 +1,4 @@
-// 🎯 Interview Page JavaScript (FINAL NO-ECHO VERSION)
+// 🎯 Interview Page JavaScript (FINAL FIXED)
 
 let mediaRecorder;
 let recordedChunks = [];
@@ -15,8 +15,14 @@ document.addEventListener('DOMContentLoaded', function() {
     initializeCamera();
     loadDomains();
 
-    // 🔥 AUTO FACE CHECK (ADDED)
-    setInterval(checkFacePosition, 2000);
+    // 🔥 FIXED FACE CHECK (faster + safe)
+    setInterval(() => {
+        const video = document.getElementById("interview-video");
+
+        if (!video || video.videoWidth === 0) return;
+
+        checkFacePosition();
+    }, 1000);
 
     if (document.getElementById("finalScore")) {
         loadResultPage();
@@ -40,11 +46,21 @@ async function initializeCamera() {
     }
 }
 
-// 📋 LOAD DOMAINS
+// 📋 LOAD DOMAINS (🔥 FIXED)
 function loadDomains() {
     fetch('/interview/domains')
-        .then(res => res.json())
-        .then(data => displayDomains(data.domains));
+        .then(res => {
+            if (!res.ok) throw new Error("API failed");
+            return res.json();
+        })
+        .then(data => {
+            console.log("✅ Domains:", data);
+            displayDomains(data.domains || []);
+        })
+        .catch(err => {
+            console.error("❌ Domain load error:", err);
+            alert("Domain load failed!");
+        });
 }
 
 function displayDomains(domains) {
@@ -220,16 +236,29 @@ function checkFacePosition() {
     });
 }
 
-// 🚀 SUBMIT INTERVIEW (🔥 UPDATED ONLY HERE)
+// 🔥 WARNING FUNCTION (ADDED FIX)
+function showWarning(message) {
+    const box = document.getElementById("warningBox");
+
+    if (!box) return;
+
+    if (message) {
+        box.style.display = "block";
+        box.innerText = message;
+        box.style.color = "red";
+    } else {
+        box.style.display = "none";
+    }
+}
+
+// 🚀 SUBMIT INTERVIEW
 function submitInterview() {
 
-    // 🔥 EMPTY VALIDATION
     if (!answers || answers.length === 0 || answers.every(a => a.trim() === "")) {
         alert("Please answer at least one question!");
         return;
     }
 
-    // 🔥 SHOW LOADER
     document.getElementById("loader").style.display = "flex";
 
     fetch('/interview/submit', {
@@ -247,7 +276,6 @@ function submitInterview() {
         localStorage.setItem("feedback", data.feedback);
         localStorage.setItem("suggestions", JSON.stringify(data.suggestions));
 
-        // 🔥 HIDE LOADER (optional because redirect ho raha hai)
         document.getElementById("loader").style.display = "none";
 
         window.location.href = "/interview/result";

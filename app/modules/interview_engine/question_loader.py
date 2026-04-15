@@ -6,11 +6,12 @@ class QuestionLoader:
     def __init__(self):
         current_dir = os.path.dirname(os.path.abspath(__file__))
 
-        # ✅ FIXED PATH
-        base_dir = os.path.abspath(os.path.join(current_dir, "../../"))
+        base_dir = os.path.abspath(os.path.join(current_dir, "../../../"))
 
+        # ✅ FINAL CORRECT PATH
         self.file_path = os.path.join(
             base_dir,
+            "app",
             "datasets",
             "career_interview_question_bank_dataset.csv.xlsx"
         )
@@ -28,10 +29,7 @@ class QuestionLoader:
                 self.df = pd.read_csv(self.file_path)
             elif self.file_path.endswith(".xlsx"):
                 self.df = pd.read_excel(self.file_path)
-            else:
-                raise ValueError("Unsupported file format.")
 
-            # ✅ CLEAN COLUMNS
             self.df.columns = (
                 self.df.columns
                 .str.strip()
