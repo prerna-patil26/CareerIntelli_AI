@@ -256,22 +256,38 @@ function checkFacePosition() {
         body: JSON.stringify({ image: image })
     })
     .then(res => res.json())
-    .then(data => showWarning(data.warning))
+    .then(data => {
+        showWarning(data.warning || "");
+    })
     .catch(err => console.log("Face check error:", err));
 }
 
-// 🔥 WARNING
+// 🔥 WARNING (UPDATED ✅)
+let warningTimeout = null;
+let lastMessage = "";
+
 function showWarning(message) {
     const box = document.getElementById("warningBox");
-
     if (!box) return;
 
+    // same message repeat avoid
+    if (message === lastMessage) return;
+
+    lastMessage = message;
+
     if (message) {
-        box.style.display = "block";
         box.innerText = message;
-        box.style.color = "red";
+        box.style.display = "block";
+
+        clearTimeout(warningTimeout);
+
+        warningTimeout = setTimeout(() => {
+            box.style.display = "none";
+            lastMessage = "";
+        }, 2000);
     } else {
         box.style.display = "none";
+        lastMessage = "";
     }
 }
 
