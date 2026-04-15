@@ -448,8 +448,8 @@ body.interview-ready .main-container {
 
 /* 🎥 VIDEO (✅ UPDATED) */
 video {
-    width: 80%;
-    max-width: 500px;
+    width: 90%;
+    max-width: 700px;
     border-radius: 12px;
     border: 2px solid #334155;
     box-shadow: 0 0 20px rgba(34, 211, 238, 0.2);
@@ -854,4 +854,22 @@ body {
     right: 20px !important;
     left: auto !important;   /* 🔥 important */
     z-index: 9999 !important;
+}
+#warningBox {
+    position: absolute;
+    top: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    
+    background: rgba(255, 0, 0, 0.85);
+    color: white;
+
+    padding: 10px 18px;
+    border-radius: 8px;
+
+    font-size: 14px;
+    font-weight: 500;
+
+    display: none;
+    z-index: 999;
 }
