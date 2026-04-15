@@ -2,33 +2,32 @@
    AUTH PAGE (LOGIN + REGISTER)
 ========================= */
 :root {
-    --bg-dark: #0B0F14;
+    --bg-dark: #0b0f14;
     --glass-light: rgba(255, 255, 255, 0.05);
     --glass-hover: rgba(255, 255, 255, 0.08);
     --glass-border: rgba(255, 255, 255, 0.1);
-    --text-primary: #FFFFFF;
+    --text-primary: #ffffff;
     --text-secondary: rgba(255, 255, 255, 0.7);
     --text-muted: rgba(255, 255, 255, 0.5);
     --glow-cyan: rgba(34, 211, 238, 0.15);
     --glow-purple: rgba(168, 85, 247, 0.1);
-    --accent-cyan: #22D3EE;
-    --accent-purple: #A855F7;
+    --accent-cyan: #22d3ee;
+    --accent-purple: #a855f7;
     --shadow-glow: 0 8px 32px rgba(34, 211, 238, 0.1);
     --shadow-lg: 0 20px 60px rgba(0, 0, 0, 0.4);
 }
-/* LOGO */
 
-html, body {
+html,
+body {
     height: 100%;
-    overflow: hidden;
 }
 
 .logo-top {
-    position: absolute;
-    left: 80px;
-    top: 80px;
-    max-width: 500px;
-
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 9999;
+    padding: 10px 20px;
 }
 
 .logo-top img {
@@ -37,14 +36,11 @@ html, body {
     margin-bottom: 20px;
 }
 
-
-
-.logo-top h1{
-   /* font-size: clamp(4.5rem, 7vw, 6rem); */
+.logo-top h1 {
     font-family: 'Poppins', sans-serif;
     font-weight: 650;
-   padding-top: 50px;
-   font-size: clamp(5rem, 6.4vw, 7rem);
+    padding-top: 50px;
+    font-size: clamp(5rem, 6.4vw, 7rem);
     line-height: 1.1;
     letter-spacing: -0.02em;
     color: var(--text-primary);
@@ -54,10 +50,10 @@ html, body {
     background-clip: text;
     animation: fade-up 0.8s ease-out 0.2s both;
 }
-.logo-top p{
 
+.logo-top p {
     font-size: 16px;
-    color: #a0aec0; /* soft gray */
+    color: #a0aec0;
     margin-top: 10px;
     max-width: 420px;
     line-height: 1.5;
@@ -65,10 +61,8 @@ html, body {
 
 .logo-img {
     width: 160px;
-    
     filter: brightness(1.5) contrast(1.2);
 }
-
 
 .logo-video {
     width: 160px;
@@ -76,7 +70,6 @@ html, body {
     mix-blend-mode: screen;
 }
 
-/* BACKGROUND */
 body.auth-page {
     background: url("/static/images/bg_1.jfif") no-repeat center center/cover;
     min-height: 100vh;
@@ -92,7 +85,6 @@ body.auth-page::before {
     z-index: 0;
 }
 
-/* CONTENT ABOVE BG */
 .auth-container,
 .login-left,
 .logo-top {
@@ -100,13 +92,6 @@ body.auth-page::before {
     z-index: 1;
 }
 
-
-.logo-top p {
-    color: #94a3b8;
-    margin-top: 10px;
-}
-
-/* TOP HEADER (REGISTER PAGE) */
 .top-header {
     position: absolute;
     top: 25px;
@@ -117,26 +102,32 @@ body.auth-page::before {
     z-index: 3;
 }
 
-/* CONTAINER */
+.top-brand {
+    font-size: 28px;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    text-shadow: 0 0 10px rgba(79, 172, 254, 0.4);
+    background: linear-gradient(90deg, #4facfe, #00f2fe);
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
 
 .auth-container {
     width: 100%;
     display: flex;
-
-    justify-content: center;
-    align-items: center;
-
+    justify-content: flex-end;
+    align-items: flex-start;
+    padding-top: 80px;
     height: 100vh;
-    padding: 0;
+    padding-right: 10%;
 }
 
-
-
-/* BOX */
 .auth-box {
+    position: relative;
     backdrop-filter: blur(20px);
-    background: rgba(255,255,255,0.05);
-    border: 1px solid rgba(255,255,255,0.1);
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
     border-radius: 20px;
     padding: 40px;
     width: 420px;
@@ -145,7 +136,6 @@ body.auth-page::before {
     animation: fadeUp 0.6s ease;
 }
 
-/* ANIMATION */
 @keyframes fadeUp {
     from {
         opacity: 0;
@@ -157,34 +147,31 @@ body.auth-page::before {
     }
 }
 
-/* TITLE */
 .auth-box h2 {
     font-size: 28px;
     margin-bottom: 20px;
-    background: linear-gradient(90deg, #60eaff, #3bbefc, #7c6cff);
+    background: linear-gradient(to right, #67e8f9, #a78bfa);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
 }
 
-/* SUBTITLE */
 .subtitle {
     font-size: 14px;
     color: #94a3b8;
+    margin-top: -10px;
     margin-bottom: 20px;
 }
 
-/* INPUT GROUP */
 .input-group {
     position: relative;
     margin-bottom: 24px;
 }
 
-/* INPUT */
 .input-group input {
     width: 100%;
     padding: 14px;
     border-radius: 8px;
-    border: 1px solid rgba(255,255,255,0.2);
+    border: 1px solid rgba(255, 255, 255, 0.2);
     font-size: 15px;
     outline: none;
     transition: 0.3s;
@@ -192,7 +179,6 @@ body.auth-page::before {
     background: rgba(0, 0, 0, 0.4) !important;
     color: white !important;
 }
-
 
 input:-webkit-autofill,
 input:-webkit-autofill:hover,
@@ -203,7 +189,6 @@ input:-webkit-autofill:active {
     transition: background-color 9999s ease-in-out 0s;
 }
 
-/* LABEL */
 .input-group label {
     position: absolute;
     top: 50%;
@@ -215,7 +200,6 @@ input:-webkit-autofill:active {
     transition: 0.25s ease;
 }
 
-/* FLOAT EFFECT */
 .input-group input:focus + label,
 .input-group input:not(:placeholder-shown) + label {
     top: -8px;
@@ -224,22 +208,17 @@ input:-webkit-autofill:active {
     color: #aaa;
 }
 
-/* INPUT STATES */
 .input-group input:focus {
     border-color: #22d3ee;
-    /* box-shadow: 0 0 12px rgba(34, 211, 238, 0.7); */
-    box-shadow: 
+    box-shadow:
         0 0 15px rgba(34, 211, 238, 0.4),
         0 0 40px rgba(167, 139, 250, 0.5);
-
 }
 
 .input-group input:not(:placeholder-shown) {
     border-color: rgba(0, 242, 254, 0.6);
-
 }
 
-/* PASSWORD */
 .password-group {
     position: relative;
 }
@@ -253,46 +232,32 @@ input:-webkit-autofill:active {
     font-size: 16px;
 }
 
-/* BUTTON */
 .auth-box button {
     width: 100%;
-    padding: 14px;
-    border-radius: 50px;
-    border: none;
-
-    /* TEXT */
+    padding: 12px 18px;
+    border-radius: 999px;
+    border: 1px solid rgba(255, 255, 255, 0.36);
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.18), rgba(34, 211, 238, 0.24));
     color: whitesmoke;
     font-size: 16px;
-    font-weight: 550;
-
-    /* GRADIENT (same as image) */
-    background: linear-gradient(90deg, #22d3ee, #a78bfa);
-    background-size: 200% 200%;
-    animation: gradientMove 4s ease infinite;
-
+    font-weight: 700;
+    line-height: 1;
     cursor: pointer;
-    transition: all 0.3s ease;
-
-    /* SOFT GLOW */
-    box-shadow: 
-        0 0 10px rgba(34, 211, 238, 0.2),
-        0 0 25px rgba(167, 139, 250, 0.3);
-
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    -webkit-backdrop-filter: blur(12px);
+    backdrop-filter: blur(12px);
+    box-shadow: 0 0 24px rgba(34, 211, 238, 0.16);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
     position: relative;
     overflow: hidden;
 }
 
-@keyframes gradientMove {
-    0% { background-position: 100% }
-    50% { background-position: 0% }
-    100% { background-position: 100% }
-}
 .auth-box button:hover {
-    transform: scale(1.04);
-
-    box-shadow: 
-        0 0 15px rgba(34, 211, 238, 0.4),
-        0 0 40px rgba(167, 139, 250, 0.5);
+    transform: translateY(-2px) scale(1.03);
+    box-shadow: 0 0 32px rgba(34, 211, 238, 0.28);
 }
 
 .auth-box button:active {
@@ -302,14 +267,13 @@ input:-webkit-autofill:active {
 .auth-box button::before {
     content: "";
     position: absolute;
-    inset: -8px;
-    border-radius: 60px;
-    background: linear-gradient(90deg, #22d3ee, #a78bfa);
-    filter: blur(20px);
-    opacity: 0.6;
+    inset: 0;
+    border-radius: inherit;
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.12), rgba(255, 255, 255, 0));
+    opacity: 0;
     z-index: -1;
 }
-/* LINK */
+
 .auth-link {
     margin-top: 18px;
     font-size: 13.5px;
@@ -328,7 +292,6 @@ input:-webkit-autofill:active {
     text-shadow: 0 0 8px #00f2fe;
 }
 
-/* ROW (REGISTER) */
 .row {
     display: flex;
     gap: 18px;
@@ -338,7 +301,6 @@ input:-webkit-autofill:active {
     flex: 1;
 }
 
-/* LOADING */
 .loading {
     opacity: 0.7;
     pointer-events: none;

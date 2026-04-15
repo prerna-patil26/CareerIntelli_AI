@@ -86,23 +86,28 @@ html, body {
 
 .top-right-button {
     position: relative;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
     overflow: hidden;
     padding: 12px 18px;
     border-radius: 999px;
     border: 1px solid rgba(255, 255, 255, 0.36);
-    background: linear-gradient(135deg, rgba(255, 255, 255, 0.18), rgba(16, 185, 129, 0.24));
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.18), rgba(34, 211, 238, 0.24));
     color: #fff;
     font-weight: 700;
+    line-height: 1;
     cursor: pointer;
     -webkit-backdrop-filter: blur(12px);
     backdrop-filter: blur(12px);
-    box-shadow: 0 0 24px rgba(16, 185, 129, 0.16);
+    box-shadow: 0 0 24px rgba(34, 211, 238, 0.16);
     transition: transform 0.2s ease, box-shadow 0.2s ease, opacity 0.2s ease;
 }
 
 .top-right-button:hover {
-    transform: translateY(-2px) scale(1.04);
-    box-shadow: 0 0 32px rgba(16, 185, 129, 0.28);
+    transform: translateY(-2px) scale(1.03);
+    box-shadow: 0 0 32px rgba(34, 211, 238, 0.28);
 }
 
 .top-right-button:disabled {
@@ -202,21 +207,24 @@ html, body {
 .dropdown-button {
     width: 100%;
     padding: 12px 16px;
-    background: rgba(255, 255, 255, 0.08);
-    border: 1px solid rgba(34, 211, 238, 0.3);
-    border-radius: 8px;
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.18), rgba(34, 211, 238, 0.24));
+    border: 1px solid rgba(255, 255, 255, 0.36);
+    border-radius: 999px;
     color: #ffffff;
     font-size: 1rem;
     cursor: pointer;
-    transition: all 0.3s ease;
+    transition: transform 0.2s ease, box-shadow 0.2s ease, opacity 0.2s ease;
     display: flex;
     justify-content: space-between;
     align-items: center;
+    -webkit-backdrop-filter: blur(12px);
+    backdrop-filter: blur(12px);
+    box-shadow: 0 0 24px rgba(34, 211, 238, 0.16);
 }
 
 .dropdown-button:hover {
-    background: rgba(34, 211, 238, 0.15);
-    border-color: var(--accent-cyan);
+    transform: translateY(-2px) scale(1.01);
+    box-shadow: 0 0 32px rgba(34, 211, 238, 0.28);
 }
 
 .dropdown-list {
@@ -296,21 +304,24 @@ html, body {
 
 .btn-generate {
     width: 100%;
-    padding: 14px 32px;
-    background: linear-gradient(135deg, #1e3a8a, #0c4a6e);
-    border: 2px solid rgba(255, 255, 255, 0.2);
+    padding: 12px 18px;
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.18), rgba(34, 211, 238, 0.24));
+    border: 1px solid rgba(255, 255, 255, 0.36);
     color: #ffffff;
     font-size: 1.1rem;
-    font-weight: 600;
-    border-radius: 12px;
+    font-weight: 700;
+    border-radius: 999px;
     cursor: pointer;
-    transition: all 0.3s ease;
+    line-height: 1;
+    -webkit-backdrop-filter: blur(12px);
+    backdrop-filter: blur(12px);
+    box-shadow: 0 0 24px rgba(34, 211, 238, 0.16);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
 .btn-generate:hover {
-    background: linear-gradient(135deg, #1e40af, #0369a1);
-    border-color: rgba(34, 211, 238, 0.5);
-    box-shadow: 0 0 20px rgba(34, 211, 238, 0.3);
+    transform: translateY(-2px) scale(1.01);
+    box-shadow: 0 0 32px rgba(34, 211, 238, 0.28);
 }
 
 .btn-generate:active {
@@ -345,20 +356,27 @@ html, body {
 }
 
 .btn-small {
-    padding: 10px 20px;
-    background: rgba(34, 211, 238, 0.1);
-    border: 1px solid rgba(34, 211, 238, 0.3);
-    color: var(--accent-cyan);
-    border-radius: 8px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 12px 18px;
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.18), rgba(34, 211, 238, 0.24));
+    border: 1px solid rgba(255, 255, 255, 0.36);
+    color: #ffffff;
+    border-radius: 999px;
     cursor: pointer;
-    transition: all 0.3s ease;
-    font-weight: 500;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    font-weight: 700;
+    line-height: 1;
+    -webkit-backdrop-filter: blur(12px);
+    backdrop-filter: blur(12px);
+    box-shadow: 0 0 24px rgba(34, 211, 238, 0.16);
 }
 
 .btn-small:hover {
-    background: rgba(34, 211, 238, 0.2);
-    transform: translateY(-2px);
-    box-shadow: 0 5px 15px rgba(34, 211, 238, 0.2);
+    transform: translateY(-2px) scale(1.03);
+    box-shadow: 0 0 32px rgba(34, 211, 238, 0.28);
 }
 
 /* Neural Roadmap */
@@ -457,19 +475,27 @@ html, body {
 
 .btn-action {
     flex: 1;
-    padding: 10px;
-    background: rgba(34, 211, 238, 0.2);
-    border: 1px solid rgba(34, 211, 238, 0.4);
-    color: var(--accent-cyan);
-    border-radius: 6px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 12px 18px;
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.18), rgba(34, 211, 238, 0.24));
+    border: 1px solid rgba(255, 255, 255, 0.36);
+    color: #ffffff;
+    border-radius: 999px;
     cursor: pointer;
-    transition: all 0.3s ease;
-    font-weight: 600;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    font-weight: 700;
+    line-height: 1;
+    -webkit-backdrop-filter: blur(12px);
+    backdrop-filter: blur(12px);
+    box-shadow: 0 0 24px rgba(34, 211, 238, 0.16);
 }
 
 .btn-action:hover {
-    background: rgba(34, 211, 238, 0.3);
-    transform: translateY(-2px);
+    transform: translateY(-2px) scale(1.03);
+    box-shadow: 0 0 32px rgba(34, 211, 238, 0.28);
 }
 
 /* Infographic Roadmap */
@@ -897,19 +923,28 @@ html, body {
 
 .timeline-action-btn {
     position: relative;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
     overflow: hidden;
-    padding: 8px 12px;
+    padding: 12px 18px;
     border-radius: 999px;
-    border: 1px solid rgba(255, 255, 255, 0.15);
-    background: rgba(255, 255, 255, 0.06);
+    border: 1px solid rgba(255, 255, 255, 0.36);
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.18), rgba(34, 211, 238, 0.24));
     color: #fff;
+    font-weight: 700;
+    line-height: 1;
     cursor: pointer;
     transition: transform 0.2s ease, box-shadow 0.2s ease;
+    -webkit-backdrop-filter: blur(12px);
+    backdrop-filter: blur(12px);
+    box-shadow: 0 0 24px rgba(34, 211, 238, 0.16);
 }
 
 .timeline-action-btn:hover {
-    transform: translateY(-1px) scale(1.02);
-    box-shadow: 0 0 16px rgba(34, 211, 238, 0.18);
+    transform: translateY(-2px) scale(1.03);
+    box-shadow: 0 0 32px rgba(34, 211, 238, 0.28);
 }
 
 .timeline-form {
@@ -935,20 +970,28 @@ html, body {
 
 .timeline-add-btn {
     position: relative;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
     overflow: hidden;
     padding: 12px 18px;
-    border-radius: 12px;
-    border: 1px solid rgba(16, 185, 129, 0.35);
-    background: linear-gradient(135deg, rgba(255, 255, 255, 0.12), rgba(16, 185, 129, 0.28));
+    border-radius: 999px;
+    border: 1px solid rgba(255, 255, 255, 0.36);
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.18), rgba(34, 211, 238, 0.24));
     color: #fff;
-    font-weight: 800;
+    font-weight: 700;
+    line-height: 1;
     cursor: pointer;
     transition: transform 0.2s ease, box-shadow 0.2s ease;
+    -webkit-backdrop-filter: blur(12px);
+    backdrop-filter: blur(12px);
+    box-shadow: 0 0 24px rgba(34, 211, 238, 0.16);
 }
 
 .timeline-add-btn:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 0 20px rgba(16, 185, 129, 0.2);
+    transform: translateY(-2px) scale(1.03);
+    box-shadow: 0 0 32px rgba(34, 211, 238, 0.28);
 }
 
 .chat-suggestions {
@@ -1100,31 +1143,50 @@ html, body {
 }
 
 .btn-send {
-    background: rgba(34, 211, 238, 0.3);
-    border: none;
-    color: var(--accent-cyan);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.18), rgba(34, 211, 238, 0.24));
+    border: 1px solid rgba(255, 255, 255, 0.36);
+    color: #fff;
     width: 40px;
     height: 40px;
-    border-radius: 6px;
+    border-radius: 50%;
     cursor: pointer;
-    transition: all 0.2s;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    -webkit-backdrop-filter: blur(12px);
+    backdrop-filter: blur(12px);
+    box-shadow: 0 0 24px rgba(34, 211, 238, 0.16);
 }
 
 .btn-send:hover {
-    background: rgba(34, 211, 238, 0.5);
+    transform: translateY(-1px) scale(1.03);
+    box-shadow: 0 0 32px rgba(34, 211, 238, 0.28);
 }
 
 .btn-close-chat {
-    background: none;
-    border: none;
-    color: rgba(255, 255, 255, 0.6);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    padding: 0;
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.18), rgba(34, 211, 238, 0.24));
+    border: 1px solid rgba(255, 255, 255, 0.36);
+    border-radius: 50%;
+    color: #fff;
     cursor: pointer;
-    font-size: 1.5rem;
-    transition: all 0.2s;
+    font-size: 1.2rem;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    -webkit-backdrop-filter: blur(12px);
+    backdrop-filter: blur(12px);
+    box-shadow: 0 0 24px rgba(34, 211, 238, 0.16);
 }
 
 .btn-close-chat:hover {
-    color: var(--accent-cyan);
+    transform: translateY(-1px) scale(1.03);
+    box-shadow: 0 0 32px rgba(34, 211, 238, 0.28);
 }
 
 .chatbot-header-title {
