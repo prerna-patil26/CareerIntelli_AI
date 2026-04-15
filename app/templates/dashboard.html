@@ -42,6 +42,7 @@
         </ul>
     </div>
 
+<<<<<<< HEAD
     <!-- 🔥 TOPBAR (CLEANED) -->
     <div class="topbar">
         <input type="text" placeholder="Search..." class="search">
@@ -62,6 +63,27 @@
                 <h1>Hi, {{ user.first_name if user is defined and user and user.first_name else 'User' }} 👋</h1>
                 <p>Let’s build your career with AI</p>
             </div>
+=======
+    <div class="main">
+
+        <!-- 🔥 TOPBAR (CLEANED) -->
+        <div class="topbar">
+            <div class="topbar-title">
+                <h1>Hi, {{ user.first_name if user is defined and user and user.first_name else 'User' }} 👋</h1>
+                <p>Let’s build your career with AI</p>
+            </div>
+
+            <div class="topbar-controls">
+                <input type="text" placeholder="Search..." class="search">
+
+                <div class="top-actions">
+                    <span class="theme-toggle">🌙</span>
+                    <div class="profile-mini" data-url="{{ url_for('profile.profile_page') }}" onclick="location.href=this.dataset.url">
+                        👤
+                    </div>
+                </div>
+            </div>
+>>>>>>> 12118e8e6a83a47381e383b8bcc5fd0fe63eb493
         </div>
 
         <!-- HERO -->
