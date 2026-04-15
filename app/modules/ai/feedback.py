@@ -7,6 +7,15 @@ from google.genai import types
 
 logger = logging.getLogger(__name__)
 
+import os
+import logging
+from typing import List
+
+from google import genai
+from google.genai import types
+
+logger = logging.getLogger(__name__)
+
 
 class FeedbackGenerator:
     def __init__(self):
@@ -14,6 +23,7 @@ class FeedbackGenerator:
             os.getenv("GEMINI_API_KEY_1")
             or os.getenv("GEMINI_API_KEY_2")
             or os.getenv("GEMINI_API_KEY")
+            or os.getenv("GOOGLE_API_KEY")
         )
 
         if not api_key:

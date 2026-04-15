@@ -12,6 +12,9 @@
         <source src="{{ url_for('roadmap_page_routes.roadmap_assets', filename='bg.mp4') }}" type="video/mp4">
     </video>
     <div class="app-bg-overlay" aria-hidden="true"></div>
+    <div class="career-top-nav">
+        <a class="career-dashboard-btn" href="{{ url_for('home.dashboard') }}">Dashboard</a>
+    </div>
     <!-- Neural Background Animation -->
     <canvas id="neural-canvas" aria-hidden="true"></canvas>
     <div class="background-wash" aria-hidden="true"></div>
@@ -129,6 +132,9 @@
                 </div>
             </section>
         </section>
+
+        {% set chatbot_page = 'career' %}
+        {% include 'shared/chatbot_widget.html' %}
     </main>
 
     <!-- Thinking Screen -->

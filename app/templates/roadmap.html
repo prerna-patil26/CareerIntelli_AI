@@ -651,7 +651,7 @@
     <div id="video-overlay"></div>
 
     <div class="top-right-controls">
-        <button type="button" class="top-right-button" id="global-back-btn">← Back</button>
+        <button type="button" class="top-right-button" id="global-dashboard-btn" data-url="{{ url_for('home.dashboard') }}" onclick="location.href=this.dataset.url">Dashboard</button>
         <button type="button" class="top-right-button" id="global-progress-btn">📊 Progress</button>
     </div>
 
@@ -706,11 +706,6 @@
                     <p class="page-subtitle">Interactive learning path personalized for you</p>
                 </heading>
 
-                <div class="roadmap-controls">
-                    <button class="btn-small" onclick="goBackToPage1()">← Back</button>
-                    <button class="btn-small" onclick="switchToPage3()">📊 Progress</button>
-                </div>
-
                 <div class="neural-roadmap" id="roadmap-container"></div>
             </div>
         </div>
@@ -746,35 +741,8 @@
         </div>
     </div>
 
-    <!-- Video Chatbot -->
-    <div class="video-chatbot">
-        <div class="chatbot-trigger" id="chatbot-trigger" onclick="toggleChatPanel()">
-            <video id="chatbot-video" autoplay loop muted>
-                <source src="{{ url_for('roadmap_page_routes.roadmap_assets', filename='chat.mp4') }}" type="video/mp4">
-            </video>
-        </div>
-
-        <div class="chat-panel" id="chat-panel">
-            <div class="chat-header">
-                <span class="chatbot-header-title">🤖 AI Career Buddy</span>
-                <button class="btn-close-chat" onclick="toggleChatPanel()">×</button>
-            </div>
-            <div class="chat-suggestions">
-                <button type="button" class="chat-suggestion" data-chat-suggestion="What should I learn next?">✔ What should I learn next?</button>
-                <button type="button" class="chat-suggestion" data-chat-suggestion="Am I job ready?">✔ Am I job ready?</button>
-                <button type="button" class="chat-suggestion" data-chat-suggestion="Explain this skill">✔ Explain this skill</button>
-            </div>
-            <div class="chat-messages" id="chat-messages">
-                <div class="message bot">
-                    👋 Hi! I'm your AI career guide. Ask me anything about your roadmap!
-                </div>
-            </div>
-            <div class="chat-input-area">
-                <input type="text" id="chat-input" placeholder="Ask something...">
-                <button class="btn-send" onclick="sendChatMessage()">📤</button>
-            </div>
-        </div>
-    </div>
+    {% set chatbot_page = 'roadmap' %}
+    {% include 'shared/chatbot_widget.html' %}
 
     <!-- Scripts -->
     <script src="https://cdn.jsdelivr.net/npm/confetti@2.0.2/dist/confetti.browser.min.js"></script>

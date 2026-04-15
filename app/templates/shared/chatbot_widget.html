@@ -1,0 +1,31 @@
+{% set chatbot_page = chatbot_page | default('general') %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/chatbot.css') }}">
+<div class="video-chatbot" data-chatbot-page="{{ chatbot_page }}" data-chatbot-api="{{ url_for('chatbot.respond_chatbot') }}">
+    <div class="chatbot-trigger" id="chatbot-trigger">
+        <video id="chatbot-video" autoplay loop muted>
+            <source src="{{ url_for('roadmap_page_routes.roadmap_assets', filename='chat.mp4') }}" type="video/mp4">
+        </video>
+    </div>
+
+    <div class="chat-panel" id="chat-panel">
+        <div class="chat-header">
+            <span class="chatbot-header-title">🤖 CareerCompass AI</span>
+            <button class="btn-close-chat" type="button">×</button>
+        </div>
+        <div class="chat-suggestions">
+            <button type="button" class="chat-suggestion" data-chatbot-suggestion="What should I learn next?">✔ What should I learn next?</button>
+            <button type="button" class="chat-suggestion" data-chatbot-suggestion="Am I job ready?">✔ Am I job ready?</button>
+            <button type="button" class="chat-suggestion" data-chatbot-suggestion="Explain this skill">✔ Explain this skill</button>
+        </div>
+        <div class="chat-messages" data-chatbot-messages>
+            <div class="message bot">
+                👋 Hi! I'm CareerCompass AI. Ask me anything about CareerIntelli pages.
+            </div>
+        </div>
+        <div class="chat-input-area">
+            <input type="text" data-chatbot-input placeholder="Ask something...">
+            <button class="btn-send" type="button" data-chatbot-send>📤</button>
+        </div>
+    </div>
+</div>
+<script src="{{ url_for('static', filename='js/chatbot.js') }}"></script>

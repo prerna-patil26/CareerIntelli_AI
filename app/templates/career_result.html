@@ -41,6 +41,9 @@
             </section>
         </main>
     </div>
+
+    {% set chatbot_page = 'career-result' %}
+    {% include 'shared/chatbot_widget.html' %}
     
     <script src="{{ url_for('static', filename='js/dashboard.js') }}"></script>
 </body>
