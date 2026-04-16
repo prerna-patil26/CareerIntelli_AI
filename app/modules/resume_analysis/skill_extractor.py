@@ -152,3 +152,17 @@ class SkillExtractor:
         matches = pattern.findall(text)
         
         return list(set(matches))
+    def extract_technical_skills_with_score(self, text: str):
+        text = text.lower()
+        technical_skills = self.skills_database.get("technical", [])
+
+        skill_scores = {}
+
+        for skill in technical_skills:
+            count = text.count(skill)
+            if count > 0:
+                # Normalize score (max 100)
+                score = min(count * 20, 100)
+                skill_scores[skill] = score
+
+        return skill_scores
