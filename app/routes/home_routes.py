@@ -1,6 +1,7 @@
 from flask import Blueprint, render_template, session, redirect, url_for, request
 from app.database.models import User, Profile
 from flask import flash
+from app import db   
 home_bp = Blueprint("home", __name__)
 
 @home_bp.route("/")
@@ -51,17 +52,17 @@ def resume_upload():
         file = request.files.get("resume")
 
         if file and file.filename != "":
-            filename = file.filename
+            
+            # 🔥 Yahan processing karo
+            result = "Your resume is strong in Python but needs improvement in projects."
 
-            # 👉 TEMP: just test upload
-            return f"Uploaded successfully: {filename}"
-
-        return "No file selected"
+            # 👉 RESULT PAGE pe bhejo
+            return render_template("resume_result.html", result=result)
 
     return render_template("resume_upload.html")
 
 
-from app import db   # 🔥 ADD THIS IMPORT
+
 
 @home_bp.route("/api/profile/profile", methods=["GET", "POST"])
 def profile():

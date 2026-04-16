@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Resume Result</title>
+
+<link rel="stylesheet" href="{{ url_for('static', filename='css/resume.css') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/interview.css') }}">
+
+</head>
+
+<body>
+
+<!-- 🎥 BACKGROUND -->
+<video class="app-bg-video" autoplay loop muted>
+    <source src="{{ url_for('roadmap_page_routes.roadmap_assets', filename='bg.mp4') }}">
+</video>
+<div class="app-bg-overlay"></div>
+
+<!-- 🔝 NAV -->
+<div class="top-nav">
+    <a class="dashboard-btn" href="{{ url_for('home.dashboard') }}">Dashboard</a>
+</div>
+
+<main class="page-center">
+
+    <!-- 🔥 HERO -->
+    <div class="hero-card">
+        <p class="hero-eyebrow">✨ AI Resume Analysis</p>
+        <h1>Your Resume Report</h1>
+        <p class="hero-copy">
+            Here is your AI-powered resume evaluation with detailed insights.
+        </p>
+    </div>
+
+
+    <div class="result-layout">
+        <!-- 🔥 LEFT SIDE -->
+        <div class="score-circle-wrap">
+            <h2>ATS Score</h2>
+
+            <div class="circle" data-score="{{ result.resume_score['percentage'] }}">
+                <div class="inside-circle">
+                    {{ result.resume_score['percentage'] }}%
+                </div>
+            </div>
+        </div>
+
+        <!-- 🔥 RIGHT SIDE -->
+        <div class="details-box-wrapper">
+
+            <!-- TABS -->
+                <div class="tabs">
+                    <button class="active" onclick="showTab('skills')">Skills</button>
+                    <button onclick="showTab('suggestions')">Suggestions</button>
+                    <button onclick="showTab('ai')">AI Feedback</button>
+                </div>
+
+                <!-- TAB CONTENT -->
+
+                <!-- SKILLS -->
+                <div id="skills" class="tab-content active">
+                    <div class="skill-grid">
+                        {% if result.parsed_data['skill_scores'] %}
+                            {% for skill, score in result.parsed_data['skill_scores'].items() %}
+                                <div class="skill-chip" style="--skill-strength: {{ score }}%">
+                                    {{ skill }}
+                                </div>
+                            {% endfor %}
+                        {% else %}
+                            <p>No skills found</p>
+                        {% endif %}
+                    </div>
+                </div>
+
+                <!-- SUGGESTIONS -->
+                <div id="suggestions" class="tab-content">
+                    {% for tip in result.resume_score['suggestions'] %}
+                        <div class="ai-tip">💡 {{ tip }}</div>
+                    {% endfor %}
+                </div>
+
+                <!-- AI -->
+                <div id="ai" class="tab-content">
+                    {% for tip in result.ai_feedback %}
+                        <div class="ai-tip">🤖 {{ tip }}</div>
+                    {% endfor %}
+                </div>
+
+        </div>
+
+        
+    </div>
+
+
+
+    <!-- 🔥 ACTION -->
+    <div class="bottom-action">
+        <a href="/resume" class="analyze-btn">
+            Analyze Another Resume
+        </a>
+    </div>
+
+</main>
+
+<!-- CHART -->
+{% if result.resume_score['breakdown'] %}
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+new Chart(document.getElementById('scoreChart'), {
+    type: 'bar',
+    data: {
+        labels: ['Skills', 'Experience', 'Education', 'Projects'],
+        datasets: [{
+            data: [
+                {{ result.resume_score['breakdown']['skills'] }},
+                {{ result.resume_score['breakdown']['experience'] }},
+                {{ result.resume_score['breakdown']['education'] }},
+                {{ result.resume_score['breakdown']['projects'] }}
+            ]
+        }]
+    },
+    options: {
+        plugins: { legend: { display: false } }
+    }
+});
+
+
+function showTab(tabId) {
+
+    // hide all
+    document.querySelectorAll(".tab-content").forEach(el => {
+        el.classList.remove("active");
+    });
+
+    document.querySelectorAll(".tabs button").forEach(btn => {
+        btn.classList.remove("active");
+    });
+
+    // show selected
+    document.getElementById(tabId).classList.add("active");
+
+    // fix: get clicked button
+    event.target.classList.add("active");
+}
+
+document.querySelectorAll(".circle").forEach(circle => {
+    let score = circle.getAttribute("data-score");
+    let deg = (score / 100) * 360;
+
+    circle.style.background = `
+        conic-gradient(
+            #22d3ee 0deg,
+            #a855f7 ${deg}deg,
+            rgba(255,255,255,0.1) ${deg}deg
+        )
+    `;
+});
+
+</script>
+{% endif %}
+
+</body>
+</html>

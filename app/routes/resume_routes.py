@@ -76,7 +76,8 @@ def validate_file(file) -> tuple:
 @resume_bp.route("/resume", methods=["GET"])
 def resume_page():
     """Display resume upload page."""
-    result = session.pop("resume_result", None)
+    # result = session.pop("resume_result", None)
+    result = session.get("resume_result")
     response = make_response(render_template("resume_upload.html", result=result))
     response.headers["Cache-Control"] = "no-store, no-cache, must-revalidate, max-age=0"
     response.headers["Pragma"] = "no-cache"
@@ -141,23 +142,31 @@ def upload_resume():
             )
 
         # ---------- EXTRACT SKILLS ----------
+       # ---------- EXTRACT SKILLS ----------
         try:
             skill_extractor = SkillExtractor()
-            technical_skills = skill_extractor.extract_technical_skills(resume_text)
+
+            # Get skill scores (dict)
+            skill_scores = skill_extractor.extract_technical_skills_with_score(resume_text)
+
+            # Convert to list (IMPORTANT for ATS scoring)
+            technical_skills = list(skill_scores.keys())
+
+            # Soft skills
             soft_skills = skill_extractor.extract_soft_skills(resume_text)
-            
-            technical_skills.sort()
-            soft_skills.sort()
-            
-            parsed_data["skills"] = technical_skills
+
+            # Save BOTH
+            parsed_data["skills"] = technical_skills      # for ATS scoring
+            parsed_data["skill_scores"] = skill_scores    # for UI strength
             parsed_data["soft_skills"] = soft_skills
-            
+
             logger.info(f"Extracted {len(technical_skills)} technical skills, {len(soft_skills)} soft skills")
+
         except Exception as e:
             logger.error(f"Skill extraction error: {e}")
             parsed_data["skills"] = []
+            parsed_data["skill_scores"] = {}
             parsed_data["soft_skills"] = []
-
         # ---------- SCORE RESUME ----------
         try:
             scorer = ResumeScorer()
@@ -232,7 +241,7 @@ def upload_resume():
 
         session["resume_result"] = result
         logger.info("Resume analysis completed successfully")
-        return redirect(url_for("resume.resume_page"))
+        return render_template("resume_result.html", result=result)
 
     except Exception as e:
         logger.error(f"Unexpected error in resume upload: {e}", exc_info=True)
@@ -240,3 +249,12 @@ def upload_resume():
             "resume_upload.html",
             error="An unexpected error occurred. Please try again later."
         )
+    
+@resume_bp.route("/resume/result")
+def resume_result():
+    result = session.get("resume_result")
+
+    if not result:
+        return redirect(url_for("resume.resume_page"))
+
+    return redirect(url_for("resume.resume_result"))

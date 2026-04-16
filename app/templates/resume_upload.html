@@ -1,204 +1,175 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Resume Analyzer</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Resume Analyzer</title>
+<link rel="stylesheet" href="{{ url_for('static', filename='css/career.css') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/resume.css') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/interview.css') }}">
 
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/base.css') }}">
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/resume.css') }}">
-
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 
-<style>
-body {
-  background: #020617;
-  overflow-x: hidden;
-}
-</style>
-
 <body>
-<video class="app-bg-video" autoplay loop muted preload="auto">
-    <source src="{{ url_for('roadmap_page_routes.roadmap_assets', filename='bg.mp4') }}" type="video/mp4">
+
+<!-- 🎥 BACKGROUND -->
+<video class="app-bg-video" autoplay loop muted>
+    <source src="{{ url_for('roadmap_page_routes.roadmap_assets', filename='bg.mp4') }}">
 </video>
-<div class="app-bg-overlay" aria-hidden="true"></div>
+<div class="app-bg-overlay"></div>
 
-<!-- 🌌 BACKGROUND -->
-<div class="bg-animation">
-    <span></span>
-    <span></span>
-    <span></span>
-    <span></span>
-</div>
-
-<div class="page-center">
-
-    <!-- HEADER -->
-    <div class="top-bar">
-        <div class="logo">🚀 CareerIntelli AI</div>
-        <a href="{{ url_for('home.dashboard') }}" class="back-btn">← Dashboard</a>
+    <div class="career-top-nav">
+        <a class="career-dashboard-btn" href="{{ url_for('home.dashboard') }}">Dashboard</a>
     </div>
 
-    <!-- HERO -->
-    <div class="hero-card">
-        <p class="hero-eyebrow">✨ AI Career Guidance</p>
-        <h1>Resume Analyzer</h1>
-        <p class="hero-copy">Upload your resume and get a detailed AI review of your skills, achievements, structure, and keyword coverage so you can strengthen it before you apply.</p>
-    </div>
+<main class="interview-shell">
 
-    <!-- UPLOAD -->
-    <div class="upload-card">
+    <!-- 🔥 INTRO -->
+    <section class="intro-screen">
+        <div class="intro-copy">
 
-        <form method="POST" action="{{ url_for('resume.upload_resume') }}" enctype="multipart/form-data">
+            <p class="intro-eyebrow">✨ AI Resume Analyzer</p>
+            <h1>Resume Analyzer</h1>
 
-            <div class="upload-box">
-                <p>📂 Drag & Drop Resume</p>
-                <span>or</span>
+            <p class="intro-subtitle">
+                Upload your resume and get AI-powered feedback to improve your chances of getting hired.
+            </p>
 
-                <input type="file" name="file" id="fileInput" hidden required>
+            <!-- 🔥 KEEP YOUR ORIGINAL UPLOAD UI -->
+            <form id="resumeForm"
+                method="POST"
+                action="{{ url_for('resume.upload_resume') }}"
+                enctype="multipart/form-data">
 
-                <button type="button" onclick="document.getElementById('fileInput').click()">
-                    Choose File
-                </button>
+                <div class="upload-wrapper">
 
-                <p class="file-name" id="fileName">{% if result and result.filename %}{{ result.filename }}{% else %}No file selected{% endif %}</p>
-                <small>Supported: PDF, DOCX</small>
-            </div>
+                    <div class="upload-box">
 
-            <button type="submit" class="upload-btn">
-                🚀 Upload & Analyze
-            </button>
+                        <p>📂 Drag & Drop Resume</p>
+                        <span>or</span>
 
-        </form>
+                        <input type="file" name="file" id="fileInput" hidden required>
 
-        {% if error %}
-            <div class="error-message">
-                <p>{{ error }}</p>
-            </div>
-        {% endif %}
-    </div>
+                        <button type="button" onclick="document.getElementById('fileInput').click()">
+                            Choose File
+                        </button>
 
-    <!-- RESULT -->
-    {% if result %}
-    <div class="result-section">
+                        <p class="file-name" id="fileName">No file selected</p>
+                        <small>Supported: PDF, DOCX</small>
 
-        <div class="result-card score-card full-width-card">
-            <h2>ATS Score</h2>
-
-            <div class="circle" style="--score: {{ result.resume_score['percentage'] }}">
-                <div class="inside-circle">
-                    {{ result.resume_score['percentage'] }}%
-                </div>
-            </div>
-
-            <p>AI-powered evaluation</p>
-        </div>
-
-        <div class="result-grid two-column">
-            <!-- SKILLS -->
-            <div class="result-card skills-card">
-                <h3>✔ Skills Detected</h3>
-
-                {% if result.parsed_data['skills'] %}
-                <div class="skill-grid">
-                    {% for skill in result.parsed_data['skills'] %}
-                    <div class="skill-chip" style="--skill-strength: {{ 60 + loop.index0 * 4 }}%;">
-                        <span>{{ skill }}</span>
-                        <span class="skill-strength"></span>
                     </div>
-                    {% endfor %}
-                </div>
-                {% else %}
-                    <p class="empty-state">No technical skills were detected in the resume.</p>
-                {% endif %}
-            </div>
 
-            {% if result.resume_score['breakdown'] %}
-            <div class="result-card chart-card">
-                <h3>📊 Score Breakdown</h3>
-                <canvas id="scoreChart"></canvas>
-            </div>
-            {% endif %}
+                    <!-- BUTTON (inside outer box but outside inner box) -->
+                    <button type="button" class="upload-btn" onclick="startResumeAnalysis()">
+                    Analyze Resume
+                    </button>
+
+                </div>
+
+                <!-- 🔥 CHANGE ONLY THIS BUTTON
+                <button type="button" class="upload-btn" onclick="startResumeAnalysis()">
+                    🚀 Analyze Resume
+                </button> -->
+
+            </form>
+
         </div>
+    </section>
 
-        <div class="result-card ai-panel full-width-panel">
-            {% if result.show_basic_suggestions and result.resume_score['suggestions'] %}
-            <div class="ai-block">
-                <h3>💡 Basic Suggestions</h3>
-                <div class="ai-suggestions">
-                    {% for tip in result.resume_score['suggestions'] %}
-                        <div class="ai-tip">💡 {{ tip }}</div>
-                    {% endfor %}
-                </div>
-            </div>
-            {% endif %}
+    <!-- 🔥 POPUP LOADER -->
+    <section class="popup-overlay" id="resumePopup">
+        <div class="popup-card">
 
-            <div class="ai-block">
-                <h3>🤖 AI Resume Feedback</h3>
-                {% if result.ai_feedback %}
-                <div class="ai-suggestions">
-                    {% for tip in result.ai_feedback %}
-                        <div class="ai-tip">💡 {{ tip }}</div>
-                    {% endfor %}
-                </div>
-                {% else %}
-                <div class="ai-tip">
-                    AI feedback not available.
-                </div>
-                {% endif %}
+            <div class="popup-robot-wrap">
+                <img class="popup-robot"
+                     src="{{ url_for('roadmap_page_routes.roadmap_assets', filename='robo.png') }}">
             </div>
+
+            <div class="popup-copy">
+                <p class="popup-eyebrow">AI Resume Analysis</p>
+                <h2>Analyzing your resume</h2>
+                <p>Please wait while AI reviews your resume.</p>
+            </div>
+
+            <div class="popup-spinner-row">
+                <span></span><span></span><span></span>
+            </div>
+
         </div>
+    </section>
 
-    </div>
-    {% endif %}
+</main>
 
-</div>
-
-{% set chatbot_page = 'resume' %}
-{% include 'shared/chatbot_widget.html' %}
-
-<!-- JS -->
 <script>
-document.addEventListener("DOMContentLoaded", function() {
-    const fileNameElem = document.getElementById("fileName");
-    const fileInput = document.getElementById("fileInput");
 
-    if (fileInput && fileNameElem) {
-        fileInput.addEventListener("change", function() {
-            if (this.files[0]) {
-                fileNameElem.textContent = this.files[0].name;
-            } else {
-                fileNameElem.textContent = "No file selected";
-            }
-        });
+// 📂 Trigger file picker
+function triggerUpload() {
+    document.getElementById("fileInput").click();
+}
+
+// 📌 Get elements
+const fileInput = document.getElementById("fileInput");
+const fileName = document.getElementById("fileName");
+const uploadBox = document.querySelector(".upload-box");
+
+// 📄 Show file name ONLY (no loader here ❌)
+fileInput.addEventListener("change", function () {
+    if (this.files[0]) {
+        fileName.textContent = this.files[0].name;
     }
 });
-</script>
 
-<!-- GRAPH -->
-{% if result and result.resume_score['breakdown'] %}
-<script>
-new Chart(document.getElementById('scoreChart'), {
-    type: 'bar',
-    data: {
-        labels: ['Skills', 'Experience', 'Education', 'Projects'],
-        datasets: [{
-            data: [
-                {{ result.resume_score['breakdown']['skills'] }},
-                {{ result.resume_score['breakdown']['experience'] }},
-                {{ result.resume_score['breakdown']['education'] }},
-                {{ result.resume_score['breakdown']['projects'] }}
-            ]
-        }]
-    },
-    options: {
-        plugins: { legend: { display: false } }
+// 🚀 Start analysis (ONLY here loader should show ✅)
+function startResumeAnalysis() {
+
+    if (!fileInput.files[0]) {
+        alert("Please select a file first");
+        return;
+    }
+
+    // 🔥 Show loader
+    document.getElementById("resumePopup").classList.add("is-visible");
+
+    // 🔥 Disable button (optional but good UX)
+    const btn = document.querySelector(".upload-btn");
+    btn.disabled = true;
+    btn.innerText = "Analyzing...";
+
+    // 🔥 Submit form after delay
+    setTimeout(() => {
+        document.getElementById("resumeForm").submit();
+    }, 1500);
+}
+
+// =====================
+// 🔥 DRAG & DROP
+// =====================
+
+// Drag over
+uploadBox.addEventListener("dragover", (e) => {
+    e.preventDefault();
+    uploadBox.classList.add("dragover");
+});
+
+// Drag leave
+uploadBox.addEventListener("dragleave", () => {
+    uploadBox.classList.remove("dragover");
+});
+
+// Drop file
+uploadBox.addEventListener("drop", (e) => {
+    e.preventDefault();
+    uploadBox.classList.remove("dragover");
+
+    const file = e.dataTransfer.files[0];
+
+    if (file) {
+        fileInput.files = e.dataTransfer.files;
+        fileName.textContent = file.name;
     }
 });
+
 </script>
-{% endif %}
 
 </body>
 </html>

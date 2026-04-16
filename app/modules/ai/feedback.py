@@ -7,34 +7,32 @@ from google.genai import types
 
 logger = logging.getLogger(__name__)
 
-import os
-import logging
-from typing import List
-
-from google import genai
-from google.genai import types
-
-logger = logging.getLogger(__name__)
-
 
 class FeedbackGenerator:
     def __init__(self):
-        api_key = (
-            os.getenv("GEMINI_API_KEY_1")
-            or os.getenv("GEMINI_API_KEY_2")
-            or os.getenv("GEMINI_API_KEY")
-            or os.getenv("GOOGLE_API_KEY")
-        )
+        self.api_keys = [
+            os.getenv("GEMINI_API_KEY"),
+            os.getenv("GEMINI_API_KEY_3"),
+            os.getenv("GEMINI_API_KEY_2"),
+            os.getenv("GEMINI_API_KEY_1"),
+            
+        ]
 
-        if not api_key:
-            logger.warning("API key not found")
+        # remove empty keys
+        self.api_keys = [k for k in self.api_keys if k]
+
+        self.key_index = 0
+
+        if not self.api_keys:
+            logger.warning("No API keys found")
             self.client = None
             return
 
-        try:
-            self.client = genai.Client(api_key=api_key)
+        self.client = genai.Client(api_key=self.api_keys[self.key_index])
 
-            # ✅ STABLE MODELS ONLY
+        try:
+            self.client = genai.Client(api_key=self.api_keys[self.key_index])
+
             self.fallback_models = [
                 "gemini-2.5-flash",
                 "gemini-2.0-flash",
@@ -46,7 +44,6 @@ class FeedbackGenerator:
         except Exception as e:
             logger.error(f"Gemini setup failed: {e}")
             self.client = None
-
     def get_ai_resume_feedback(self, resume_text: str, retry_count=0) -> List[str]:
 
         if not resume_text.strip():
@@ -125,12 +122,32 @@ Resume:
                 return ["AI is busy right now. Please try again in a few seconds."]
 
             # 🔥 HANDLE QUOTA
-            if "429" in error_str or "quota" in error_str:
-                return ["API quota exceeded. Try again later or switch API key."]
+            import time
 
-            logger.error(f"Error: {e}")
-            return ["Unable to generate feedback at the moment."]
+        # 🔥 HANDLE QUOTA + BUSY BOTH
+        if "429" in error_str or "quota" in error_str or "503" in error_str or "unavailable" in error_str:
 
+            logger.warning(f"API issue detected (key {self.key_index}), trying next key...")
+
+            # 🔁 Try next API key
+            if self.key_index < len(self.api_keys) - 1:
+                self.key_index += 1
+                self.client = genai.Client(api_key=self.api_keys[self.key_index])
+
+                time.sleep(2)  # avoid hammering API
+
+                return self.get_ai_resume_feedback(resume_text)
+
+            # ❌ All keys exhausted → fallback
+            logger.error("All API keys exhausted. Using fallback.")
+
+            return [
+                "Improve resume formatting to ensure clarity and professional presentation.",
+                "Add measurable achievements with numbers to demonstrate real impact.",
+                "Highlight relevant technical and soft skills aligned with your target role.",
+                "Include detailed project descriptions with tools and outcomes clearly explained.",
+                "Optimize your resume using ATS-friendly keywords from job descriptions."
+            ]
     def _parse_feedback(self, text: str) -> List[str]:
         feedback = []
         current = ""
