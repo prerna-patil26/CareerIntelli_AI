@@ -139,11 +139,12 @@
     </main>
 
     <!-- Thinking Screen -->
-    <section class="thinking-screen" id="thinking-screen" aria-live="polite" aria-atomic="true">
-        <div class="thinking-card">
-            <h2>🧠 AI is analyzing your profile</h2>
+    <section class="thinking-screen" id="thinking-screen" aria-live="polite" aria-atomic="true" aria-hidden="true">
+        <div class="thinking-card" role="status">
+            <p class="thinking-eyebrow">AI Career Analysis</p>
+            <h2>AI is analyzing your profile</h2>
             <p id="thinking-message" class="thinking-message"></p>
-            <div class="thinking-dots" aria-hidden="true">
+            <div class="thinking-spinner-row" aria-hidden="true">
                 <span></span>
                 <span></span>
                 <span></span>

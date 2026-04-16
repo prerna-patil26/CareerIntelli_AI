@@ -652,33 +652,39 @@ input {
 .thinking-screen {
     position: fixed;
     inset: 0;
-    z-index: 5;
+    z-index: 9999;
     display: none;
-    align-items: center;
-    justify-content: center;
     padding: 24px;
-    background: rgba(11, 15, 20, 0.8);
-    backdrop-filter: blur(12px);
+    background: rgba(2, 6, 23, 0.78);
     -webkit-backdrop-filter: blur(12px);
+    backdrop-filter: blur(12px);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.25s ease;
 }
 
 .thinking-screen.is-active {
-    display: flex;
+    display: grid;
+    place-items: center;
+    opacity: 1;
+    pointer-events: auto;
     animation: fade-in 0.3s ease;
 }
 
 .thinking-card {
     position: relative;
-    width: min(620px, 92vw);
-    padding: 48px 40px;
+    transform: none;
+    width: min(480px, 92vw);
+    padding: 44px 38px;
     text-align: center;
     border-radius: 24px;
     border: 1px solid var(--glass-border);
-    background: var(--glass-light);
-    backdrop-filter: blur(12px);
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0.05));
     -webkit-backdrop-filter: blur(12px);
+    backdrop-filter: blur(12px);
     box-shadow: var(--shadow-lg);
     animation: fade-up-scale 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+    overflow: hidden;
 }
 
 .thinking-card::before {
@@ -690,12 +696,22 @@ input {
     pointer-events: none;
 }
 
+.thinking-eyebrow {
+    position: relative;
+    z-index: 1;
+    margin-bottom: 10px;
+    color: var(--accent-cyan);
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    font-size: 0.8rem;
+}
+
 .thinking-card h2 {
     position: relative;
     z-index: 1;
     margin-bottom: 16px;
     color: var(--text-primary);
-    font-size: 1.4rem;
+    font-size: 1.55rem;
 }
 
 .thinking-message {
@@ -703,11 +719,11 @@ input {
     z-index: 1;
     min-height: 30px;
     color: var(--text-secondary);
-    font-size: 1.05rem;
+    font-size: 1.06rem;
     letter-spacing: 0.05em;
 }
 
-.thinking-dots {
+.thinking-spinner-row {
     position: relative;
     z-index: 1;
     display: inline-flex;
@@ -715,7 +731,7 @@ input {
     margin-top: 20px;
 }
 
-.thinking-dots span {
+.thinking-spinner-row span {
     width: 12px;
     height: 12px;
     border-radius: 50%;
@@ -724,12 +740,16 @@ input {
     box-shadow: 0 0 15px rgba(34, 211, 238, 0.5);
 }
 
-.thinking-dots span:nth-child(2) {
+.thinking-spinner-row span:nth-child(2) {
     animation-delay: 0.2s;
 }
 
-.thinking-dots span:nth-child(3) {
+.thinking-spinner-row span:nth-child(3) {
     animation-delay: 0.4s;
+}
+
+body.analysis-loading {
+    overflow: hidden;
 }
 
 /* ============================================ */

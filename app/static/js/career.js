@@ -159,6 +159,7 @@ const skillsChips = document.getElementById('skills-chips');
 const ratingList = document.getElementById('rating-list');
 const thinkingScreen = document.getElementById('thinking-screen');
 const thinkingMessage = document.getElementById('thinking-message');
+let thinkingMessageTimer = null;
 
 /**
  * Utility Functions
@@ -268,10 +269,12 @@ async function typeText(target, text, speed = 16) {
     }
 }
 
-async function runThinkingPhase() {
+function showThinkingPhase() {
     state.mode = 'thinking';
     showStep(4);
     thinkingScreen.classList.add('is-active');
+    thinkingScreen.setAttribute('aria-hidden', 'false');
+    document.body.classList.add('analysis-loading');
     neuralBackground.triggerPulse();
 
     const messages = [
@@ -280,13 +283,28 @@ async function runThinkingPhase() {
         'Building your career roadmap...'
     ];
 
-    for (const message of messages) {
-        await typeText(thinkingMessage, message, 16);
-        await new Promise(resolve => setTimeout(resolve, 350));
+    let messageIndex = 0;
+    thinkingMessage.textContent = messages[messageIndex];
+
+    if (thinkingMessageTimer) {
+        clearInterval(thinkingMessageTimer);
     }
 
-    await new Promise(resolve => setTimeout(resolve, 350));
+    thinkingMessageTimer = setInterval(() => {
+        messageIndex = (messageIndex + 1) % messages.length;
+        thinkingMessage.textContent = messages[messageIndex];
+    }, 1200);
+}
+
+function hideThinkingPhase() {
+    if (thinkingMessageTimer) {
+        clearInterval(thinkingMessageTimer);
+        thinkingMessageTimer = null;
+    }
+
     thinkingScreen.classList.remove('is-active');
+    thinkingScreen.setAttribute('aria-hidden', 'true');
+    document.body.classList.remove('analysis-loading');
 }
 
 function renderResultList(targetId, lines) {
@@ -376,17 +394,19 @@ document.getElementById('go-step-2').addEventListener('click', () => {
 document.getElementById('back-step-1').addEventListener('click', () => showStep(1));
 
 document.getElementById('analyze-button').addEventListener('click', async () => {
+    showThinkingPhase();
+
     try {
-        const [data] = await Promise.all([
-            fetchCareerPrediction(state.skills),
-            runThinkingPhase()
-        ]);
+        const data = await fetchCareerPrediction(state.skills);
         await updateUI(data);
     } catch (error) {
-        thinkingScreen.classList.remove('is-active');
-        state.mode = 'idle';
         alert('Prediction failed. Please try again.');
         console.error('Error:', error);
+    } finally {
+        hideThinkingPhase();
+        if (state.mode === 'thinking') {
+            state.mode = 'idle';
+        }
     }
 });
 
