@@ -142,24 +142,48 @@
         <h2 class="section-title">Explore</h2>
 
         <div class="cards">
-            <div class="card" data-url="{{ url_for('home.resume_upload') }}" onclick="location.href=this.dataset.url">
+            <div class="card" data-url="{{ url_for('home.resume_upload') }}" role="button" tabindex="0">
                 <h3>📄 Resume Analyzer</h3>
                 <p>Smart ATS score & improvements</p>
             </div>
 
-            <div class="card" data-url="{{ url_for('career_routes.career_page') }}" onclick="location.href=this.dataset.url">
+            <div class="card" data-url="{{ url_for('career_routes.career_page') }}" role="button" tabindex="0">
+                <div class="card-meta">
+                    <span class="card-badge">AI</span>
+                    <span class="card-arrow"><i class="fa-solid fa-arrow-right"></i></span>
+                </div>
                 <h3>🎯 Career Prediction</h3>
                 <p>AI-powered prediction module</p>
+                <div class="card-footer">
+                    <span>Open module</span>
+                    <i class="fa-solid fa-sparkles"></i>
+                </div>
             </div>
 
-            <div class="card" data-url="{{ url_for('home.roadmap') }}" onclick="location.href=this.dataset.url">
+            <div class="card" data-url="{{ url_for('home.roadmap') }}" role="button" tabindex="0">
+                <div class="card-meta">
+                    <span class="card-badge">PLAN</span>
+                    <span class="card-arrow"><i class="fa-solid fa-arrow-right"></i></span>
+                </div>
                 <h3>🗺️ Roadmap Explorer</h3>
                 <p>Career roadmap module</p>
+                <div class="card-footer">
+                    <span>Open module</span>
+                    <i class="fa-solid fa-sparkles"></i>
+                </div>
             </div>
 
-            <div class="card" data-url="{{ url_for('home.interview') }}" onclick="location.href=this.dataset.url">
+            <div class="card" data-url="{{ url_for('home.interview') }}" role="button" tabindex="0">
+                <div class="card-meta">
+                    <span class="card-badge">LIVE</span>
+                    <span class="card-arrow"><i class="fa-solid fa-arrow-right"></i></span>
+                </div>
                 <h3>🎤 Interview Practice</h3>
                 <p>AI interview simulator & feedback</p>
+                <div class="card-footer">
+                    <span>Open module</span>
+                    <i class="fa-solid fa-sparkles"></i>
+                </div>
             </div>
         </div>
     </main>
@@ -174,6 +198,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const highlight = document.getElementById('nav-content-highlight');
     const links = Array.from(document.querySelectorAll('.nav-button'));
     const activeLink = document.querySelector('.nav-button.active') || links[0];
+    const dashboardCards = Array.from(document.querySelectorAll('.cards .card'));
 
     const moveHighlight = (element) => {
         if (!element || !highlight || !nav) {
@@ -195,6 +220,33 @@ document.addEventListener('DOMContentLoaded', () => {
     if (nav) {
         nav.addEventListener('mouseleave', resetHighlight);
     }
+
+    const triggerCardAction = (card) => {
+        if (!card) {
+            return;
+        }
+
+        card.classList.remove('card-pulse');
+        void card.offsetWidth;
+        card.classList.add('card-pulse');
+
+        window.setTimeout(() => {
+            const url = card.dataset.url;
+            if (url) {
+                window.location.href = url;
+            }
+        }, 170);
+    };
+
+    dashboardCards.forEach((card) => {
+        card.addEventListener('click', () => triggerCardAction(card));
+        card.addEventListener('keydown', (event) => {
+            if (event.key === 'Enter' || event.key === ' ') {
+                event.preventDefault();
+                triggerCardAction(card);
+            }
+        });
+    });
 
     resetHighlight();
 });
