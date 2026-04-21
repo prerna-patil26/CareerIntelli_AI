@@ -412,6 +412,15 @@ function normalizeSkill(value) {
     return String(value || '').toLowerCase().trim();
 }
 
+function renderDetailList(items, fallbackMessage) {
+    const list = Array.isArray(items) ? items.filter(Boolean) : [];
+    if (!list.length) {
+        return `<p>${fallbackMessage}</p>`;
+    }
+
+    return `<ul>${list.map((item) => `<li>${item}</li>`).join('')}</ul>`;
+}
+
 function showSkillDetails(skillIndex) {
     const steps = Array.isArray(appState.roadmapData?.steps) ? appState.roadmapData.steps : [];
     const step = steps[skillIndex];
@@ -427,34 +436,77 @@ function showSkillDetails(skillIndex) {
 
     const whatToLearn = Array.isArray(step.what_to_learn?.concepts) && step.what_to_learn.concepts.length
         ? step.what_to_learn.concepts
-        : Array.isArray(step.concepts) ? step.concepts : [];
+        : Array.isArray(step.concepts) && step.concepts.length
+            ? step.concepts
+            : Array.isArray(step.sub_skills) ? step.sub_skills : [];
     const howToStart = Array.isArray(step.how_to_start) ? step.how_to_start : [];
     const subSkills = Array.isArray(step.sub_skills) ? step.sub_skills : [];
+    const benefits = Array.isArray(step.benefits) && step.benefits.length
+        ? step.benefits
+        : [
+            `Strengthens your readiness for ${appState.selectedRole || 'your target role'}.`,
+            'Helps you build confidence in projects, interviews, and daily work.',
+            'Makes it easier to progress to the next roadmap step.'
+        ];
+    const futureUse = Array.isArray(step.future_use) && step.future_use.length
+        ? step.future_use
+        : [
+            'Apply it in portfolio projects that hiring managers can review.',
+            'Explain it with confidence in interviews and technical discussions.',
+            'Use it to connect related tools, concepts, and workflows later in the roadmap.'
+        ];
+    const whyNeeded = step.why_important || step.why || `This skill is important for ${step.skill || step.name || 'this role'} and helps you move from beginner understanding to practical application.`;
+    const nextSteps = howToStart.length
+        ? howToStart
+        : [
+            'Learn the fundamentals and core terminology.',
+            'Practice with small examples or exercises.',
+            'Apply it in a mini project or real task.'
+        ];
 
     modalBody.innerHTML = `
         <div class="detail-card">
-            <h2>${step.skill || step.name}</h2>
+            <h2 id="skill-details-title">${step.skill || step.name}</h2>
             <p class="detail-summary">${step.description || step.intro || ''}</p>
         </div>
         <div class="detail-block">
-            <h3>What to learn</h3>
-            <ul>${whatToLearn.map((item) => `<li>${item}</li>`).join('')}</ul>
+            <h3>What you should study</h3>
+            ${renderDetailList(whatToLearn, 'Start with the basics, then move into applied practice and projects.')}
         </div>
         <div class="detail-block">
-            <h3>Why needed</h3>
-            <p>${step.why_important || step.why || 'This skill is required for your target career path.'}</p>
+            <h3>Why it is important</h3>
+            <p>${whyNeeded}</p>
         </div>
         <div class="detail-block">
-            <h3>How to start</h3>
-            <ul>${howToStart.map((item) => `<li>${item}</li>`).join('')}</ul>
+            <h3>How to begin</h3>
+            ${renderDetailList(nextSteps, 'Begin with basics, then move to practice and projects.')}
         </div>
         <div class="detail-block">
-            <h3>Subskills</h3>
-            <ul>${subSkills.map((item) => `<li>${item}</li>`).join('')}</ul>
+            <h3>Benefits you will get</h3>
+            ${renderDetailList(benefits, 'You will build stronger confidence, better job readiness, and more practical ability.')}
+        </div>
+        <div class="detail-block">
+            <h3>How this helps in the future</h3>
+            ${renderDetailList(futureUse, 'This skill will keep paying off in projects, interviews, and day-to-day job work.')}
+        </div>
+        <div class="detail-block">
+            <h3>Related subskills</h3>
+            ${renderDetailList(subSkills, 'These will appear as you explore this topic in more depth.')}
         </div>
     `;
 
     modal.classList.add('active');
+    modal.setAttribute('aria-hidden', 'false');
+}
+
+function hideSkillDetails() {
+    const modal = document.getElementById('skill-details-modal');
+    if (!modal) {
+        return;
+    }
+
+    modal.classList.remove('active');
+    modal.setAttribute('aria-hidden', 'true');
 }
 
 // ============ PAGE NAVIGATION ============
@@ -526,19 +578,26 @@ function renderProgressPage() {
     const total = derivedRows.filter((row) => row.source === 'roadmap').length;
     const completed = derivedRows.filter((row) => row.status === 'completed').length;
     const percent = total > 0 ? Math.round((completed / total) * 100) : 0;
+    const nextFocus = derivedRows.find((row) => row.source === 'roadmap' && row.status === 'pending')
+        || derivedRows.find((row) => row.source === 'roadmap' && row.status === 'locked')
+        || null;
 
     container.innerHTML = `
-        <div class="stat-card">
+        <div class="stat-card completed">
             <div class="stat-value">${completed}</div>
             <div class="stat-label">Skills Completed</div>
         </div>
-        <div class="stat-card">
+        <div class="stat-card remaining">
             <div class="stat-value">${Math.max(total - completed, 0)}</div>
             <div class="stat-label">Skills Remaining</div>
         </div>
-        <div class="stat-card">
+        <div class="stat-card progress">
             <div class="stat-value">${percent}%</div>
             <div class="stat-label">Progress</div>
+        </div>
+        <div class="stat-card focus">
+            <div class="stat-value">${nextFocus ? nextFocus.skill : 'Done'}</div>
+            <div class="stat-label">Next Focus</div>
         </div>
     `;
 
@@ -723,6 +782,18 @@ function createRipple(target, event) {
     target.appendChild(ripple);
     setTimeout(() => ripple.remove(), 650);
 }
+
+document.addEventListener('click', (event) => {
+    if (event.target && event.target.matches('[data-close-modal]')) {
+        hideSkillDetails();
+    }
+});
+
+document.addEventListener('keydown', (event) => {
+    if (event.key === 'Escape') {
+        hideSkillDetails();
+    }
+});
 
 // ============ UTILITIES ============
 console.log('✓ AI Career Roadmap Script Loaded');

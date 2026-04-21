@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>CareerIntelli AI - Dashboard</title>
 
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Poppins:wght@500;600;700;800&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
 <link rel="stylesheet" href="{{ url_for('static', filename='css/base.css') }}">
 <link rel="stylesheet" href="{{ url_for('static', filename='css/dashboard.css') }}">
@@ -91,7 +91,7 @@
                 <input type="text" placeholder="Search..." class="search">
 
                 <div class="top-actions">
-                    <span class="theme-toggle">🌙</span>
+                    <span class="theme-toggle" role="button" tabindex="0" aria-label="Toggle dashboard theme">🌙</span>
                     <div class="profile-mini" data-url="{{ url_for('profile.profile_page') }}" onclick="location.href=this.dataset.url">
                         {% if profile and profile.profile_photo %}
                         <img src="{{ url_for('static', filename=profile.profile_photo) }}" alt="Profile photo">
@@ -105,84 +105,93 @@
 
         <div class="hero">
             <div class="hero-content">
-                <h2>🚀 Welcome to Your AI Career Hub</h2>
-                <p>Unlock your potential with AI-powered Resume Analysis, Career Predictions, and Interview Practice</p>
+                <span class="hero-kicker">Daily overview</span>
+                <h2>Your AI career workspace, organized</h2>
+                <p>Track resume quality, role fit, and interview readiness from a single dashboard.</p>
                 <button type="button" data-url="{{ url_for('home.resume_upload') }}" onclick="location.href=this.dataset.url">
-                    🚀 Get Started
+                    Start with Resume Review
                 </button>
             </div>
         </div>
 
         <div class="analytics-card">
-            <h3>Career Progress</h3>
-            <p>Your improvement this week</p>
+            <h3>Weekly snapshot</h3>
+            <p>{{ dashboard_metrics.weekly_snapshot.subtitle if dashboard_metrics else 'Resume, roadmap, and interview progress at a glance' }}</p>
             <div class="fake-chart"></div>
         </div>
 
         <div class="stats">
             <div class="stat-card">
-                <h4>Total Resumes</h4>
-                <p>3</p>
-                <span class="growth">+12%</span>
+                <h4>Uploaded Resumes</h4>
+                <p>{{ dashboard_metrics.uploaded_resumes.value if dashboard_metrics else 0 }}</p>
+                <span class="growth">{{ dashboard_metrics.uploaded_resumes.growth if dashboard_metrics else '+0 this week' }}</span>
             </div>
 
             <div class="stat-card">
-                <h4>Career Matches</h4>
-                <p>5</p>
-                <span class="growth">+8%</span>
+                <h4>Suggested Roles</h4>
+                <p>{{ dashboard_metrics.suggested_roles.value if dashboard_metrics else 0 }}</p>
+                <span class="growth">{{ dashboard_metrics.suggested_roles.growth if dashboard_metrics else '+0 vs last upload' }}</span>
             </div>
 
             <div class="stat-card">
-                <h4>Interviews</h4>
-                <p>2</p>
-                <span class="growth">+5%</span>
+                <h4>Practice Sessions</h4>
+                <p>{{ dashboard_metrics.practice_sessions.value if dashboard_metrics else 0 }}</p>
+                <span class="growth">{{ dashboard_metrics.practice_sessions.growth if dashboard_metrics else '+0 this week' }}</span>
             </div>
         </div>
 
-        <h2 class="section-title">Explore</h2>
+        <h2 class="section-title">Focus areas</h2>
 
         <div class="cards">
             <div class="card" data-url="{{ url_for('home.resume_upload') }}" role="button" tabindex="0">
-                <h3>📄 Resume Analyzer</h3>
-                <p>Smart ATS score & improvements</p>
+                <div class="card-meta">
+                    <span class="card-symbol"><i class="fa-solid fa-file-circle-check"></i></span>
+                    <span class="card-badge">ATS</span>
+                    <span class="card-arrow"><i class="fa-solid fa-arrow-right"></i></span>
+                </div>
+                <h3>Resume Analyzer</h3>
+                <p>ATS score, missing keywords, and clear improvement cues.</p>
+                <div class="card-footer">
+                    <i class="fa-solid fa-file-circle-check"></i>
+                </div>
             </div>
 
             <div class="card" data-url="{{ url_for('career_routes.career_page') }}" role="button" tabindex="0">
                 <div class="card-meta">
+                    <span class="card-symbol"><i class="fa-solid fa-bullseye"></i></span>
                     <span class="card-badge">AI</span>
                     <span class="card-arrow"><i class="fa-solid fa-arrow-right"></i></span>
                 </div>
-                <h3>🎯 Career Prediction</h3>
-                <p>AI-powered prediction module</p>
+                <h3>Career Prediction</h3>
+                <p>Role suggestions shaped by your skills and profile.</p>
                 <div class="card-footer">
-                    <span>Open module</span>
-                    <i class="fa-solid fa-sparkles"></i>
-                </div>
-            </div>
-
-            <div class="card" data-url="{{ url_for('home.roadmap') }}" role="button" tabindex="0">
-                <div class="card-meta">
-                    <span class="card-badge">PLAN</span>
-                    <span class="card-arrow"><i class="fa-solid fa-arrow-right"></i></span>
-                </div>
-                <h3>🗺️ Roadmap Explorer</h3>
-                <p>Career roadmap module</p>
-                <div class="card-footer">
-                    <span>Open module</span>
-                    <i class="fa-solid fa-sparkles"></i>
+                    <i class="fa-solid fa-bullseye"></i>
                 </div>
             </div>
 
             <div class="card" data-url="{{ url_for('home.interview') }}" role="button" tabindex="0">
                 <div class="card-meta">
+                    <span class="card-symbol"><i class="fa-solid fa-microphone-lines"></i></span>
                     <span class="card-badge">LIVE</span>
                     <span class="card-arrow"><i class="fa-solid fa-arrow-right"></i></span>
                 </div>
-                <h3>🎤 Interview Practice</h3>
-                <p>AI interview simulator & feedback</p>
+                <h3>Interview Practice</h3>
+                <p>Mock interviews with feedback on clarity and confidence.</p>
                 <div class="card-footer">
-                    <span>Open module</span>
-                    <i class="fa-solid fa-sparkles"></i>
+                    <i class="fa-solid fa-microphone-lines"></i>
+                </div>
+            </div>
+
+            <div class="card" data-url="{{ url_for('home.roadmap') }}" role="button" tabindex="0">
+                <div class="card-meta">
+                    <span class="card-symbol"><i class="fa-solid fa-route"></i></span>
+                    <span class="card-badge">PLAN</span>
+                    <span class="card-arrow"><i class="fa-solid fa-arrow-right"></i></span>
+                </div>
+                <h3>Roadmap Explorer</h3>
+                <p>Step-by-step learning paths for your next career move.</p>
+                <div class="card-footer">
+                    <i class="fa-solid fa-route"></i>
                 </div>
             </div>
         </div>
@@ -199,6 +208,36 @@ document.addEventListener('DOMContentLoaded', () => {
     const links = Array.from(document.querySelectorAll('.nav-button'));
     const activeLink = document.querySelector('.nav-button.active') || links[0];
     const dashboardCards = Array.from(document.querySelectorAll('.cards .card'));
+    const themeToggle = document.querySelector('.theme-toggle');
+    const themeKey = 'dashboard-theme-mode';
+
+    const applyTheme = (mode) => {
+        const isLight = mode === 'light';
+        document.body.classList.toggle('dashboard-light-theme', isLight);
+        if (themeToggle) {
+            themeToggle.textContent = isLight ? '☀️' : '🌙';
+            themeToggle.setAttribute('aria-pressed', String(isLight));
+        }
+    };
+
+    const storedTheme = window.localStorage.getItem(themeKey);
+    applyTheme(storedTheme === 'light' ? 'light' : 'dark');
+
+    const toggleTheme = () => {
+        const nextMode = document.body.classList.contains('dashboard-light-theme') ? 'dark' : 'light';
+        window.localStorage.setItem(themeKey, nextMode);
+        applyTheme(nextMode);
+    };
+
+    if (themeToggle) {
+        themeToggle.addEventListener('click', toggleTheme);
+        themeToggle.addEventListener('keydown', (event) => {
+            if (event.key === 'Enter' || event.key === ' ') {
+                event.preventDefault();
+                toggleTheme();
+            }
+        });
+    }
 
     const moveHighlight = (element) => {
         if (!element || !highlight || !nav) {

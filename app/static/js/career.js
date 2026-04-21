@@ -293,7 +293,7 @@ function showThinkingPhase() {
     thinkingMessageTimer = setInterval(() => {
         messageIndex = (messageIndex + 1) % messages.length;
         thinkingMessage.textContent = messages[messageIndex];
-    }, 1200);
+    }, 850);
 }
 
 function hideThinkingPhase() {
@@ -403,7 +403,9 @@ document.getElementById('analyze-button').addEventListener('click', async () => 
         alert('Prediction failed. Please try again.');
         console.error('Error:', error);
     } finally {
-        hideThinkingPhase();
+        window.setTimeout(() => {
+            hideThinkingPhase();
+        }, 250);
         if (state.mode === 'thinking') {
             state.mode = 'idle';
         }

@@ -6,6 +6,8 @@ from flask import request, render_template, redirect, url_for, session, make_res
 from werkzeug.utils import secure_filename
 
 from . import resume_bp
+from app import db
+from app.database.models import Profile, Resume
 
 from app.modules.resume_analysis.parser import ResumeParser
 from app.modules.resume_analysis.skill_extractor import SkillExtractor
@@ -238,6 +240,28 @@ def upload_resume():
             "target_role": DEFAULT_TARGET_ROLE,
             "show_basic_suggestions": show_basic_suggestions,
         }
+
+        user_id = session.get("user_id")
+        if user_id:
+            try:
+                resume_record = Resume(
+                    user_id=user_id,
+                    file_path=filepath,
+                    score=score_result.get("percentage", 0),
+                    skills=technical_skills,
+                    experience=parsed_data.get("experience", []),
+                    education=parsed_data.get("education", []),
+                )
+                db.session.add(resume_record)
+
+                profile = Profile.query.filter_by(user_id=user_id).first()
+                if profile:
+                    profile.resume_file = filepath
+
+                db.session.commit()
+            except Exception as db_error:
+                logger.error(f"Failed to save resume metadata: {db_error}")
+                db.session.rollback()
 
         session["resume_result"] = result
         logger.info("Resume analysis completed successfully")

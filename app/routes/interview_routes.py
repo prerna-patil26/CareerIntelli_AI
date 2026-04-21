@@ -1,4 +1,9 @@
-from flask import Blueprint, request, jsonify, render_template
+from datetime import datetime
+
+from flask import Blueprint, request, jsonify, render_template, session
+
+from app import db
+from app.database.models import Interview
 
 from app.modules.interview_engine.question_loader import QuestionLoader
 from app.modules.interview_engine.question_selector import QuestionSelector
@@ -201,6 +206,23 @@ def submit_answers():
     )
 
     suggestions = ai_result.get("suggestions", [])
+
+    user_id = session.get("user_id")
+    if user_id:
+        try:
+            interview_record = Interview(
+                user_id=user_id,
+                job_role=data.get("career") or data.get("role") or "Interview Practice",
+                difficulty=data.get("difficulty"),
+                score=float(final_score),
+                duration_seconds=data.get("duration_seconds"),
+                completed_at=datetime.utcnow(),
+            )
+            db.session.add(interview_record)
+            db.session.commit()
+        except Exception as db_error:
+            db.session.rollback()
+            print(f"Interview save failed: {db_error}")
 
     return jsonify({
         "total_score": float(final_score),

@@ -4,7 +4,8 @@ from __future__ import annotations
 from typing import Dict, List, Optional
 
 from flask import Blueprint, jsonify, redirect, render_template, request, session, url_for
-from app.database.models import User
+from app.database.models import Profile, User
+from app.routes.home_routes import _build_dashboard_metrics
 
 
 # Keep the blueprint name as ``career_routes`` so existing ``url_for`` calls keep working.
@@ -121,7 +122,15 @@ def dashboard():
         session.clear()
         return redirect(url_for("home.login_page"))
 
-    return render_template("dashboard.html", user=user)
+    profile = Profile.query.filter_by(user_id=user.id).first()
+
+    return render_template(
+        "dashboard.html",
+        user=user,
+        profile=profile,
+        dashboard_metrics=_build_dashboard_metrics(user),
+        sidebar_active="dashboard",
+    )
 
 
 @career_bp.route("/career-prediction")
