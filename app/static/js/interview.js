@@ -12,16 +12,29 @@ let selectedDomain = "";
 let recognition;
 let interviewStarted = false;
 
-// ✅ ADDED (store interval globally)
 let faceInterval = null;
 let interviewLaunchTimer = null;
+
+// TIMER
+let timeLeft = 60;
+let timerInterval;
+let totalQuestions = 10;
+
+// Circle constants
+const radius = 26;
+const circumference = 2 * Math.PI * radius;
 
 document.addEventListener('DOMContentLoaded', function() {
     initializeCamera();
     loadDomains();
     wireInterviewLaunch();
 
-    // 🔥 FIXED FACE CHECK (store interval)
+    const circle = document.querySelector(".progress-ring__circle");
+    if (circle) {
+        circle.style.strokeDasharray = circumference;
+        circle.style.strokeDashoffset = 0;
+    }
+
     faceInterval = setInterval(() => {
         if (!interviewStarted) return;
 
@@ -36,10 +49,10 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 });
 
-// 🎥 CAMERA
+// CAMERA
 async function initializeCamera() {
     try {
-        const stream = await navigator.mediaDevices.getUserMedia({ 
+        const stream = await navigator.mediaDevices.getUserMedia({
             video: true,
             audio: false
         });
@@ -52,6 +65,7 @@ async function initializeCamera() {
     }
 }
 
+// INTRO → MAIN UI
 function wireInterviewLaunch() {
     const startButton = document.getElementById('startInterviewBtn');
 
@@ -59,6 +73,7 @@ function wireInterviewLaunch() {
 
     startButton.addEventListener('click', () => {
         const popup = document.getElementById('startPopup');
+
         if (popup) {
             popup.classList.add('is-visible');
             popup.setAttribute('aria-hidden', 'false');
@@ -75,6 +90,7 @@ function wireInterviewLaunch() {
             }
 
             document.body.classList.add('interview-ready');
+
             const interviewApp = document.getElementById('interviewApp');
             if (interviewApp) {
                 interviewApp.hidden = false;
@@ -83,7 +99,7 @@ function wireInterviewLaunch() {
     });
 }
 
-// 📋 LOAD DOMAINS
+// LOAD DOMAINS
 function loadDomains() {
     fetch('/interview/domains')
         .then(res => {
@@ -118,7 +134,7 @@ function displayDomains(domains) {
     });
 }
 
-// 🚀 START INTERVIEW
+// START INTERVIEW
 function startInterview() {
     if (!selectedDomain) {
         alert("Please select a domain");
@@ -141,18 +157,34 @@ function startInterview() {
     .then(data => {
         questions = data.questions;
         currentIndex = 0;
+        totalQuestions = questions.length;
 
         if (loader) {
             loader.classList.remove("is-visible");
         }
 
+        // ✅ HIDE DOMAIN SELECTION
+        const domainSection = document.getElementById("domainSelectionSection");
+        if (domainSection) {
+            domainSection.style.display = "none";
+        }
+
+        // ✅ SHOW SELECTED DOMAIN TITLE
+        const domainTitle = document.getElementById("selectedDomainTitle");
+        if (domainTitle) {
+            domainTitle.innerText = `${selectedDomain} Interview`;
+            domainTitle.style.display = "block";
+        }
+
         document.getElementById("interviewSection").style.display = "block";
 
+        updateQuestionCounter();
+        startTimer();
         showQuestion();
     });
 }
 
-// 🧠 SHOW QUESTION
+// SHOW QUESTION
 function showQuestion() {
     const question = questions[currentIndex];
     document.getElementById("questionText").innerText = question;
@@ -163,7 +195,7 @@ function showQuestion() {
         (currentIndex === questions.length - 1) ? "Submit Interview" : "Next";
 }
 
-// 🔊 SPEAK
+// SPEAK
 function speak(text) {
     const speech = new SpeechSynthesisUtterance(text);
 
@@ -171,7 +203,7 @@ function speak(text) {
     window.speechSynthesis.speak(speech);
 }
 
-// 🎤 START MIC
+// START MIC
 function startSpeechRecognition() {
     const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
 
@@ -202,14 +234,20 @@ function startSpeechRecognition() {
             }
         }
 
-        document.getElementById('answerText').innerText =
-            finalTranscript + interimTranscript;
+        let fullAnswer = finalTranscript + interimTranscript;
+
+        document.getElementById('answerText').innerText = fullAnswer;
+
+        let wordCount = fullAnswer.trim().split(/\s+/).filter(word => word).length;
+        let confidence = Math.min(wordCount * 2, 100);
+
+        document.getElementById("confidenceFill").style.width = confidence + "%";
     };
 
     recognition.start();
 }
 
-// ⛔ STOP MIC
+// STOP MIC
 function stopSpeechRecognition() {
     if (recognition) {
         recognition.onend = null;
@@ -217,12 +255,66 @@ function stopSpeechRecognition() {
     }
 }
 
-// ➡️ NEXT QUESTION
+// TIMER
+function startTimer() {
+    clearInterval(timerInterval);
+
+    timeLeft = 60;
+
+    const timerElement = document.getElementById("timer");
+    const circle = document.querySelector(".progress-ring__circle");
+
+    timerElement.innerText = `${timeLeft}s`;
+    timerElement.style.color = "#22D3EE";
+
+    if (circle) {
+        circle.style.stroke = "#22D3EE";
+        circle.style.strokeDashoffset = 0;
+    }
+
+    timerInterval = setInterval(() => {
+        timeLeft--;
+
+        timerElement.innerText = `${timeLeft}s`;
+
+        if (circle) {
+            const progress = timeLeft / 60;
+            const offset = circumference - (progress * circumference);
+            circle.style.strokeDashoffset = offset;
+        }
+
+        if (timeLeft <= 10) {
+            timerElement.style.color = "red";
+
+            if (circle) {
+                circle.style.stroke = "red";
+            }
+        }
+
+        if (timeLeft <= 0) {
+            clearInterval(timerInterval);
+            nextQuestion();
+        }
+
+    }, 1000);
+}
+
+// QUESTION COUNTER
+function updateQuestionCounter() {
+    document.getElementById("questionCounter").innerText =
+        `Question ${currentIndex + 1} / ${totalQuestions}`;
+}
+
+// NEXT QUESTION
 function nextQuestion() {
+    clearInterval(timerInterval);
+
     let answer = document.getElementById("answerText").innerText;
 
     answers.push(answer);
     document.getElementById("answerText").innerText = "";
+
+    document.getElementById("confidenceFill").style.width = "0%";
 
     currentIndex++;
 
@@ -231,10 +323,12 @@ function nextQuestion() {
         return;
     }
 
+    updateQuestionCounter();
+    startTimer();
     showQuestion();
 }
 
-// 📸 CAPTURE IMAGE
+// CAPTURE FRAME
 function captureFrame() {
     const video = document.getElementById("interview-video");
 
@@ -246,7 +340,7 @@ function captureFrame() {
     return canvas.toDataURL("image/jpeg");
 }
 
-// 🔥 FACE CHECK
+// FACE CHECK
 function checkFacePosition() {
     const image = captureFrame();
 
@@ -262,7 +356,7 @@ function checkFacePosition() {
     .catch(err => console.log("Face check error:", err));
 }
 
-// 🔥 WARNING (UPDATED ✅)
+// WARNING
 let warningTimeout = null;
 let lastMessage = "";
 
@@ -270,7 +364,6 @@ function showWarning(message) {
     const box = document.getElementById("warningBox");
     if (!box) return;
 
-    // same message repeat avoid
     if (message === lastMessage) return;
 
     lastMessage = message;
@@ -291,20 +384,15 @@ function showWarning(message) {
     }
 }
 
-// 🚀 SUBMIT
+// SUBMIT
 function submitInterview() {
-
-    console.log("🔥 SUBMIT STARTED");
-
     if (!answers.length || answers.every(a => a.trim() === "")) {
         alert("Please answer at least one question!");
         return;
     }
 
-    // ✅ MOST IMPORTANT FIX (STOP FACE CHECK)
     if (faceInterval) {
         clearInterval(faceInterval);
-        console.log("🛑 Face detection stopped");
     }
 
     document.getElementById("loader").style.display = "flex";

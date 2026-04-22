@@ -490,7 +490,7 @@ video {
 
 /* 🔤 HEADINGS */
 h2, h3 {
-    font-family: 'Poppins', sans-serif;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
 }
 
 /* 🔍 INPUT */
@@ -520,11 +520,12 @@ li {
 }
 
 li:hover {
-    background-color: #1E3A8A;
+    background: rgba(34, 211, 238, 0.2);
 }
 
 li.selected {
-    background-color: #7C3AED;
+    background: linear-gradient(135deg, rgba(34, 211, 238, 0.6), rgba(6, 182, 212, 0.6));
+    color: white;
 }
 
 /* 🔘 BUTTONS */
@@ -646,7 +647,7 @@ li {
 /* 🌌 BACKGROUND */
 body {
     margin: 0;
-    font-family: 'Segoe UI', sans-serif;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
     background: radial-gradient(circle at top, #1e293b, #020617);
     color: white;
 }
@@ -872,4 +873,403 @@ body {
 
     display: none;
     z-index: 999;
+}
+
+/* 🔥 QUESTION HEADER */
+.question-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+    font-weight: bold;
+    color: #22D3EE;
+}
+
+/* ⏱ TIMER STYLE */
+#timer {
+    background: rgba(34, 211, 238, 0.15);
+    padding: 6px 12px;
+    border-radius: 8px;
+    border: 1px solid rgba(34, 211, 238, 0.4);
+    font-size: 14px;
+}
+
+/* 💬 QUESTION COUNTER */
+#questionCounter {
+    font-size: 14px;
+    opacity: 0.9;
+}
+
+/* 🌌 GLASS IMPROVEMENT (ONLY ENHANCED, NOT CHANGED) */
+.camera-section,
+.question-section {
+    background: rgba(15, 23, 42, 0.55) !important;
+    backdrop-filter: blur(18px);
+}
+
+/* 🎥 VIDEO BETTER LOOK */
+video {
+    backdrop-filter: blur(4px);
+}
+/* 🌌 TRUE GLASS EFFECT (FIXED) */
+.camera-section,
+.question-section {
+    background: rgba(15, 23, 42, 0.35) !important;  /* 🔥 lighter */
+    backdrop-filter: blur(10px);
+}
+
+/* ✨ OVERLAY LIGHT KARO */
+.app-bg-overlay {
+    background: rgba(2, 6, 23, 0.25) !important;
+}
+
+#timer {
+    background: rgba(34, 211, 238, 0.15);
+    padding: 8px 14px;
+    border-radius: 20px;
+    border: 1px solid rgba(34, 211, 238, 0.5);
+    font-size: 14px;
+    font-weight: bold;
+    box-shadow: 0 0 12px rgba(34, 211, 238, 0.3);
+}
+.timer-warning {
+    color: red !important;
+    background: transparent !important;
+    border: none !important;
+    box-shadow: none !important;
+}
+#questionText {
+    font-size: 20px;
+    font-weight: 600;
+    margin-top: 10px;
+}
+button {
+    margin-right: 10px;
+}
+.camera-section video {
+    box-shadow: 0 0 30px rgba(34, 211, 238, 0.25);
+}
+
+/* 🔵 CIRCULAR TIMER */
+.timer-wrapper {
+    position: relative;
+    width: 60px;
+    height: 60px;
+}
+
+.progress-ring__circle {
+    stroke-dasharray: 163;
+    stroke-dashoffset: 0;
+    transition: stroke-dashoffset 1s linear;
+    transform: rotate(-90deg);
+    transform-origin: 50% 50%;
+}
+
+.timer-wrapper span {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 12px;
+    font-weight: bold;
+}
+
+/* 🎤 MIC GLOW */
+.mic-active {
+    box-shadow: 0 0 20px #22D3EE, 0 0 40px #22D3EE;
+    transform: scale(1.1);
+}
+
+/* 📊 CONFIDENCE BAR */
+.confidence-box {
+    margin-top: 10px;
+}
+
+.confidence-bar {
+    height: 8px;
+    background: #334155;
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+.confidence-fill {
+    height: 100%;
+    width: 0%;
+    background: linear-gradient(90deg, #22D3EE, #7C3AED);
+    transition: width 0.5s ease;
+}
+
+/* ✨ TYPING EFFECT */
+.typing {
+    border-right: 2px solid #22D3EE;
+    white-space: nowrap;
+    overflow: hidden;
+}
+.progress-ring__circle {
+    stroke: rgba(34, 211, 238, 0.7);
+}
+/* 🔥 CLEAN MINIMAL TIMER */
+.timer-wrapper {
+    position: relative;
+    width: 70px;
+    height: 70px;
+}
+
+/* OUTER RING */
+.progress-ring__circle {
+    stroke: rgba(34, 211, 238, 0.7);
+    stroke-width: 4;
+    fill: transparent;
+}
+
+/* ❌ REMOVE INNER BACKGROUND */
+#timer {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    
+    background: transparent;   /* ❌ no box */
+    border: none;              /* ❌ no border */
+    box-shadow: none;          /* ❌ no glow box */
+
+    font-size: 14px;
+    font-weight: 600;
+    color: #22D3EE;
+}
+#timer {
+    text-shadow: 0 0 10px rgba(34, 211, 238, 0.6);
+}
+/* 🎯 PERFECT CENTER TEXT */
+/* 🎯 PERFECT CENTER TEXT */
+.timer-wrapper {
+    position: relative;
+    width: 70px;
+    height: 70px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#timer {
+    position: absolute;
+
+    font-size: 14px;
+    font-weight: 600;
+
+    color: inherit;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    width: 100%;
+    height: 100%;
+
+    text-align: center;
+}
+#timer {
+    text-shadow: 0 0 8px rgba(34, 211, 238, 0.6);
+}
+/* 🎥 CAMERA SECTION */
+.camera-section {
+    position: relative;
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: 0 0 20px rgba(34, 211, 238, 0.15);
+}
+
+/* 🎥 VIDEO */
+#interview-video {
+    width: 100%;
+    border-radius: 16px;
+}
+
+
+
+
+/* ✨ HOVER */
+.control-btn:hover {
+    background: rgba(255,255,255,0.2);
+}
+
+/* 🔴 END BUTTON */
+
+
+/* ✅ ICON FIX (NO CUT ISSUE) */
+.control-btn svg {
+    width: 22px;
+    height: 22px;
+    display: block;
+}
+
+/* 🧠 AI OBSERVING TEXT (VISIBLE ABOVE CONTROLS) */
+.ai-observing {
+    position: absolute;
+    bottom: 80px;
+    left: 50%;
+    transform: translateX(-50%);
+
+    font-size: 13px;
+    color: white;
+
+    background: rgba(0,0,0,0.6);
+    padding: 6px 12px;
+    border-radius: 10px;
+
+    backdrop-filter: blur(8px);
+}
+
+/* 🔴 LIVE INDICATOR */
+.live-indicator {
+    position: absolute;
+    top: 12px;
+    left: 12px;
+
+    background: #ef4444;
+    padding: 6px 12px;
+    border-radius: 10px;
+
+    font-size: 13px;
+    font-weight: 600;
+    color: white;
+
+    animation: pulse 1.5s infinite;
+}
+
+@keyframes pulse {
+    0% { opacity: 1; }
+    50% { opacity: 0.6; }
+    100% { opacity: 1; }
+}
+
+/* 🎥 CAMERA SECTION CLEAN */
+.camera-section {
+    position: relative;
+    border-radius: 16px;
+    overflow: hidden;
+}
+
+/* VIDEO */
+#interview-video {
+    width: 100%;
+    border-radius: 16px;
+}
+.camera-section,
+.question-section {
+    background: rgba(2, 6, 23, 0.3) !important; /* light overlay */
+    backdrop-filter: none !important; /* 🔥 REMOVE BLUR */
+}
+
+.control-btn {
+    transition: all 0.3s ease;
+}
+
+/* ============================= */
+/* RIGHT PANEL FINAL POLISH */
+/* ============================= */
+
+/* Right panel cleaner layout */
+.question-section {
+    width: 45%;
+    padding: 35px 40px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+/* Selected domain heading center + bigger */
+#selectedDomainTitle {
+    text-align: center;
+    font-size: 42px;
+    font-weight: 800;
+    margin-bottom: 25px;
+    letter-spacing: 1px;
+
+    background: linear-gradient(
+        90deg,
+        #e0f7ff 0%,
+        #b8f0ff 30%,
+        #66d9ff 60%,
+        #22d3ee 100%
+    );
+
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+/* Question counter + timer alignment */
+.question-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+/* Question counter */
+#questionCounter {
+    font-size: 18px;
+    font-weight: 600;
+    color: #22D3EE;
+}
+
+/* Question text bigger */
+#questionText {
+    font-size: 32px;
+    font-weight: 700;
+    line-height: 1.4;
+    margin-top: 10px;
+    margin-bottom: 25px;
+    color: white;
+}
+
+/* Speech buttons spacing */
+button {
+    margin-right: 12px;
+    margin-bottom: 15px;
+}
+
+/* Answer section box */
+#answerText {
+    min-height: 80px;
+    max-height: 120px;
+    overflow-y: auto;
+    
+    padding: 15px;
+    margin-top: 10px;
+    margin-bottom: 20px;
+
+    border-radius: 12px;
+    background: rgba(255, 255, 255, 0.08);
+
+    color: #22D3EE;
+    font-weight: 600;
+    font-size: 16px;
+
+    border: 1px solid rgba(255,255,255,0.1);
+}
+
+/* Confidence section spacing */
+.confidence-box {
+    margin-top: 10px;
+    margin-bottom: 25px;
+}
+
+/* Confidence bar smaller width */
+.confidence-bar {
+    width: 85%;
+    height: 10px;
+    border-radius: 10px;
+}
+
+/* Next button cleaner placement */
+#nextBtn {
+    margin-top: 10px;
+}
+
+/* Timer little left */
+.timer-wrapper {
+    margin-right: 20px;
 }
