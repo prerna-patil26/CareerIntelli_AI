@@ -256,7 +256,7 @@ def upload_resume():
 
                 profile = Profile.query.filter_by(user_id=user_id).first()
                 if profile:
-                    profile.resume_file = filepath
+                    profile.resume_file = f"uploads/resumes/{filename}"
 
                 db.session.commit()
             except Exception as db_error:
