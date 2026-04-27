@@ -76,6 +76,9 @@ def start_interview():
 
     questions = selector.select_questions(career)
 
+    # ✅ FIX 1: Store total questions in session for coverage penalty in submit
+    session['total_questions'] = len(questions)
+
     return jsonify({
         "career": career,
         "total_questions": len(questions),
@@ -162,14 +165,32 @@ def submit_answers():
     except:
         ai_score = 5
 
-    final_score = round((manual_score * 0.6) + (ai_score * 10 * 0.4), 2)
+    # ✅ FIX 2: Apply coverage penalty — if user answered only 1 of 15 questions,
+    # the score must reflect that, not just score the answers given
+    total_questions = data.get("total_questions") or session.get("total_questions") or len(answers)
+    coverage_ratio = len(answers) / total_questions
+    penalized_manual_score = manual_score * coverage_ratio
+    penalized_ai_score = ai_score * coverage_ratio
+
+    final_score = round((penalized_manual_score * 0.6) + (penalized_ai_score * 10 * 0.4), 2)
 
     # 🎯 BREAKDOWN
     technical_score = round(final_score * 0.4, 2)
 
-    communication_score = speech_metrics.calculate_communication_score(
-        total_fillers, total_words
-    )
+    # ✅ FIX 3: Communication score — pass answers + total_questions so it penalizes
+    # low coverage. Old code used filler ratio which gave 90% for "hello" (0 fillers).
+    meaningful_answers = [ans for ans in answers if len(ans.strip().split()) > 5]
+    meaningful_ratio = len(meaningful_answers) / total_questions
+    avg_word_count = total_words / len(answers) if answers else 0
+
+    if avg_word_count > 20 and meaningful_ratio >= 0.7:
+        communication_score = 8.0
+    elif avg_word_count > 10 and meaningful_ratio >= 0.4:
+        communication_score = 6.0
+    elif avg_word_count > 5 and meaningful_ratio >= 0.2:
+        communication_score = 4.0
+    else:
+        communication_score = 2.0
 
     # 🎥 FACE DETECTION
     if image_data:
@@ -190,8 +211,15 @@ def submit_answers():
     else:
         warning = ""
 
-    # 🎯 CONFIDENCE
-    engagement_score = engagement_tracker.calculate_engagement(1)
+    # 🎯 CONFIDENCE — pass actual face position instead of hardcoded 1
+    if face_position == "centered":
+        engagement_input = 1.0
+    elif face_position in ["left", "right"]:
+        engagement_input = 0.5
+    else:
+        engagement_input = 0.0
+
+    engagement_score = engagement_tracker.calculate_engagement(engagement_input)
 
     confidence_score = confidence_estimator.estimate_confidence(
         engagement_score,
