@@ -44,7 +44,7 @@
             </div>
         </section>
 
-        <!-- POPUP -->
+        <!-- START INTERVIEW POPUP -->
         <section class="popup-overlay" id="startPopup" aria-hidden="true">
             <div class="popup-card" role="status" aria-live="polite">
                 <div class="popup-glow"></div>
@@ -75,13 +75,37 @@
             </div>
         </section>
 
-        <!-- LOADER -->
-        <div id="loader">
-            <div class="loader-box">
-                <div class="spinner"></div>
-                <p>Analyzing your interview...</p>
+
+        <!-- INTERVIEW FEEDBACK LOADER (UPDATED) -->
+        <section class="popup-overlay" id="loader">
+            <div class="popup-card">
+
+                <div class="popup-robot-wrap">
+                    <img 
+                        class="popup-robot"
+                        src="{{ url_for('roadmap_page_routes.roadmap_assets', filename='robo.png') }}"
+                        alt="AI robot loading"
+                    >
+                </div>
+
+                <div class="popup-copy">
+                    <p class="popup-eyebrow">AI Interview Analysis</p>
+                    <h2>Analyzing your interview</h2>
+                    <p>
+                        Please wait while AI evaluates your responses 
+                        and generates personalized feedback.
+                    </p>
+                </div>
+
+                <div class="popup-spinner-row">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
+
             </div>
-        </div>
+        </section>
+
 
         <!-- MAIN INTERVIEW -->
         <div class="main-container" id="interviewApp" hidden>
@@ -102,7 +126,7 @@
             <!-- RIGHT PANEL -->
             <div class="question-section">
 
-                <!-- ✅ DOMAIN SECTION WRAPPER -->
+                <!-- DOMAIN SECTION -->
                 <div id="domainSelectionSection">
                     <h2>Select Domain</h2>
 
@@ -119,7 +143,7 @@
                     </button>
                 </div>
 
-                <!-- ✅ Selected domain title (hidden initially) -->
+                <!-- Selected domain title -->
                 <h2 id="selectedDomainTitle" style="display:none;">
                     AI Engineer Interview
                 </h2>

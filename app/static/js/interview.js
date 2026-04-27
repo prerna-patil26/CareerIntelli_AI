@@ -130,7 +130,7 @@ function displayDomains(domains) {
             selectedDomain = domain;
             document.getElementById("searchBox").value = domain;
 
-            document.querySelectorAll("li").forEach(li => 
+            document.querySelectorAll("li").forEach(li =>
                 li.classList.remove("selected")
             );
 
@@ -255,11 +255,7 @@ function startSpeechRecognition() {
 
         document.getElementById("answerText").innerText = fullAnswer;
 
-        let wordCount = fullAnswer
-            .trim()
-            .split(/\s+/)
-            .filter(word => word).length;
-
+        let wordCount = fullAnswer.trim().split(/\s+/).filter(word => word).length;
         let confidence = Math.min(wordCount * 2, 100);
 
         document.getElementById("confidenceFill").style.width =
@@ -421,7 +417,7 @@ function showWarning(message) {
 }
 
 
-// SUBMIT INTERVIEW (UPDATED)
+// SUBMIT INTERVIEW (ONLY LOADER FIXED)
 function submitInterview() {
     if (!answers.length || answers.every(a => a.trim() === "")) {
         alert("Please answer at least one question!");
@@ -432,9 +428,9 @@ function submitInterview() {
         clearInterval(faceInterval);
     }
 
-    document.getElementById("loader").style.display = "flex";
+    const loader = document.getElementById("loader");
+    loader.classList.add("is-visible");
 
-    // Capture final image
     let imageData = captureFrame();
 
     fetch('/interview/submit', {
@@ -442,8 +438,6 @@ function submitInterview() {
         headers: {
             'Content-Type': 'application/json'
         },
-
-        // UPDATED PAYLOAD
         body: JSON.stringify({
             answers: answers,
             total_questions: 15,
@@ -451,26 +445,23 @@ function submitInterview() {
             career: selectedDomain
         })
     })
-        .then(res => res.json())
-        .then(data => {
-            localStorage.setItem("total_score", data.total_score);
-            localStorage.setItem("technical_score", data.technical_score);
-            localStorage.setItem("communication_score", data.communication_score);
-            localStorage.setItem("confidence_score", data.confidence_score);
-            localStorage.setItem("feedback", data.feedback);
-            localStorage.setItem(
-                "suggestions",
-                JSON.stringify(data.suggestions)
-            );
+    .then(res => res.json())
+    .then(data => {
+        localStorage.setItem("total_score", data.total_score);
+        localStorage.setItem("technical_score", data.technical_score);
+        localStorage.setItem("communication_score", data.communication_score);
+        localStorage.setItem("confidence_score", data.confidence_score);
+        localStorage.setItem("feedback", data.feedback);
+        localStorage.setItem("suggestions", JSON.stringify(data.suggestions));
 
-            document.getElementById("loader").style.display = "none";
-
+        setTimeout(() => {
+            loader.classList.remove("is-visible");
             window.location.href = "/interview/result";
-        })
-        .catch((error) => {
-            console.error("Submit Error:", error);
-
-            document.getElementById("loader").style.display = "none";
-            alert("Something went wrong!");
-        });
+        }, 2000);
+    })
+    .catch((error) => {
+        console.error("Submit Error:", error);
+        loader.classList.remove("is-visible");
+        alert("Something went wrong!");
+    });
 }
