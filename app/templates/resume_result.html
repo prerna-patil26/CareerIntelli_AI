@@ -52,9 +52,10 @@
 
             <!-- TABS -->
                 <div class="tabs">
-                    <button class="active" onclick="showTab('skills')">Skills</button>
-                    <button onclick="showTab('suggestions')">Suggestions</button>
-                    <button onclick="showTab('ai')">AI Feedback</button>
+                    <button class="active" onclick="showTab('skills', event)">Skills</button>
+                    <button onclick="showTab('chart', event)">Chart</button>
+                    <button onclick="showTab('suggestions', event)">Suggestions</button>
+                    <button onclick="showTab('ai', event)">AI Feedback</button>
                 </div>
 
                 <!-- TAB CONTENT -->
@@ -74,6 +75,12 @@
                     </div>
                 </div>
 
+                <div id="chart" class="tab-content">
+                    <div class="chart-wrapper">
+                        <canvas id="scoreChart"></canvas>
+                    </div>
+                </div>
+
                 <!-- SUGGESTIONS -->
                 <div id="suggestions" class="tab-content">
                     {% for tip in result.resume_score['suggestions'] %}
@@ -81,12 +88,15 @@
                     {% endfor %}
                 </div>
 
+
                 <!-- AI -->
                 <div id="ai" class="tab-content">
                     {% for tip in result.ai_feedback %}
                         <div class="ai-tip">🤖 {{ tip }}</div>
                     {% endfor %}
                 </div>
+
+                
 
         </div>
 
@@ -107,29 +117,83 @@
 <!-- CHART -->
 {% if result.resume_score['breakdown'] %}
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
 <script>
-new Chart(document.getElementById('scoreChart'), {
-    type: 'bar',
-    data: {
-        labels: ['Skills', 'Experience', 'Education', 'Projects'],
-        datasets: [{
-            data: [
-                {{ result.resume_score['breakdown']['skills'] }},
-                {{ result.resume_score['breakdown']['experience'] }},
-                {{ result.resume_score['breakdown']['education'] }},
-                {{ result.resume_score['breakdown']['projects'] }}
-            ]
-        }]
-    },
-    options: {
-        plugins: { legend: { display: false } }
-    }
-});
+let chartCreated = false;
+
+// 🔥 LOAD CHART
+function loadChart() {
+
+    if (chartCreated) return;
+
+    const ctx = document.getElementById('scoreChart');
+    if (!ctx) return;
+
+    new Chart(ctx, {
+        type: 'bar',
+        data: {
+            labels: ['Skills', 'Experience', 'Education', 'Projects'],
+            datasets: [{
+                data: [
+                    {{ result.resume_score['breakdown']['skills'] }},
+                    {{ result.resume_score['breakdown']['experience'] }},
+                    {{ result.resume_score['breakdown']['education'] }},
+                    {{ result.resume_score['breakdown']['projects'] }}
+                ],
+                backgroundColor: [
+                    "#22d3ee",
+                    "#a855f7",
+                    "#6366f1",
+                    "#ec4899"
+                ],
+                borderRadius: 8,
+                barThickness: 40
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+
+            plugins: {
+                legend: { display: false }
+            },
+
+            animation: {
+                duration: 1200,
+                easing: 'easeOutQuart'
+            },
+
+            scales: {
+                y: {
+                    beginAtZero: true,
+                    ticks: {
+                        color: "#aaa",
+                        font: { size: 12 }
+                    },
+                    grid: {
+                        color: "rgba(255,255,255,0.05)"
+                    }
+                },
+                x: {
+                    ticks: {
+                        color: "#aaa",
+                        font: { size: 12 }
+                    },
+                    grid: {
+                        display: false
+                    }
+                }
+            }
+        }
+    });
+
+    chartCreated = true;
+}
 
 
-function showTab(tabId) {
+// 🔥 TAB SWITCHING
+function showTab(tabId, event) {
 
-    // hide all
     document.querySelectorAll(".tab-content").forEach(el => {
         el.classList.remove("active");
     });
@@ -138,13 +202,17 @@ function showTab(tabId) {
         btn.classList.remove("active");
     });
 
-    // show selected
     document.getElementById(tabId).classList.add("active");
-
-    // fix: get clicked button
     event.target.classList.add("active");
+
+    // Load chart only when needed
+    if (tabId === "chart") {
+        setTimeout(loadChart, 100);
+    }
 }
 
+
+// 🔥 ATS CIRCLE
 document.querySelectorAll(".circle").forEach(circle => {
     let score = circle.getAttribute("data-score");
     let deg = (score / 100) * 360;

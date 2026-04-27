@@ -60,7 +60,7 @@
         <!-- PROFILE CARD -->
         <div class="result-section profile-card">
             {% if profile and profile.profile_photo %}
-            <img src="{{ url_for('static', filename=profile.profile_photo) }}" class="profile-pic">
+            <img src="{{ url_for('static', filename=profile.profile_photo) }}?t={{ range(1,100000)|random }}" class="profile-pic">
             {% else %}
             <img src="{{ url_for('static', filename='images/default.png') }}" class="profile-pic">
             {% endif %}
@@ -95,7 +95,11 @@
 
 
     <!-- ================= EDIT MODE ================= -->
-    <form id="profileForm" style="display:none;" method="POST" enctype="multipart/form-data">
+    <form id="profileForm"
+      action="{{ url_for('profile.update_profile') }}"
+      method="POST"
+      enctype="multipart/form-data"
+      style="display:none;">
 
         <!-- 🔥 PROFILE IMAGE TOP CENTER -->
         <div class="profile-top-center">

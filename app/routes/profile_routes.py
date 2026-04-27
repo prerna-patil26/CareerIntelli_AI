@@ -1,5 +1,6 @@
 """User profile routes for CareerIntelli AI."""
 
+from fileinput import filename
 import os
 from werkzeug.utils import secure_filename
 
@@ -13,7 +14,7 @@ from app.database.models import User, Profile
 
 # Upload folders
 UPLOAD_PROFILE_PHOTO = "app/static/uploads/profile_photos"
-UPLOAD_RESUME = "app/static/uploads/resumes"
+UPLOAD_RESUME = os.path.join("static", "uploads", "resumes")
 
 
 # ---------------------------------------------------
@@ -132,11 +133,11 @@ def update_profile():
             path = os.path.join(UPLOAD_RESUME, filename)
             resume.save(path)
 
-            profile.resume_file = "uploads/resumes/" + filename
+            profile.resume_file = f"uploads/resumes/{filename}"
 
         db.session.commit()
 
-        return redirect(url_for("profile.profile_page"))
+        return redirect(url_for("profile.profile_page", _external=True))
 
     except Exception as e:
         return jsonify({"error": str(e)}), 500
