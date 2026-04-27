@@ -9,23 +9,29 @@ class InterviewScorer:
         # 🎯 Technical (based on evaluator)
         technical_score = round(total_score / 10, 1)
 
-        # 💬 Communication (based on answer length)
+        # 💬 Communication (based on answer length + coverage quality)
         avg_length = sum(len(ans.split()) for ans in answers) / len(answers)
+        meaningful_answers = [ans for ans in answers if len(ans.strip().split()) > 5]
+        meaningful_ratio = len(meaningful_answers) / len(answers)
 
-        if avg_length > 20:
+        if avg_length > 20 and meaningful_ratio >= 0.7:
             communication_score = 8
-        elif avg_length > 10:
+        elif avg_length > 10 and meaningful_ratio >= 0.4:
             communication_score = 6
-        else:
+        elif avg_length > 5 and meaningful_ratio >= 0.2:
             communication_score = 4
-
-        # 🎯 Confidence (basic logic)
-        if avg_length > 20:
-            confidence_score = 8
-        elif avg_length > 10:
-            confidence_score = 6
         else:
-            confidence_score = 5
+            communication_score = 2
+
+        # 🎯 Confidence (based on answer coverage + length, not just length)
+        if avg_length > 20 and meaningful_ratio >= 0.7:
+            confidence_score = 8
+        elif avg_length > 10 and meaningful_ratio >= 0.4:
+            confidence_score = 6
+        elif avg_length > 5 and meaningful_ratio >= 0.2:
+            confidence_score = 4
+        else:
+            confidence_score = 2
 
         return {
             "total_score": total_score,
