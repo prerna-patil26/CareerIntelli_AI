@@ -152,17 +152,41 @@ class SkillExtractor:
         matches = pattern.findall(text)
         
         return list(set(matches))
-    def extract_technical_skills_with_score(self, text: str):
+    def extract_technical_skills_with_score(self, text):
         text = text.lower()
         technical_skills = self.skills_database.get("technical", [])
 
         skill_scores = {}
 
+    # 🔥 Simple section extraction
+        def extract_section(text, keywords):
+            for word in keywords:
+                if word in text:
+                    start = text.find(word)
+                    return text[start:start + 500]
+            return ""
+
+        projects_section = extract_section(text, ["project", "projects"])
+        experience_section = extract_section(text, ["experience", "work experience"])
+
         for skill in technical_skills:
+
             count = text.count(skill)
+
             if count > 0:
-                # Normalize score (max 100)
-                score = min(count * 20, 100)
-                skill_scores[skill] = score
+
+                # ✅ Frequency score (0–40)
+                frequency_score = min(count * 10, 40)
+
+                # ✅ Project bonus (30)
+                project_score = 30 if skill in projects_section else 0
+
+                # ✅ Experience bonus (30)
+                experience_score = 30 if skill in experience_section else 0
+
+                # 🔥 FINAL SCORE
+                score = frequency_score + project_score + experience_score
+
+                skill_scores[skill] = min(score, 100)
 
         return skill_scores

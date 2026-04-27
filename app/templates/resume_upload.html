@@ -4,10 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Resume Analyzer</title>
-<link rel="stylesheet" href="{{ url_for('static', filename='css/career.css') }}">
 <link rel="stylesheet" href="{{ url_for('static', filename='css/resume.css') }}">
-<link rel="stylesheet" href="{{ url_for('static', filename='css/interview.css') }}">
-
 </head>
 
 <body>
@@ -16,10 +13,10 @@
 <video class="app-bg-video" autoplay loop muted>
     <source src="{{ url_for('roadmap_page_routes.roadmap_assets', filename='bg.mp4') }}">
 </video>
-<div class="app-bg-overlay"></div>
-
+<!-- <div class="app-bg-overlay"></div> -->
     <div class="career-top-nav">
-        <a class="career-dashboard-btn" href="{{ url_for('home.dashboard') }}">Dashboard</a>
+    <a class="career-dashboard-btn" href="{{ url_for('home.dashboard') }}">Dashboard</a>
+    <button class="career-dashboard-btn" onclick="openHistory()">History</button>
     </div>
 
 <main class="interview-shell">
@@ -66,11 +63,6 @@
 
                 </div>
 
-                <!-- 🔥 CHANGE ONLY THIS BUTTON
-                <button type="button" class="upload-btn" onclick="startResumeAnalysis()">
-                    🚀 Analyze Resume
-                </button> -->
-
             </form>
 
         </div>
@@ -97,7 +89,16 @@
 
         </div>
     </section>
-
+    <!-- 🔥 HISTORY MODAL -->
+    <div class="history-overlay" id="historyModal">
+        <div class="history-box">
+            <div class="history-header">
+                <h2>📂 Resume History</h2>
+                <button class="history-close-btn" onclick="closeHistory()">✖</button>
+            </div>
+            <div id="historyContent"></div>
+        </div>
+    </div>
 </main>
 
 <script>
@@ -168,6 +169,80 @@ uploadBox.addEventListener("drop", (e) => {
         fileName.textContent = file.name;
     }
 });
+
+function openHistory() {
+    const modal = document.getElementById("historyModal");
+    const container = document.getElementById("historyContent");
+    modal.style.display = "flex";
+    container.innerHTML = `<div class="history-loading">Loading...</div>`;
+
+    fetch("{{ url_for('resume.history_data') }}")
+        .then(res => res.json())
+        .then(data => {
+            console.log("History URLs:", data); // debug
+
+            if (data.length === 0) {
+                container.innerHTML = `<div class="history-empty">No resumes uploaded yet 📂</div>`;
+                return;
+            }
+
+            // Remove duplicates by filename
+            const seen = new Set();
+            const unique = data.filter(item => {
+                if (seen.has(item.filename)) return false;
+                seen.add(item.filename);
+                return true;
+            });
+
+            let html = unique.map(item => `
+                <div class="history-card">
+                    <div class="history-info">
+                        <span class="history-filename">📄 ${item.filename}</span>
+                        <span class="history-score">ATS Score: <strong>${item.score}%</strong></span>
+                    </div>
+                    <div class="history-actions">
+                        <button class="hist-btn view-btn" onclick="viewResume('${item.url}')" title="View">👁</button>
+                        <button class="hist-btn del-btn" onclick="deleteResume('${item.filename}')" title="Delete">🗑</button>
+                    </div>
+                </div>
+            `).join("");
+
+            container.innerHTML = html;
+        })
+        .catch(() => {
+            container.innerHTML = `<div class="history-empty">Failed to load history.</div>`;
+        });
+}
+
+function viewResume(url) {
+    console.log("Opening URL:", url);
+    if (!url || url === "#") {
+        alert("File not available on server.");
+        return;
+    }
+    window.open(url, "_blank");
+}
+function closeHistory() {
+    document.getElementById("historyModal").style.display = "none";
+}
+
+function deleteResume(filename) {
+    if (!confirm("Delete this resume?")) return;
+
+    fetch("/resume/delete", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify({ filename: filename })
+    })
+    .then(res => res.json())
+    .then(() => {
+        openHistory(); // reload list
+    });
+}
+
+
 
 </script>
 

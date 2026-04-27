@@ -2,7 +2,7 @@
 
 import os
 import logging
-from flask import request, render_template, redirect, url_for, session, make_response
+from flask import request, render_template, redirect, url_for, session, make_response, jsonify
 from werkzeug.utils import secure_filename
 
 from . import resume_bp
@@ -241,18 +241,28 @@ def upload_resume():
             "show_basic_suggestions": show_basic_suggestions,
         }
 
+        # Replace your DB save block with this:
         user_id = session.get("user_id")
         if user_id:
             try:
-                resume_record = Resume(
-                    user_id=user_id,
-                    file_path=filepath,
-                    score=score_result.get("percentage", 0),
-                    skills=technical_skills,
-                    experience=parsed_data.get("experience", []),
-                    education=parsed_data.get("education", []),
-                )
-                db.session.add(resume_record)
+                # ✅ Check if same filename already exists for this user
+                existing = Resume.query.filter_by(user_id=user_id).filter(
+                    Resume.file_path.like(f"%{filename}")
+                ).first()
+
+                if not existing:
+                    resume_record = Resume(
+                        user_id=user_id,
+                        file_path=filepath,
+                        score=score_result.get("percentage", 0),
+                        skills=technical_skills,
+                        experience=parsed_data.get("experience", []),
+                        education=parsed_data.get("education", []),
+                    )
+                    db.session.add(resume_record)
+                else:
+                    # ✅ Just update the score
+                    existing.score = score_result.get("percentage", 0)
 
                 profile = Profile.query.filter_by(user_id=user_id).first()
                 if profile:
@@ -262,7 +272,6 @@ def upload_resume():
             except Exception as db_error:
                 logger.error(f"Failed to save resume metadata: {db_error}")
                 db.session.rollback()
-
         session["resume_result"] = result
         logger.info("Resume analysis completed successfully")
         return render_template("resume_result.html", result=result)
@@ -277,8 +286,57 @@ def upload_resume():
 @resume_bp.route("/resume/result")
 def resume_result():
     result = session.get("resume_result")
-
     if not result:
         return redirect(url_for("resume.resume_page"))
+    return render_template("resume_result.html", result=result)  # ← render, don't redirect
 
-    return redirect(url_for("resume.resume_result"))
+@resume_bp.route("/resume/history-data")
+def history_data():
+    try:
+        user_id = session.get("user_id")
+
+        if not user_id:
+            return jsonify([])
+
+        resumes = Resume.query.filter_by(user_id=user_id)\
+            .order_by(Resume.id.desc()).all()
+
+        data = []
+        for r in resumes:
+            # ✅ Build correct static path
+            if r.file_path and "static/" in r.file_path:
+                static_relative = r.file_path.split("static/")[1]
+                file_url = url_for('static', filename=static_relative)
+            elif r.file_path:
+                file_url = url_for('static', filename=f"uploads/resumes/{os.path.basename(r.file_path)}")
+            else:
+                file_url = "#"
+
+            data.append({
+                "filename": os.path.basename(r.file_path) if r.file_path else "Unknown",
+                "score": r.score or 0,
+                "url": file_url
+            })
+
+        return jsonify(data)
+
+    except Exception as e:
+        print("🔥 HISTORY ERROR:", e)
+        return jsonify([])
+
+
+@resume_bp.route("/resume/delete", methods=["POST"])
+def delete_resume():
+    user_id = session.get("user_id")
+    filename = request.json.get("filename")
+
+    record = Resume.query.filter_by(user_id=user_id).filter(
+        Resume.file_path.like(f"%{filename}")
+    ).first()
+
+    if record:
+        db.session.delete(record)
+        db.session.commit()
+        return {"status": "success"}
+
+    return {"status": "error"}
