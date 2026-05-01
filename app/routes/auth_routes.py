@@ -95,11 +95,8 @@ def register_page():
 
 @auth_bp.route("/logout")
 def logout():
-
     session.clear()
-
-    return redirect(url_for("auth.login_page"))
-
+    return redirect(url_for("home.index"))   # ✅ change here
 
 # ---------------------------------------------------
 # API LOGIN
