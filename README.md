@@ -1,4 +1,4 @@
-# 🚀 CareerIntelli AI  
+# CareerIntelli AI  
 ### 🧠 Your End-to-End AI Career Intelligence Platform
 
 CareerIntelli AI is a full-stack AI-powered platform that helps users **analyze resumes, predict career paths, practice interviews, and generate personalized learning roadmaps** — all in one unified system.
