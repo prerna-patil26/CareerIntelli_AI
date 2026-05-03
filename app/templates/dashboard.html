@@ -34,9 +34,9 @@
             <nav class="sidebar-nav" id="nav-content" aria-label="Dashboard navigation">
                 <div class="sidebar-highlight" id="nav-content-highlight" aria-hidden="true"></div>
 
-                <a class="nav-button {% if sidebar_active == 'dashboard' %}active{% endif %}" data-nav-item="dashboard" href="{{ url_for('home.dashboard') }}">
+                <!-- <a class="nav-button {% if sidebar_active == 'dashboard' %}active{% endif %}" data-nav-item="dashboard" href="{{ url_for('home.dashboard') }}">
                     <i class="fa-solid fa-gauge-high"></i>
-                    <span>Dashboard</span>
+                    <span>Dashboard</span> -->
                 </a>
                 <a class="nav-button {% if sidebar_active == 'resume' %}active{% endif %}" data-nav-item="resume" href="{{ url_for('home.resume_upload') }}">
                     <i class="fa-solid fa-file-lines"></i>
@@ -68,7 +68,7 @@
 
                     <div class="sidebar-user-meta">
                         <span class="sidebar-user-name">{{ user.first_name if user and user.first_name else 'User' }}{% if user and user.last_name %} {{ user.last_name }}{% endif %}</span>
-                        <span class="sidebar-user-subtitle">CareerIntelli AI</span>
+                        <!-- <span class="sidebar-user-subtitle">CareerIntelli AI</span> -->
                     </div>
 
                     <button type="button" class="sidebar-logout" data-url="{{ url_for('auth.logout') }}" onclick="location.href=this.dataset.url" aria-label="Logout">
@@ -83,12 +83,12 @@
     <main class="dashboard-main">
         <div class="topbar">
             <div class="topbar-title">
-                <h1>Hi, {{ user.first_name if user is defined and user and user.first_name else 'User' }} 👋</h1>
+                <h1>Hi, {{ user.first_name if user is defined and user and user.first_name else 'User' }}</h1>
                 <p>Let’s build your career with AI</p>
             </div>
 
             <div class="topbar-controls">
-                <input type="text" placeholder="Search..." class="search">
+                <!-- <input type="text" placeholder="Search..." class="search"> -->
 
                 <div class="top-actions">
                     <span class="theme-toggle" role="button" tabindex="0" aria-label="Toggle dashboard theme">🌙</span>
@@ -106,6 +106,7 @@
         <div class="hero">
             <div class="hero-content">
                 <span class="hero-kicker">Daily overview</span>
+                
                 <h2>Your AI career workspace, organized</h2>
                 <p>Track resume quality, role fit, and interview readiness from a single dashboard.</p>
                 <button type="button" data-url="{{ url_for('home.resume_upload') }}" onclick="location.href=this.dataset.url">
@@ -114,11 +115,11 @@
             </div>
         </div>
 
-        <div class="analytics-card">
+        <!-- <div class="analytics-card">
             <h3>Weekly snapshot</h3>
             <p>{{ dashboard_metrics.weekly_snapshot.subtitle if dashboard_metrics else 'Resume, roadmap, and interview progress at a glance' }}</p>
             <div class="fake-chart"></div>
-        </div>
+        </div> -->
 
         <div class="stats">
             <div class="stat-card">

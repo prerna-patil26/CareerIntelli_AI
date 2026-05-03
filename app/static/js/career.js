@@ -272,7 +272,10 @@ async function typeText(target, text, speed = 16) {
 function showThinkingPhase() {
     state.mode = 'thinking';
     showStep(4);
-    thinkingScreen.classList.add('is-active');
+    // thinkingScreen.classList.add('is-active');
+    thinkingScreen.classList.add('active');
+    document.body.style.overflow = "hidden";
+
     thinkingScreen.setAttribute('aria-hidden', 'false');
     document.body.classList.add('analysis-loading');
     neuralBackground.triggerPulse();
@@ -301,8 +304,9 @@ function hideThinkingPhase() {
         clearInterval(thinkingMessageTimer);
         thinkingMessageTimer = null;
     }
-
-    thinkingScreen.classList.remove('is-active');
+    thinkingScreen.classList.remove('active');
+    document.body.style.overflow = "auto";
+    // thinkingScreen.classList.remove('is-active');
     thinkingScreen.setAttribute('aria-hidden', 'true');
     document.body.classList.remove('analysis-loading');
 }
@@ -362,7 +366,7 @@ async function updateUI(data) {
         }
     });
 
-    showStep(5);
+    // showStep(5);
     await typeText(document.getElementById('ai-insight'), data.insight || 'Career analysis complete', 14);
 }
 
@@ -393,22 +397,44 @@ document.getElementById('go-step-2').addEventListener('click', () => {
 
 document.getElementById('back-step-1').addEventListener('click', () => showStep(1));
 
+// document.getElementById('analyze-button').addEventListener('click', async () => {
+//     showThinkingPhase();
+
+//     try {
+//         const data = await fetchCareerPrediction(state.skills);
+//         await updateUI(data);
+//     } catch (error) {
+//         alert('Prediction failed. Please try again.');
+//         console.error('Error:', error);
+//     } finally {
+//         window.setTimeout(() => {
+//             hideThinkingPhase();
+//         }, 250);
+//         if (state.mode === 'thinking') {
+//             state.mode = 'idle';
+//         }
+//     }
+// });
+
+
 document.getElementById('analyze-button').addEventListener('click', async () => {
     showThinkingPhase();
 
     try {
-        const data = await fetchCareerPrediction(state.skills);
-        await updateUI(data);
+        // ⏳ minimum loader time (important)
+        const [data] = await Promise.all([
+            fetchCareerPrediction(state.skills),
+            new Promise(resolve => setTimeout(resolve, 1500))
+        ]);
+
+        hideThinkingPhase();   // ✅ पहले loader हटाओ
+        showStep(5);           // ✅ फिर result दिखाओ
+        await updateUI(data);  // ✅ फिर data render
+
     } catch (error) {
+        hideThinkingPhase();
         alert('Prediction failed. Please try again.');
-        console.error('Error:', error);
-    } finally {
-        window.setTimeout(() => {
-            hideThinkingPhase();
-        }, 250);
-        if (state.mode === 'thinking') {
-            state.mode = 'idle';
-        }
+        console.error(error);
     }
 });
 
