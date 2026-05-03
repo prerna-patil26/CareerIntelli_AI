@@ -7,7 +7,7 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='css/interview.css') }}">
 
     <style>
-        /* 🔹 Feedback full width */
+        /* 🔹 Feedback layout */
         .feedback-section {
             display: flex;
             gap: 20px;
@@ -18,13 +18,22 @@
             padding: 20px;
             min-height: 180px;
             line-height: 1.6;
+            background: rgba(255,255,255,0.05);
+            backdrop-filter: blur(12px);
+            border-radius: 16px;
+            transition: 0.3s;
         }
 
-        /* 🔹 Suggestions + Performance row */
+        .f-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 0 20px rgba(0, 212, 255, 0.3);
+        }
+
+        /* 🔹 Bottom row */
         .bottom-row {
             display: flex;
             gap: 30px;
-            margin-top: 30px;
+            margin-top: 40px;
         }
 
         .suggestions-container {
@@ -33,12 +42,51 @@
 
         .performance-container {
             flex: 1;
+            position: sticky;
+            top: 20px;
         }
 
+        /* 🔹 Suggestions cards */
         .suggestions {
             display: flex;
             flex-direction: column;
             gap: 15px;
+        }
+
+        .suggestions div {
+            background: rgba(255,255,255,0.06);
+            padding: 15px;
+            border-radius: 14px;
+            backdrop-filter: blur(10px);
+            border-left: 4px solid #00d4ff;
+            transition: 0.3s;
+        }
+
+        .suggestions div:hover {
+            transform: translateX(5px);
+            background: rgba(255,255,255,0.1);
+        }
+
+        /* 🔹 Score description */
+        .score-desc {
+            text-align: center;
+            opacity: 0.8;
+            margin-top: 8px;
+        }
+
+        /* 🔹 Strength box */
+        .strength-box {
+    margin-top: 20px;
+    padding: 15px;
+    background: rgba(0, 212, 255, 0.08);
+    border-left: 4px solid #00d4ff;
+    border-radius: 10px;
+}
+
+        /* 🔹 Performance bar animation */
+        .bar div {
+            transition: width 1s ease-in-out;
+            background: linear-gradient(to right, #00d4ff, #7b2ff7);
         }
     </style>
 
@@ -54,14 +102,14 @@
     <source src="{{ url_for('roadmap_page_routes.roadmap_assets', filename='bg.mp4') }}" type="video/mp4">
 </video>
 
-<div class="app-bg-overlay" aria-hidden="true"></div>
+<div class="app-bg-overlay"></div>
 
 <div class="dashboard">
 
-    <!-- 🎯 MAIN TITLE -->
+    <!-- 🎯 TITLE -->
     <h1 class="main-title">🎯 Interview Result</h1>
 
-    <!-- 🔵 HERO SCORE -->
+    <!-- 🔵 SCORE -->
     <div class="hero">
         <div class="score-ring">
             <div class="circle">
@@ -69,9 +117,10 @@
             </div>
         </div>
         <h2 id="performanceLabel">Performance</h2>
+        <p class="score-desc">Your performance needs improvement. Focus on core concepts.</p>
     </div>
 
-    <!-- ✅ ROW 1: FEEDBACK -->
+    <!-- ✅ FEEDBACK -->
     <h2 class="section-title">💬 Feedback</h2>
 
     <div class="feedback-section">
@@ -91,33 +140,44 @@
         </div>
     </div>
 
-    <!-- ✅ ROW 2: SUGGESTIONS + PERFORMANCE -->
+    <!-- ⭐ STRENGTHS -->
+    <div class="strength-box">
+        <h3>⭐ Strengths</h3>
+        <p>
+        • Shows willingness to learn and improve<br>
+        • Demonstrates basic understanding of concepts<br>
+        • Has potential to build stronger technical skills<br>
+        • Attempts to communicate ideas clearly
+    </p>
+    </div>
+
+    <!-- ✅ ROW 2 -->
     <div class="bottom-row">
 
-        <!-- LEFT -->
+        <!-- 💡 Suggestions -->
         <div class="suggestions-container">
             <h2 class="section-title">💡 Suggestions</h2>
             <div class="suggestions" id="suggestionsList"></div>
         </div>
 
-        <!-- RIGHT -->
+        <!-- 📊 Performance -->
         <div class="performance-container">
             <h2 class="section-title">📊 Performance</h2>
 
             <div class="performance">
 
                 <div class="bar-box">
-                    <span>Technical <b id="techPercent"></b></span>
+                    <span>Technical <b id="techPercent"></b> (Very Low)</span>
                     <div class="bar"><div id="techBar"></div></div>
                 </div>
 
                 <div class="bar-box">
-                    <span>Communication <b id="commPercent"></b></span>
+                    <span>Communication <b id="commPercent"></b> (Poor)</span>
                     <div class="bar"><div id="commBar"></div></div>
                 </div>
 
                 <div class="bar-box">
-                    <span>Confidence <b id="confPercent"></b></span>
+                    <span>Confidence <b id="confPercent"></b> (Average)</span>
                     <div class="bar"><div id="confBar"></div></div>
                 </div>
 
@@ -126,7 +186,7 @@
 
     </div>
 
-    <!-- 🔙 BACK BUTTON -->
+    <!-- 🔙 BACK -->
     <div class="back-container">
         <button onclick="goBack()">Back to Interview</button>
     </div>
