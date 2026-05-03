@@ -1273,3 +1273,47 @@ button {
 .timer-wrapper {
     margin-right: 20px;
 }
+
+/* 🔹 Feedback + Suggestions Layout */
+.feedback-suggestion-wrapper {
+    display: flex;
+    gap: 30px;
+    align-items: flex-start;
+}
+
+/* LEFT SIDE (Feedback) */
+.feedback-container {
+    flex: 2;
+}
+
+/* RIGHT SIDE (Suggestions) */
+.suggestions-container {
+    flex: 1.2;
+}
+
+/* 🔹 Feedback Cards Bigger */
+.feedback-section {
+    display: flex;
+    gap: 20px;
+}
+
+.f-card {
+    flex: 1;
+    padding: 20px;
+    min-height: 200px;
+    font-size: 15px;
+    line-height: 1.6;
+}
+
+/* 🔹 Suggestions Styling Improve */
+.suggestions {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.suggestions div {
+    background: rgba(255,255,255,0.05);
+    padding: 12px 16px;
+    border-radius: 12px;
+}
